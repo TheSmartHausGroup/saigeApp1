@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "paths": {
+    "/sendMessage": {
+      "name": "/sendMessage",
+      "lambdaFunction": "saigeapp101983377",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create",
+          "read",
+          "update",
+          "delete"
+        ]
+      }
+    },
+    "/sendAudio": {
+      "name": "/sendAudio",
+      "lambdaFunction": "saigeapp101983377",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create",
+          "read",
+          "update",
+          "delete"
+        ]
+      }
+    },
+    "/sendEmail": {
+      "name": "/sendEmail",
+      "lambdaFunction": "saigeapp101983377",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create",
+          "read",
+          "update",
+          "delete"
+        ]
+      }
+    }
+  }
+}

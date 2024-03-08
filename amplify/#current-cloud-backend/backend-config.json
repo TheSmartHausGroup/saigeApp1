@@ -1,0 +1,90 @@
+{
+  "api": {
+    "saigeAppAPI": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "saigeapp101983377"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    }
+  },
+  "auth": {
+    "saigeapp16dc1619e": {
+      "customAuth": false,
+      "dependsOn": [],
+      "frontendAuthConfig": {
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyCharacters": [],
+          "passwordPolicyMinLength": 8
+        },
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "socialProviders": [],
+        "usernameAttributes": [],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito"
+    }
+  },
+  "function": {
+    "saigeapp101983377": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "saigeapp1f41b9062": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_saigeapp101983377_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "saigeapp101983377"
+        }
+      ]
+    },
+    "AMPLIFY_function_saigeapp101983377_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "saigeapp101983377"
+        }
+      ]
+    },
+    "AMPLIFY_function_saigeapp1f41b9062_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "saigeapp1f41b9062"
+        }
+      ]
+    },
+    "AMPLIFY_function_saigeapp1f41b9062_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "saigeapp1f41b9062"
+        }
+      ]
+    }
+  }
+}
