@@ -1,4 +1,4 @@
-Chat Application
+sAIge is an intelligent virtual assistant Chat Application. 
 This chat application provides real-time messaging capabilities, supporting both text and audio messages, and allows users to email conversation transcripts. Built with React, AWS Amplify, and integrated with AWS services like Lambda, S3, and Cognito, it offers a seamless chat experience with robust backend infrastructure.
 
 Features
