@@ -32,7 +32,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saigedev-133739-deployment/amplify-cfn-templates/api/saigeAppAPI-cloudformation-template.json",
         "logicalId": "apisaigeAppAPI"
       },
-      "lastPushTimeStamp": "2024-03-09T14:49:19.210Z",
+      "lastPushTimeStamp": "2024-03-09T14:59:47.344Z",
       "output": {
         "ApiName": "saigeAppAPI",
         "RootUrl": "https://m2fsghsrqc.execute-api.us-east-1.amazonaws.com/saigedev",
@@ -93,7 +93,7 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "Cognito",
-      "lastPushTimeStamp": "2024-03-09T14:49:19.239Z",
+      "lastPushTimeStamp": "2024-03-09T14:59:47.370Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saigedev-133739-deployment/amplify-cfn-templates/auth/saigeapp16dc1619e-cloudformation-template.json",
         "logicalId": "authsaigeapp16dc1619e"
@@ -123,7 +123,7 @@
           ]
         }
       ],
-      "lastPushTimeStamp": "2024-03-09T14:49:20.661Z",
+      "lastPushTimeStamp": "2024-03-09T14:59:49.675Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saigedev-133739-deployment/amplify-cfn-templates/auth/userPoolGroups-cloudformation-template.json",
         "logicalId": "authuserPoolGroups"
@@ -149,7 +149,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saigedev-133739-deployment/amplify-cfn-templates/function/saigeapp101983377-cloudformation-template.json",
         "logicalId": "functionsaigeapp101983377"
       },
-      "lastPushTimeStamp": "2024-03-09T14:49:19.247Z",
+      "lastPushTimeStamp": "2024-03-09T14:59:47.386Z",
       "output": {
         "LambdaExecutionRoleArn": "arn:aws:iam::866161883187:role/saigeapp1LambdaRolee03c4221-saigedev",
         "Region": "us-east-1",
@@ -175,7 +175,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saigedev-133739-deployment/amplify-cfn-templates/function/saigeapp1f41b9062-cloudformation-template.json",
         "logicalId": "functionsaigeapp1f41b9062"
       },
-      "lastPushTimeStamp": "2024-03-09T14:49:19.251Z",
+      "lastPushTimeStamp": "2024-03-09T14:59:47.393Z",
       "output": {
         "LambdaExecutionRoleArn": "arn:aws:iam::866161883187:role/saigeapp1LambdaRole43239f23-saigedev",
         "Region": "us-east-1",
@@ -201,7 +201,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saigedev-133739-deployment/amplify-cfn-templates/function/saigeapp16dc1619eDefineAuthChallenge-cloudformation-template.json",
         "logicalId": "functionsaigeapp16dc1619eDefineAuthChallenge"
       },
-      "lastPushTimeStamp": "2024-03-09T14:49:19.256Z",
+      "lastPushTimeStamp": "2024-03-09T14:59:47.420Z",
       "output": {
         "LambdaExecutionRoleArn": "arn:aws:iam::866161883187:role/saigeapp16dc1619eDefineAuthChallenge-saigedev",
         "Region": "us-east-1",
@@ -227,7 +227,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saigedev-133739-deployment/amplify-cfn-templates/function/saigeapp16dc1619eCreateAuthChallenge-cloudformation-template.json",
         "logicalId": "functionsaigeapp16dc1619eCreateAuthChallenge"
       },
-      "lastPushTimeStamp": "2024-03-09T14:49:19.261Z",
+      "lastPushTimeStamp": "2024-03-09T14:59:47.426Z",
       "output": {
         "LambdaExecutionRoleArn": "arn:aws:iam::866161883187:role/saigeapp16dc1619eCreateAuthChallenge-saigedev",
         "Region": "us-east-1",
@@ -253,7 +253,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saigedev-133739-deployment/amplify-cfn-templates/function/saigeapp16dc1619eVerifyAuthChallengeResponse-cloudformation-template.json",
         "logicalId": "functionsaigeapp16dc1619eVerifyAuthChallengeResponse"
       },
-      "lastPushTimeStamp": "2024-03-09T14:49:19.289Z",
+      "lastPushTimeStamp": "2024-03-09T14:59:47.433Z",
       "output": {
         "LambdaExecutionRoleArn": "arn:aws:iam::866161883187:role/saigeapp16dc1619eVerifyAuthChallengeResponse-saigedev",
         "Region": "us-east-1",
