@@ -3,5 +3,20 @@
     "configLevel": "project",
     "useProfile": true,
     "profileName": "default"
+  },
+  "saigedev": {
+    "configLevel": "project",
+    "useProfile": true,
+    "profileName": "default"
+  },
+  "saige": {
+    "configLevel": "project",
+    "useProfile": true,
+    "profileName": "default"
+  },
+  "saigeapp": {
+    "configLevel": "project",
+    "useProfile": true,
+    "profileName": "default"
   }
 }

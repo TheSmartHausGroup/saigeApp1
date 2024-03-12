@@ -1,10 +1,40 @@
 {
   "aws_project_region": "us-east-1",
-  "aws_cognito_identity_pool_id": "us-east-1:28f83a68-6f8e-4c51-bd89-dc39a1815ba1",
+  "aws_cloud_logic_custom": [
+    {
+      "name": "saigeAPP1API",
+      "endpoint": "https://vmss5rlq3k.execute-api.us-east-1.amazonaws.com/saigeapp",
+      "region": "us-east-1"
+    },
+    {
+      "name": "saigeAppAPI",
+      "endpoint": "https://j6d903xkxg.execute-api.us-east-1.amazonaws.com/saigeapp",
+      "region": "us-east-1"
+    },
+    {
+      "name": "saigeApp1API2",
+      "endpoint": "https://zlg93off1k.execute-api.us-east-1.amazonaws.com/saigeapp",
+      "region": "us-east-1"
+    }
+  ],
+  "aws_cognito_identity_pool_id": "us-east-1:23cc09dc-c2d4-40f5-8bde-82da2ddd9303",
   "aws_cognito_region": "us-east-1",
-  "aws_user_pools_id": "us-east-1_pCsSgxvxt",
-  "aws_user_pools_web_client_id": "6reftvmga3aukjs9sjicocreef",
-  "oauth": {},
+  "aws_user_pools_id": "us-east-1_MBtKXGdJm",
+  "aws_user_pools_web_client_id": "1df9nnj0ip5c29ah7fl7niro2r",
+  "oauth": {
+    "domain": "saigeapp1ea3aa9b1-ea3aa9b1-saigeapp.auth.us-east-1.amazoncognito.com",
+    "scope": [
+      "phone",
+      "email",
+      "openid",
+      "profile",
+      "aws.cognito.signin.user.admin"
+    ],
+    "redirectSignIn": "https://example.com/auth/",
+    "redirectSignOut": "https://example.com/auth/",
+    "responseType": "code"
+  },
+  "federationTarget": "COGNITO_USER_POOLS",
   "aws_cognito_username_attributes": [],
   "aws_cognito_social_providers": [],
   "aws_cognito_signup_attributes": [
@@ -20,12 +50,5 @@
   },
   "aws_cognito_verification_mechanisms": [
     "EMAIL"
-  ],
-  "aws_cloud_logic_custom": [
-    {
-      "name": "saigeAppAPI",
-      "endpoint": "https://ynezysp2m6.execute-api.us-east-1.amazonaws.com/dev",
-      "region": "us-east-1"
-    }
   ]
 }

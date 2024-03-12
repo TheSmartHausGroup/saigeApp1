@@ -1,5 +1,33 @@
 {
   "api": {
+    "saigeAPP1API": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "saigeapp101983377"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
+    "saigeApp1API2": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "saigeapp101983377"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
     "saigeAppAPI": {
       "dependsOn": [
         {
@@ -18,7 +46,35 @@
   "auth": {
     "saigeapp16dc1619e": {
       "customAuth": false,
-      "dependsOn": [],
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn",
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "saigeapp16dc1619eDefineAuthChallenge",
+          "triggerProvider": "Cognito"
+        },
+        {
+          "attributes": [
+            "Arn",
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "saigeapp16dc1619eCreateAuthChallenge",
+          "triggerProvider": "Cognito"
+        },
+        {
+          "attributes": [
+            "Arn",
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "saigeapp16dc1619eVerifyAuthChallengeResponse",
+          "triggerProvider": "Cognito"
+        }
+      ],
       "frontendAuthConfig": {
         "mfaConfiguration": "OFF",
         "mfaTypes": [
@@ -39,10 +95,41 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
+    },
+    "userPoolGroups": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId",
+            "AppClientIDWeb",
+            "AppClientID",
+            "IdentityPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "saigeapp16dc1619e"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito-UserPool-Groups"
     }
   },
   "function": {
     "saigeapp101983377": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "saigeapp16dc1619eCreateAuthChallenge": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "saigeapp16dc1619eDefineAuthChallenge": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "saigeapp16dc1619eVerifyAuthChallengeResponse": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
@@ -67,6 +154,62 @@
         {
           "category": "function",
           "resourceName": "saigeapp101983377"
+        }
+      ]
+    },
+    "AMPLIFY_function_saigeapp16dc1619eCreateAuthChallenge_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "saigeapp16dc1619eCreateAuthChallenge"
+        }
+      ]
+    },
+    "AMPLIFY_function_saigeapp16dc1619eCreateAuthChallenge_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "saigeapp16dc1619eCreateAuthChallenge"
+        }
+      ]
+    },
+    "AMPLIFY_function_saigeapp16dc1619eDefineAuthChallenge_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "saigeapp16dc1619eDefineAuthChallenge"
+        }
+      ]
+    },
+    "AMPLIFY_function_saigeapp16dc1619eDefineAuthChallenge_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "saigeapp16dc1619eDefineAuthChallenge"
+        }
+      ]
+    },
+    "AMPLIFY_function_saigeapp16dc1619eVerifyAuthChallengeResponse_RECAPTCHASECRET": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "saigeapp16dc1619eVerifyAuthChallengeResponse"
+        }
+      ]
+    },
+    "AMPLIFY_function_saigeapp16dc1619eVerifyAuthChallengeResponse_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "saigeapp16dc1619eVerifyAuthChallengeResponse"
+        }
+      ]
+    },
+    "AMPLIFY_function_saigeapp16dc1619eVerifyAuthChallengeResponse_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "saigeapp16dc1619eVerifyAuthChallengeResponse"
         }
       ]
     },
