@@ -14,6 +14,20 @@
       "providerPlugin": "awscloudformation",
       "service": "API Gateway"
     },
+    "saigeApp1API2": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "saigeapp101983377"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
     "saigeAppAPI": {
       "dependsOn": [
         {
@@ -127,91 +141,11 @@
     }
   },
   "parameters": {
-    "AMPLIFY_function_saigeapp101983377_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "saigeapp101983377"
-        }
-      ]
-    },
-    "AMPLIFY_function_saigeapp101983377_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "saigeapp101983377"
-        }
-      ]
-    },
-    "AMPLIFY_function_saigeapp16dc1619eCreateAuthChallenge_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "saigeapp16dc1619eCreateAuthChallenge"
-        }
-      ]
-    },
-    "AMPLIFY_function_saigeapp16dc1619eCreateAuthChallenge_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "saigeapp16dc1619eCreateAuthChallenge"
-        }
-      ]
-    },
-    "AMPLIFY_function_saigeapp16dc1619eDefineAuthChallenge_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "saigeapp16dc1619eDefineAuthChallenge"
-        }
-      ]
-    },
-    "AMPLIFY_function_saigeapp16dc1619eDefineAuthChallenge_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "saigeapp16dc1619eDefineAuthChallenge"
-        }
-      ]
-    },
     "AMPLIFY_function_saigeapp16dc1619eVerifyAuthChallengeResponse_RECAPTCHASECRET": {
       "usedBy": [
         {
           "category": "function",
           "resourceName": "saigeapp16dc1619eVerifyAuthChallengeResponse"
-        }
-      ]
-    },
-    "AMPLIFY_function_saigeapp16dc1619eVerifyAuthChallengeResponse_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "saigeapp16dc1619eVerifyAuthChallengeResponse"
-        }
-      ]
-    },
-    "AMPLIFY_function_saigeapp16dc1619eVerifyAuthChallengeResponse_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "saigeapp16dc1619eVerifyAuthChallengeResponse"
-        }
-      ]
-    },
-    "AMPLIFY_function_saigeapp1f41b9062_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "saigeapp1f41b9062"
-        }
-      ]
-    },
-    "AMPLIFY_function_saigeapp1f41b9062_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "saigeapp1f41b9062"
         }
       ]
     }
