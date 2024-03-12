@@ -155,7 +155,7 @@
     "APIGatewayAuthStack": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-dev-145543-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saigeapp-112130-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json",
         "Parameters": {
           "authRoleName": {
             "Ref": "AuthRoleName"
@@ -163,22 +163,178 @@
           "unauthRoleName": {
             "Ref": "UnauthRoleName"
           },
-          "env": "dev",
+          "env": "saigeapp",
+          "saigeAPP1API": {
+            "Fn::GetAtt": [
+              "apisaigeAPP1API",
+              "Outputs.ApiId"
+            ]
+          },
           "saigeAppAPI": {
             "Fn::GetAtt": [
               "apisaigeAppAPI",
+              "Outputs.ApiId"
+            ]
+          },
+          "saigeApp1API2": {
+            "Fn::GetAtt": [
+              "apisaigeApp1API2",
               "Outputs.ApiId"
             ]
           }
         }
       }
     },
+    "AuthTriggerCustomLambdaStack": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saigeapp-112130-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json",
+        "Parameters": {
+          "env": "saigeapp",
+          "userpoolId": {
+            "Fn::GetAtt": [
+              "authsaigeapp16dc1619e",
+              "Outputs.UserPoolId"
+            ]
+          },
+          "userpoolArn": {
+            "Fn::GetAtt": [
+              "authsaigeapp16dc1619e",
+              "Outputs.UserPoolArn"
+            ]
+          },
+          "functionsaigeapp16dc1619eDefineAuthChallengeLambdaExecutionRole": {
+            "Fn::GetAtt": [
+              "functionsaigeapp16dc1619eDefineAuthChallenge",
+              "Outputs.LambdaExecutionRoleArn"
+            ]
+          },
+          "functionsaigeapp16dc1619eDefineAuthChallengeArn": {
+            "Fn::GetAtt": [
+              "functionsaigeapp16dc1619eDefineAuthChallenge",
+              "Outputs.Arn"
+            ]
+          },
+          "functionsaigeapp16dc1619eDefineAuthChallengeName": {
+            "Fn::GetAtt": [
+              "functionsaigeapp16dc1619eDefineAuthChallenge",
+              "Outputs.Name"
+            ]
+          },
+          "functionsaigeapp16dc1619eCreateAuthChallengeLambdaExecutionRole": {
+            "Fn::GetAtt": [
+              "functionsaigeapp16dc1619eCreateAuthChallenge",
+              "Outputs.LambdaExecutionRoleArn"
+            ]
+          },
+          "functionsaigeapp16dc1619eCreateAuthChallengeArn": {
+            "Fn::GetAtt": [
+              "functionsaigeapp16dc1619eCreateAuthChallenge",
+              "Outputs.Arn"
+            ]
+          },
+          "functionsaigeapp16dc1619eCreateAuthChallengeName": {
+            "Fn::GetAtt": [
+              "functionsaigeapp16dc1619eCreateAuthChallenge",
+              "Outputs.Name"
+            ]
+          },
+          "functionsaigeapp16dc1619eVerifyAuthChallengeResponseLambdaExecutionRole": {
+            "Fn::GetAtt": [
+              "functionsaigeapp16dc1619eVerifyAuthChallengeResponse",
+              "Outputs.LambdaExecutionRoleArn"
+            ]
+          },
+          "functionsaigeapp16dc1619eVerifyAuthChallengeResponseArn": {
+            "Fn::GetAtt": [
+              "functionsaigeapp16dc1619eVerifyAuthChallengeResponse",
+              "Outputs.Arn"
+            ]
+          },
+          "functionsaigeapp16dc1619eVerifyAuthChallengeResponseName": {
+            "Fn::GetAtt": [
+              "functionsaigeapp16dc1619eVerifyAuthChallengeResponse",
+              "Outputs.Name"
+            ]
+          }
+        }
+      },
+      "DependsOn": [
+        "authsaigeapp16dc1619e",
+        "functionsaigeapp16dc1619eDefineAuthChallenge",
+        "functionsaigeapp16dc1619eCreateAuthChallenge",
+        "functionsaigeapp16dc1619eVerifyAuthChallengeResponse"
+      ]
+    },
+    "apisaigeAPP1API": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saigeapp-112130-deployment/amplify-cfn-templates/api/saigeAPP1API-cloudformation-template.json",
+        "Parameters": {
+          "functionsaigeapp101983377Name": {
+            "Fn::GetAtt": [
+              "functionsaigeapp101983377",
+              "Outputs.Name"
+            ]
+          },
+          "functionsaigeapp101983377Arn": {
+            "Fn::GetAtt": [
+              "functionsaigeapp101983377",
+              "Outputs.Arn"
+            ]
+          },
+          "env": "saigeapp"
+        }
+      }
+    },
+    "apisaigeAppAPI": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saigeapp-112130-deployment/amplify-cfn-templates/api/saigeAppAPI-cloudformation-template.json",
+        "Parameters": {
+          "functionsaigeapp101983377Name": {
+            "Fn::GetAtt": [
+              "functionsaigeapp101983377",
+              "Outputs.Name"
+            ]
+          },
+          "functionsaigeapp101983377Arn": {
+            "Fn::GetAtt": [
+              "functionsaigeapp101983377",
+              "Outputs.Arn"
+            ]
+          },
+          "env": "saigeapp"
+        }
+      }
+    },
+    "apisaigeApp1API2": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saigeapp-112130-deployment/amplify-cfn-templates/api/saigeApp1API2-cloudformation-template.json",
+        "Parameters": {
+          "functionsaigeapp101983377Name": {
+            "Fn::GetAtt": [
+              "functionsaigeapp101983377",
+              "Outputs.Name"
+            ]
+          },
+          "functionsaigeapp101983377Arn": {
+            "Fn::GetAtt": [
+              "functionsaigeapp101983377",
+              "Outputs.Arn"
+            ]
+          },
+          "env": "saigeapp"
+        }
+      }
+    },
     "authsaigeapp16dc1619e": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-dev-145543-deployment/amplify-cfn-templates/auth/saigeapp16dc1619e-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saigeapp-112130-deployment/amplify-cfn-templates/auth/saigeapp16dc1619e-cloudformation-template.json",
         "Parameters": {
-          "identityPoolName": "saigeapp16dc1619e_identitypool_6dc1619e",
+          "identityPoolName": "saigeapp16dc1619e_identitypool_d75dcbb6",
           "allowUnauthenticatedIdentities": false,
           "resourceNameTruncated": "saigea6dc1619e",
           "userPoolName": "saigeapp16dc1619e_userpool_6dc1619e",
@@ -203,8 +359,8 @@
           "sharedId": "6dc1619e",
           "resourceName": "saigeapp16dc1619e",
           "authSelections": "identityPoolAndUserPool",
-          "useDefault": "default",
-          "userPoolGroupList": "",
+          "useDefault": "manual",
+          "userPoolGroupList": "userdev",
           "serviceName": "Cognito",
           "usernameCaseSensitive": false,
           "useEnabledMfas": true,
@@ -221,51 +377,130 @@
             ]
           },
           "breakCircularDependency": true,
-          "dependsOn": "",
-          "env": "dev"
+          "dependsOn": "[object Object],[object Object],[object Object]",
+          "userPoolGroups": true,
+          "adminQueries": false,
+          "triggers": "{\"DefineAuthChallenge\":[\"captcha-define-challenge\"],\"CreateAuthChallenge\":[\"captcha-create-challenge\"],\"VerifyAuthChallengeResponse\":[\"captcha-verify\"]}",
+          "hostedUI": true,
+          "hostedUIDomainName": "saigeapp1ea3aa9b1-ea3aa9b1",
+          "authProvidersUserPool": "",
+          "hostedUIProviderMeta": "[]",
+          "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://example.com/auth/\"],\"LogoutURLs\":[\"https://example.com/auth/\"]}",
+          "authProviders": "",
+          "parentStack": {
+            "Ref": "AWS::StackId"
+          },
+          "authTriggerConnections": "{\"triggerType\":\"DefineAuthChallenge\",\"lambdaFunctionName\":\"saigeapp16dc1619eDefineAuthChallenge\"},{\"triggerType\":\"CreateAuthChallenge\",\"lambdaFunctionName\":\"saigeapp16dc1619eCreateAuthChallenge\"},{\"triggerType\":\"VerifyAuthChallengeResponse\",\"lambdaFunctionName\":\"saigeapp16dc1619eVerifyAuthChallengeResponse\"}",
+          "permissions": "",
+          "hostedUIProviderCreds": "[]",
+          "env": "saigeapp"
         }
       }
     },
-    "functionsaigeapp1f41b9062": {
+    "authuserPoolGroups": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-dev-145543-deployment/amplify-cfn-templates/function/saigeapp1f41b9062-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saigeapp-112130-deployment/amplify-cfn-templates/auth/userPoolGroups-cloudformation-template.json",
         "Parameters": {
-          "deploymentBucketName": "amplify-saigeapp1-dev-145543-deployment",
-          "s3Key": "amplify-builds/saigeapp1f41b9062-53776765706b48497856-build.zip",
-          "env": "dev"
+          "AuthRoleArn": {
+            "Fn::GetAtt": [
+              "AuthRole",
+              "Arn"
+            ]
+          },
+          "UnauthRoleArn": {
+            "Fn::GetAtt": [
+              "UnauthRole",
+              "Arn"
+            ]
+          },
+          "authsaigeapp16dc1619eUserPoolId": {
+            "Fn::GetAtt": [
+              "authsaigeapp16dc1619e",
+              "Outputs.UserPoolId"
+            ]
+          },
+          "authsaigeapp16dc1619eAppClientIDWeb": {
+            "Fn::GetAtt": [
+              "authsaigeapp16dc1619e",
+              "Outputs.AppClientIDWeb"
+            ]
+          },
+          "authsaigeapp16dc1619eAppClientID": {
+            "Fn::GetAtt": [
+              "authsaigeapp16dc1619e",
+              "Outputs.AppClientID"
+            ]
+          },
+          "authsaigeapp16dc1619eIdentityPoolId": {
+            "Fn::GetAtt": [
+              "authsaigeapp16dc1619e",
+              "Outputs.IdentityPoolId"
+            ]
+          },
+          "env": "saigeapp"
         }
       }
     },
     "functionsaigeapp101983377": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-dev-145543-deployment/amplify-cfn-templates/function/saigeapp101983377-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saigeapp-112130-deployment/amplify-cfn-templates/function/saigeapp101983377-cloudformation-template.json",
         "Parameters": {
-          "deploymentBucketName": "amplify-saigeapp1-dev-145543-deployment",
-          "s3Key": "amplify-builds/saigeapp101983377-47337861525243395969-build.zip",
-          "env": "dev"
+          "deploymentBucketName": "amplify-saigeapp1-saigeapp-112130-deployment",
+          "s3Key": "amplify-builds/saigeapp101983377-4941444f31306d594f2f-build.zip",
+          "env": "saigeapp"
         }
       }
     },
-    "apisaigeAppAPI": {
+    "functionsaigeapp16dc1619eCreateAuthChallenge": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-dev-145543-deployment/amplify-cfn-templates/api/saigeAppAPI-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saigeapp-112130-deployment/amplify-cfn-templates/function/saigeapp16dc1619eCreateAuthChallenge-cloudformation-template.json",
         "Parameters": {
-          "functionsaigeapp101983377Name": {
-            "Fn::GetAtt": [
-              "functionsaigeapp101983377",
-              "Outputs.Name"
-            ]
-          },
-          "functionsaigeapp101983377Arn": {
-            "Fn::GetAtt": [
-              "functionsaigeapp101983377",
-              "Outputs.Arn"
-            ]
-          },
-          "env": "dev"
+          "modules": "captcha-create-challenge",
+          "resourceName": "saigeapp16dc1619eCreateAuthChallenge",
+          "deploymentBucketName": "amplify-saigeapp1-saigeapp-112130-deployment",
+          "s3Key": "amplify-builds/saigeapp16dc1619eCreateAuthChallenge-34314a32433949376c52-build.zip",
+          "env": "saigeapp"
+        }
+      }
+    },
+    "functionsaigeapp16dc1619eDefineAuthChallenge": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saigeapp-112130-deployment/amplify-cfn-templates/function/saigeapp16dc1619eDefineAuthChallenge-cloudformation-template.json",
+        "Parameters": {
+          "modules": "captcha-define-challenge",
+          "resourceName": "saigeapp16dc1619eDefineAuthChallenge",
+          "deploymentBucketName": "amplify-saigeapp1-saigeapp-112130-deployment",
+          "s3Key": "amplify-builds/saigeapp16dc1619eDefineAuthChallenge-6e6a3768504a7a386e4b-build.zip",
+          "env": "saigeapp"
+        }
+      }
+    },
+    "functionsaigeapp16dc1619eVerifyAuthChallengeResponse": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saigeapp-112130-deployment/amplify-cfn-templates/function/saigeapp16dc1619eVerifyAuthChallengeResponse-cloudformation-template.json",
+        "Parameters": {
+          "modules": "captcha-verify",
+          "resourceName": "saigeapp16dc1619eVerifyAuthChallengeResponse",
+          "RECAPTCHASECRET": "6Lc13pApAAAAAEM0w4kNyq32A3Dbl_KkT4RjPa8t",
+          "deploymentBucketName": "amplify-saigeapp1-saigeapp-112130-deployment",
+          "s3Key": "amplify-builds/saigeapp16dc1619eVerifyAuthChallengeResponse-304355562f4a65663664-build.zip",
+          "env": "saigeapp"
+        }
+      }
+    },
+    "functionsaigeapp1f41b9062": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saigeapp-112130-deployment/amplify-cfn-templates/function/saigeapp1f41b9062-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-saigeapp1-saigeapp-112130-deployment",
+          "s3Key": "amplify-builds/saigeapp1f41b9062-76313765786b62536972-build.zip",
+          "env": "saigeapp"
         }
       }
     },
