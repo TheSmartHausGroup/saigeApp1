@@ -1,20 +1,32 @@
 {
   "providers": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-saigeapp1-saige-105932-authRole",
-      "UnauthRoleArn": "arn:aws:iam::866161883187:role/amplify-saigeapp1-saige-105932-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::866161883187:role/amplify-saigeapp1-saige-105932-authRole",
+      "AuthRoleName": "amplify-saigeapp1-saigeapp-112130-authRole",
+      "UnauthRoleArn": "arn:aws:iam::866161883187:role/amplify-saigeapp1-saigeapp-112130-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::866161883187:role/amplify-saigeapp1-saigeapp-112130-authRole",
       "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-saigeapp1-saige-105932-deployment",
-      "UnauthRoleName": "amplify-saigeapp1-saige-105932-unauthRole",
-      "StackName": "amplify-saigeapp1-saige-105932",
-      "StackId": "arn:aws:cloudformation:us-east-1:866161883187:stack/amplify-saigeapp1-saige-105932/22fb1f70-e081-11ee-b9a6-1250973ee56d",
-      "AmplifyAppId": "d3aifje4m8km3f",
-      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-saigeapp1-saige-105932-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json",
-      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saige-105932-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
+      "DeploymentBucketName": "amplify-saigeapp1-saigeapp-112130-deployment",
+      "UnauthRoleName": "amplify-saigeapp1-saigeapp-112130-unauthRole",
+      "StackName": "amplify-saigeapp1-saigeapp-112130",
+      "StackId": "arn:aws:cloudformation:us-east-1:866161883187:stack/amplify-saigeapp1-saigeapp-112130/35327c30-e084-11ee-b968-127cb3c2785d",
+      "AmplifyAppId": "d358cdvef4d95n"
     }
   },
   "api": {
+    "saigeAPP1API": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "saigeapp101983377"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
     "saigeAppAPI": {
       "dependsOn": [
         {
@@ -27,20 +39,9 @@
         }
       ],
       "providerPlugin": "awscloudformation",
-      "service": "API Gateway",
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saige-105932-deployment/amplify-cfn-templates/api/saigeAppAPI-cloudformation-template.json",
-        "logicalId": "apisaigeAppAPI"
-      },
-      "lastPushTimeStamp": "2024-03-12T15:11:07.390Z",
-      "output": {
-        "ApiName": "saigeAppAPI",
-        "RootUrl": "https://c656jkreu4.execute-api.us-east-1.amazonaws.com/saige",
-        "ApiId": "c656jkreu4"
-      },
-      "lastPushDirHash": "kpENLhs21TzEb5aXy9udh8uGrlM="
+      "service": "API Gateway"
     },
-    "saigeAPP1API": {
+    "saigeApp1API2": {
       "service": "API Gateway",
       "providerPlugin": "awscloudformation",
       "dependsOn": [
@@ -52,18 +53,7 @@
             "Arn"
           ]
         }
-      ],
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saige-105932-deployment/amplify-cfn-templates/api/saigeAPP1API-cloudformation-template.json",
-        "logicalId": "apisaigeAPP1API"
-      },
-      "lastPushTimeStamp": "2024-03-12T15:11:07.390Z",
-      "output": {
-        "ApiName": "saigeAPP1API",
-        "RootUrl": "https://xjf1zya1yg.execute-api.us-east-1.amazonaws.com/saige",
-        "ApiId": "xjf1zya1yg"
-      },
-      "lastPushDirHash": "Fc9goEgZnfOxcXV8WKuhqC1TexQ="
+      ]
     }
   },
   "auth": {
@@ -117,24 +107,7 @@
         ]
       },
       "providerPlugin": "awscloudformation",
-      "service": "Cognito",
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saige-105932-deployment/amplify-cfn-templates/auth/saigeapp16dc1619e-cloudformation-template.json",
-        "logicalId": "authsaigeapp16dc1619e"
-      },
-      "lastPushTimeStamp": "2024-03-12T15:11:07.390Z",
-      "output": {
-        "UserPoolId": "us-east-1_Uk1vQcGqI",
-        "AppClientIDWeb": "4hj2e3u5q2nqhcr93eqb4a508i",
-        "AppClientID": "40a3dpga4vat3ep5v7puqfipe8",
-        "HostedUIDomain": "saigeapp1ea3aa9b1-ea3aa9b1-saige",
-        "IdentityPoolId": "us-east-1:604bef63-31cb-446e-bbee-5c1d01821a04",
-        "UserPoolArn": "arn:aws:cognito-idp:us-east-1:866161883187:userpool/us-east-1_Uk1vQcGqI",
-        "IdentityPoolName": "saigeapp16dc1619e_identitypool_d75dcbb6__saige",
-        "OAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://example.com/auth/\"],\"LogoutURLs\":[\"https://example.com/auth/\"]}",
-        "UserPoolName": "saigeapp16dc1619e_userpool_6dc1619e"
-      },
-      "lastPushDirHash": "NMuiQAFtgN2yg3bcYtqD1xdDm48="
+      "service": "Cognito"
     },
     "userPoolGroups": {
       "dependsOn": [
@@ -151,147 +124,34 @@
       ],
       "providerPlugin": "awscloudformation",
       "service": "Cognito-UserPool-Groups",
-      "lastPushTimeStamp": "2024-03-12T15:11:07.390Z",
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saige-105932-deployment/amplify-cfn-templates/auth/userPoolGroups-cloudformation-template.json",
-        "logicalId": "authuserPoolGroups"
-      },
-      "output": {
-        "userdevGroupRole": "arn:aws:iam::866161883187:role/us-east-1_Uk1vQcGqI-userdevGroupRole"
-      },
-      "lastPushDirHash": "+9t0ZXXd/X0mnM/IUr0CznT4T30="
+      "lastPushTimeStamp": "2024-03-12T15:22:08.560Z"
     }
   },
   "function": {
     "saigeapp101983377": {
       "build": true,
       "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "lastBuildTimeStamp": "2024-03-12T15:07:00.925Z",
-      "lastBuildType": "PROD",
-      "lastPackageTimeStamp": "2024-03-12T15:07:12.017Z",
-      "distZipFilename": "saigeapp101983377-4941444f31306d594f2f-build.zip",
-      "s3Bucket": {
-        "deploymentBucketName": "amplify-saigeapp1-saige-105932-deployment",
-        "s3Key": "amplify-builds/saigeapp101983377-4941444f31306d594f2f-build.zip"
-      },
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saige-105932-deployment/amplify-cfn-templates/function/saigeapp101983377-cloudformation-template.json",
-        "logicalId": "functionsaigeapp101983377"
-      },
-      "lastPushTimeStamp": "2024-03-12T15:11:07.390Z",
-      "output": {
-        "LambdaExecutionRoleArn": "arn:aws:iam::866161883187:role/saigeapp1LambdaRolee03c4221-saige",
-        "Region": "us-east-1",
-        "Arn": "arn:aws:lambda:us-east-1:866161883187:function:saigeapp101983377-saige",
-        "Name": "saigeapp101983377-saige",
-        "LambdaExecutionRole": "saigeapp1LambdaRolee03c4221-saige"
-      },
-      "lastPushDirHash": "IADO10mYO/jqwf/GDl6ZI4UUhIQ="
+      "service": "Lambda"
     },
     "saigeapp16dc1619eCreateAuthChallenge": {
       "build": true,
       "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "lastBuildTimeStamp": "2024-03-12T15:07:16.487Z",
-      "lastBuildType": "PROD",
-      "lastPackageTimeStamp": "2024-03-12T15:07:16.539Z",
-      "distZipFilename": "saigeapp16dc1619eCreateAuthChallenge-34314a32433949376c52-build.zip",
-      "s3Bucket": {
-        "deploymentBucketName": "amplify-saigeapp1-saige-105932-deployment",
-        "s3Key": "amplify-builds/saigeapp16dc1619eCreateAuthChallenge-34314a32433949376c52-build.zip"
-      },
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saige-105932-deployment/amplify-cfn-templates/function/saigeapp16dc1619eCreateAuthChallenge-cloudformation-template.json",
-        "logicalId": "functionsaigeapp16dc1619eCreateAuthChallenge"
-      },
-      "lastPushTimeStamp": "2024-03-12T15:11:07.390Z",
-      "output": {
-        "LambdaExecutionRoleArn": "arn:aws:iam::866161883187:role/saigeapp16dc1619eCreateAuthChallenge-saige",
-        "Region": "us-east-1",
-        "Arn": "arn:aws:lambda:us-east-1:866161883187:function:saigeapp16dc1619eCreateAuthChallenge-saige",
-        "Name": "saigeapp16dc1619eCreateAuthChallenge-saige",
-        "LambdaExecutionRole": "saigeapp16dc1619eCreateAuthChallenge-saige"
-      },
-      "lastPushDirHash": "7Kn8fXGr6fEufFtH/UltABo8+Qw="
+      "service": "Lambda"
     },
     "saigeapp16dc1619eDefineAuthChallenge": {
       "build": true,
       "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "lastBuildTimeStamp": "2024-03-12T15:07:17.736Z",
-      "lastBuildType": "PROD",
-      "lastPackageTimeStamp": "2024-03-12T15:07:17.788Z",
-      "distZipFilename": "saigeapp16dc1619eDefineAuthChallenge-6e6a3768504a7a386e4b-build.zip",
-      "s3Bucket": {
-        "deploymentBucketName": "amplify-saigeapp1-saige-105932-deployment",
-        "s3Key": "amplify-builds/saigeapp16dc1619eDefineAuthChallenge-6e6a3768504a7a386e4b-build.zip"
-      },
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saige-105932-deployment/amplify-cfn-templates/function/saigeapp16dc1619eDefineAuthChallenge-cloudformation-template.json",
-        "logicalId": "functionsaigeapp16dc1619eDefineAuthChallenge"
-      },
-      "lastPushTimeStamp": "2024-03-12T15:11:07.390Z",
-      "output": {
-        "LambdaExecutionRoleArn": "arn:aws:iam::866161883187:role/saigeapp16dc1619eDefineAuthChallenge-saige",
-        "Region": "us-east-1",
-        "Arn": "arn:aws:lambda:us-east-1:866161883187:function:saigeapp16dc1619eDefineAuthChallenge-saige",
-        "Name": "saigeapp16dc1619eDefineAuthChallenge-saige",
-        "LambdaExecutionRole": "saigeapp16dc1619eDefineAuthChallenge-saige"
-      },
-      "lastPushDirHash": "d1NXtjOazaTopE3jV9bqXAaUm4s="
+      "service": "Lambda"
     },
     "saigeapp16dc1619eVerifyAuthChallengeResponse": {
       "build": true,
       "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "lastBuildTimeStamp": "2024-03-12T15:07:19.440Z",
-      "lastBuildType": "PROD",
-      "lastPackageTimeStamp": "2024-03-12T15:07:20.519Z",
-      "distZipFilename": "saigeapp16dc1619eVerifyAuthChallengeResponse-304355562f4a65663664-build.zip",
-      "s3Bucket": {
-        "deploymentBucketName": "amplify-saigeapp1-saige-105932-deployment",
-        "s3Key": "amplify-builds/saigeapp16dc1619eVerifyAuthChallengeResponse-304355562f4a65663664-build.zip"
-      },
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saige-105932-deployment/amplify-cfn-templates/function/saigeapp16dc1619eVerifyAuthChallengeResponse-cloudformation-template.json",
-        "logicalId": "functionsaigeapp16dc1619eVerifyAuthChallengeResponse"
-      },
-      "lastPushTimeStamp": "2024-03-12T15:11:07.390Z",
-      "output": {
-        "LambdaExecutionRoleArn": "arn:aws:iam::866161883187:role/saigeapp16dc1619eVerifyAuthChallengeResponse-saige",
-        "Region": "us-east-1",
-        "Arn": "arn:aws:lambda:us-east-1:866161883187:function:saigeapp16dc1619eVerifyAuthChallengeResponse-saige",
-        "Name": "saigeapp16dc1619eVerifyAuthChallengeResponse-saige",
-        "LambdaExecutionRole": "saigeapp16dc1619eVerifyAuthChallengeResponse-saige"
-      },
-      "lastPushDirHash": "725X3ADrcanhp6uT+scQBmjCmfw="
+      "service": "Lambda"
     },
     "saigeapp1f41b9062": {
       "build": true,
       "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "lastBuildTimeStamp": "2024-03-12T15:07:47.316Z",
-      "lastBuildType": "PROD",
-      "lastPackageTimeStamp": "2024-03-12T15:07:56.169Z",
-      "distZipFilename": "saigeapp1f41b9062-76313765786b62536972-build.zip",
-      "s3Bucket": {
-        "deploymentBucketName": "amplify-saigeapp1-saige-105932-deployment",
-        "s3Key": "amplify-builds/saigeapp1f41b9062-76313765786b62536972-build.zip"
-      },
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saige-105932-deployment/amplify-cfn-templates/function/saigeapp1f41b9062-cloudformation-template.json",
-        "logicalId": "functionsaigeapp1f41b9062"
-      },
-      "lastPushTimeStamp": "2024-03-12T15:11:07.390Z",
-      "output": {
-        "LambdaExecutionRoleArn": "arn:aws:iam::866161883187:role/saigeapp1LambdaRole43239f23-saige",
-        "Region": "us-east-1",
-        "Arn": "arn:aws:lambda:us-east-1:866161883187:function:saigeapp1f41b9062-saige",
-        "Name": "saigeapp1f41b9062-saige",
-        "LambdaExecutionRole": "saigeapp1LambdaRole43239f23-saige"
-      },
-      "lastPushDirHash": "v17exkbSirPIvcLoebLTSYW8mOw="
+      "service": "Lambda"
     }
   }
 }

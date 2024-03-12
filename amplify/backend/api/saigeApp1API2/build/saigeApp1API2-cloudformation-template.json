@@ -1,5 +1,5 @@
 {
-  "Description": "{\"createdOn\":\"Mac\",\"createdBy\":\"Amplify\",\"createdWith\":\"12.10.1\",\"stackType\":\"api-API Gateway\",\"metadata\":{}}",
+  "Description": "API Gateway Resource for AWS Amplify CLI",
   "AWSTemplateFormatVersion": "2010-09-09",
   "Parameters": {
     "functionsaigeapp101983377Name": {
@@ -33,7 +33,7 @@
           [
             "https://",
             {
-              "Ref": "saigeAPP1API"
+              "Ref": "saigeApp1API2"
             },
             ".execute-api.",
             {
@@ -55,17 +55,17 @@
     },
     "ApiName": {
       "Description": "API Friendly name",
-      "Value": "saigeAPP1API"
+      "Value": "saigeApp1API2"
     },
     "ApiId": {
       "Description": "API ID (prefix of API URL)",
       "Value": {
-        "Ref": "saigeAPP1API"
+        "Ref": "saigeApp1API2"
       }
     }
   },
   "Resources": {
-    "functionsaigeapp101983377PermissionsaigeAPP1API": {
+    "functionsaigeapp101983377PermissionsaigeApp1API2": {
       "Type": "AWS::Lambda::Permission",
       "Properties": {
         "Action": "lambda:InvokeFunction",
@@ -87,7 +87,7 @@
               },
               ":",
               {
-                "Ref": "saigeAPP1API"
+                "Ref": "saigeApp1API2"
               },
               "/*/*/*"
             ]
@@ -95,14 +95,14 @@
         }
       }
     },
-    "saigeAPP1API": {
+    "saigeApp1API2": {
       "Type": "AWS::ApiGateway::RestApi",
       "Properties": {
         "Body": {
           "swagger": "2.0",
           "info": {
             "version": "2018-05-24T17:52:00Z",
-            "title": "saigeAPP1API"
+            "title": "saigeApp1API2"
           },
           "host": {
             "Fn::Join": [
@@ -775,15 +775,15 @@
         },
         "Description": "",
         "FailOnWarnings": true,
-        "Name": "saigeAPP1API"
+        "Name": "saigeApp1API2"
       }
     },
-    "saigeAPP1APIDefault4XXResponse5a612608": {
+    "saigeApp1API2Default4XXResponse66828453": {
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
         "ResponseType": "DEFAULT_4XX",
         "RestApiId": {
-          "Ref": "saigeAPP1API"
+          "Ref": "saigeApp1API2"
         },
         "ResponseParameters": {
           "gatewayresponse.header.Access-Control-Allow-Origin": "'*'",
@@ -793,12 +793,12 @@
         }
       }
     },
-    "saigeAPP1APIDefault5XXResponse5a612608": {
+    "saigeApp1API2Default5XXResponse66828453": {
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
         "ResponseType": "DEFAULT_5XX",
         "RestApiId": {
-          "Ref": "saigeAPP1API"
+          "Ref": "saigeApp1API2"
         },
         "ResponseParameters": {
           "gatewayresponse.header.Access-Control-Allow-Origin": "'*'",
@@ -808,11 +808,11 @@
         }
       }
     },
-    "DeploymentAPIGWsaigeAPP1API3a3b3826": {
+    "DeploymentAPIGWsaigeApp1API270e83163": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
-          "Ref": "saigeAPP1API"
+          "Ref": "saigeApp1API2"
         },
         "Description": "The Development stage deployment of your API.",
         "StageName": {
@@ -826,8 +826,8 @@
         }
       },
       "DependsOn": [
-        "saigeAPP1APIDefault4XXResponse5a612608",
-        "saigeAPP1APIDefault5XXResponse5a612608"
+        "saigeApp1API2Default4XXResponse66828453",
+        "saigeApp1API2Default5XXResponse66828453"
       ]
     }
   }

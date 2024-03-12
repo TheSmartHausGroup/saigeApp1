@@ -1,5 +1,5 @@
 {
-  "Description": "{\"createdOn\":\"Mac\",\"createdBy\":\"Amplify\",\"createdWith\":\"12.10.1\",\"stackType\":\"api-API Gateway\",\"metadata\":{}}",
+  "Description": "API Gateway Resource for AWS Amplify CLI",
   "AWSTemplateFormatVersion": "2010-09-09",
   "Parameters": {
     "functionsaigeapp101983377Name": {
@@ -778,7 +778,7 @@
         "Name": "saigeAppAPI"
       }
     },
-    "saigeAppAPIDefault4XXResponseb7fede6a": {
+    "saigeAppAPIDefault4XXResponse900830e0": {
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
         "ResponseType": "DEFAULT_4XX",
@@ -793,7 +793,7 @@
         }
       }
     },
-    "saigeAppAPIDefault5XXResponseb7fede6a": {
+    "saigeAppAPIDefault5XXResponse900830e0": {
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
         "ResponseType": "DEFAULT_5XX",
@@ -808,7 +808,7 @@
         }
       }
     },
-    "DeploymentAPIGWsaigeAppAPIe9fae01a": {
+    "DeploymentAPIGWsaigeAppAPIdae4c811": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -826,8 +826,8 @@
         }
       },
       "DependsOn": [
-        "saigeAppAPIDefault4XXResponseb7fede6a",
-        "saigeAppAPIDefault5XXResponseb7fede6a"
+        "saigeAppAPIDefault4XXResponse900830e0",
+        "saigeAppAPIDefault5XXResponse900830e0"
       ]
     }
   }
