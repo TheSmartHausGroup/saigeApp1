@@ -778,7 +778,7 @@
         "Name": "saigeApp1API2"
       }
     },
-    "saigeApp1API2Default4XXResponse66828453": {
+    "saigeApp1API2Default4XXResponse213de11e": {
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
         "ResponseType": "DEFAULT_4XX",
@@ -793,7 +793,7 @@
         }
       }
     },
-    "saigeApp1API2Default5XXResponse66828453": {
+    "saigeApp1API2Default5XXResponse213de11e": {
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
         "ResponseType": "DEFAULT_5XX",
@@ -808,7 +808,7 @@
         }
       }
     },
-    "DeploymentAPIGWsaigeApp1API270e83163": {
+    "DeploymentAPIGWsaigeApp1API29de85a5e": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -826,8 +826,8 @@
         }
       },
       "DependsOn": [
-        "saigeApp1API2Default4XXResponse66828453",
-        "saigeApp1API2Default5XXResponse66828453"
+        "saigeApp1API2Default4XXResponse213de11e",
+        "saigeApp1API2Default5XXResponse213de11e"
       ]
     }
   }

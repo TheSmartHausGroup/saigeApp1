@@ -11,10 +11,13 @@
     "env": {
       "Type": "String"
     },
+    "saigeAPP1API": {
+      "Type": "String"
+    },
     "saigeAppAPI": {
       "Type": "String"
     },
-    "saigeAPP1API": {
+    "saigeApp1API2": {
       "Type": "String"
     }
   },
@@ -41,6 +44,186 @@
                 "execute-api:Invoke"
               ],
               "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:execute-api:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":",
+                      {
+                        "Ref": "saigeAPP1API"
+                      },
+                      "/",
+                      {
+                        "Fn::If": [
+                          "ShouldNotCreateEnvResources",
+                          "Prod",
+                          {
+                            "Ref": "env"
+                          }
+                        ]
+                      },
+                      "/*/sendAudio/*"
+                    ]
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:execute-api:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":",
+                      {
+                        "Ref": "saigeAPP1API"
+                      },
+                      "/",
+                      {
+                        "Fn::If": [
+                          "ShouldNotCreateEnvResources",
+                          "Prod",
+                          {
+                            "Ref": "env"
+                          }
+                        ]
+                      },
+                      "/*/sendAudio"
+                    ]
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:execute-api:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":",
+                      {
+                        "Ref": "saigeAPP1API"
+                      },
+                      "/",
+                      {
+                        "Fn::If": [
+                          "ShouldNotCreateEnvResources",
+                          "Prod",
+                          {
+                            "Ref": "env"
+                          }
+                        ]
+                      },
+                      "/*/sendEmail/*"
+                    ]
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:execute-api:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":",
+                      {
+                        "Ref": "saigeAPP1API"
+                      },
+                      "/",
+                      {
+                        "Fn::If": [
+                          "ShouldNotCreateEnvResources",
+                          "Prod",
+                          {
+                            "Ref": "env"
+                          }
+                        ]
+                      },
+                      "/*/sendEmail"
+                    ]
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:execute-api:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":",
+                      {
+                        "Ref": "saigeAPP1API"
+                      },
+                      "/",
+                      {
+                        "Fn::If": [
+                          "ShouldNotCreateEnvResources",
+                          "Prod",
+                          {
+                            "Ref": "env"
+                          }
+                        ]
+                      },
+                      "/*/sendMessage/*"
+                    ]
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:execute-api:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":",
+                      {
+                        "Ref": "saigeAPP1API"
+                      },
+                      "/",
+                      {
+                        "Fn::If": [
+                          "ShouldNotCreateEnvResources",
+                          "Prod",
+                          {
+                            "Ref": "env"
+                          }
+                        ]
+                      },
+                      "/*/sendMessage"
+                    ]
+                  ]
+                },
                 {
                   "Fn::Join": [
                     "",
@@ -235,7 +418,7 @@
                       },
                       ":",
                       {
-                        "Ref": "saigeAPP1API"
+                        "Ref": "saigeApp1API2"
                       },
                       "/",
                       {
@@ -265,7 +448,7 @@
                       },
                       ":",
                       {
-                        "Ref": "saigeAPP1API"
+                        "Ref": "saigeApp1API2"
                       },
                       "/",
                       {
@@ -295,7 +478,7 @@
                       },
                       ":",
                       {
-                        "Ref": "saigeAPP1API"
+                        "Ref": "saigeApp1API2"
                       },
                       "/",
                       {
@@ -325,7 +508,7 @@
                       },
                       ":",
                       {
-                        "Ref": "saigeAPP1API"
+                        "Ref": "saigeApp1API2"
                       },
                       "/",
                       {
@@ -355,7 +538,7 @@
                       },
                       ":",
                       {
-                        "Ref": "saigeAPP1API"
+                        "Ref": "saigeApp1API2"
                       },
                       "/",
                       {
@@ -385,7 +568,7 @@
                       },
                       ":",
                       {
-                        "Ref": "saigeAPP1API"
+                        "Ref": "saigeApp1API2"
                       },
                       "/",
                       {
