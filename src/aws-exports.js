@@ -6,15 +6,21 @@ const awsmobile = {
     "aws_cloud_logic_custom": [
         {
             "name": "saigeAppAPI",
-            "endpoint": "https://m2fsghsrqc.execute-api.us-east-1.amazonaws.com/saigedev",
+            "endpoint": "https://c656jkreu4.execute-api.us-east-1.amazonaws.com/saige",
+            "region": "us-east-1"
+        },
+        {
+            "name": "saigeAPP1API",
+            "endpoint": "https://xjf1zya1yg.execute-api.us-east-1.amazonaws.com/saige",
             "region": "us-east-1"
         }
     ],
+    "aws_cognito_identity_pool_id": "us-east-1:604bef63-31cb-446e-bbee-5c1d01821a04",
     "aws_cognito_region": "us-east-1",
-    "aws_user_pools_id": "us-east-1_qwtzwRU73",
-    "aws_user_pools_web_client_id": "7tpcgabmushlhs3a0udtv307h8",
+    "aws_user_pools_id": "us-east-1_Uk1vQcGqI",
+    "aws_user_pools_web_client_id": "4hj2e3u5q2nqhcr93eqb4a508i",
     "oauth": {
-        "domain": "saigeapp1ea3aa9b1-ea3aa9b1-saigedev.auth.us-east-1.amazoncognito.com",
+        "domain": "saigeapp1ea3aa9b1-ea3aa9b1-saige.auth.us-east-1.amazoncognito.com",
         "scope": [
             "phone",
             "email",
