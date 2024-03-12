@@ -9,7 +9,9 @@
       "UnauthRoleName": "amplify-saigeapp1-saigeapp-112130-unauthRole",
       "StackName": "amplify-saigeapp1-saigeapp-112130",
       "StackId": "arn:aws:cloudformation:us-east-1:866161883187:stack/amplify-saigeapp1-saigeapp-112130/35327c30-e084-11ee-b968-127cb3c2785d",
-      "AmplifyAppId": "d358cdvef4d95n"
+      "AmplifyAppId": "d358cdvef4d95n",
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-saigeapp1-saigeapp-112130-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saigeapp-112130-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
     }
   },
   "api": {
@@ -124,7 +126,7 @@
       ],
       "providerPlugin": "awscloudformation",
       "service": "Cognito-UserPool-Groups",
-      "lastPushTimeStamp": "2024-03-12T15:22:08.560Z"
+      "lastPushTimeStamp": "2024-03-12T15:27:11.547Z"
     }
   },
   "function": {
