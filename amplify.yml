@@ -1,0 +1,24 @@
+version: 1
+backend:
+  phases:
+    preBuild:
+      commands:
+        - echo "Installing pipenv and virtualenv"
+        - pip3 install --user pipenv virtualenv
+    build:
+      commands:
+        - echo "Build commands for backend"
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - echo "Install dependencies"
+        - npm install
+    build:
+      commands:
+        - echo "Build commands for frontend"
+        - REACT_APP_ENV=production npm run build # Ensure this matches your project's build command
+artifacts:
+  baseDirectory: build
+  files:
+    - '**/*'
