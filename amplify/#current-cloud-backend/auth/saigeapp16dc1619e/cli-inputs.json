@@ -1,6 +1,8 @@
 {
   "version": "1",
   "cognitoConfig": {
+    "identityPoolName": "saigeapp16dc1619e_identitypool_d75dcbb6",
+    "allowUnauthenticatedIdentities": false,
     "resourceNameTruncated": "saigea6dc1619e",
     "userPoolName": "saigeapp16dc1619e_userpool_6dc1619e",
     "autoVerifiedAttributes": [
@@ -33,7 +35,7 @@
     "userpoolClientSetAttributes": false,
     "sharedId": "6dc1619e",
     "resourceName": "saigeapp16dc1619e",
-    "authSelections": "userPoolOnly",
+    "authSelections": "identityPoolAndUserPool",
     "useDefault": "manual",
     "userPoolGroupList": [
       "userdev"
@@ -105,7 +107,11 @@
     "parentStack": {
       "Ref": "AWS::StackId"
     },
-    "authTriggerConnections": "[\n  {\n    \"triggerType\": \"DefineAuthChallenge\",\n    \"lambdaFunctionName\": \"saigeapp16dc1619eDefineAuthChallenge\"\n  },\n  {\n    \"triggerType\": \"CreateAuthChallenge\",\n    \"lambdaFunctionName\": \"saigeapp16dc1619eCreateAuthChallenge\"\n  },\n  {\n    \"triggerType\": \"VerifyAuthChallengeResponse\",\n    \"lambdaFunctionName\": \"saigeapp16dc1619eVerifyAuthChallengeResponse\"\n  }\n]",
+    "authTriggerConnections": [
+      "{\"triggerType\":\"DefineAuthChallenge\",\"lambdaFunctionName\":\"saigeapp16dc1619eDefineAuthChallenge\"}",
+      "{\"triggerType\":\"CreateAuthChallenge\",\"lambdaFunctionName\":\"saigeapp16dc1619eCreateAuthChallenge\"}",
+      "{\"triggerType\":\"VerifyAuthChallengeResponse\",\"lambdaFunctionName\":\"saigeapp16dc1619eVerifyAuthChallengeResponse\"}"
+    ],
     "permissions": []
   }
 }

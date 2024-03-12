@@ -155,7 +155,7 @@
     "APIGatewayAuthStack": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saigedev-133739-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saige-105932-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json",
         "Parameters": {
           "authRoleName": {
             "Ref": "AuthRoleName"
@@ -163,10 +163,16 @@
           "unauthRoleName": {
             "Ref": "UnauthRoleName"
           },
-          "env": "saigedev",
+          "env": "saige",
           "saigeAppAPI": {
             "Fn::GetAtt": [
               "apisaigeAppAPI",
+              "Outputs.ApiId"
+            ]
+          },
+          "saigeAPP1API": {
+            "Fn::GetAtt": [
+              "apisaigeAPP1API",
               "Outputs.ApiId"
             ]
           }
@@ -176,9 +182,9 @@
     "AuthTriggerCustomLambdaStack": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saigedev-133739-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saige-105932-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json",
         "Parameters": {
-          "env": "saigedev",
+          "env": "saige",
           "userpoolId": {
             "Fn::GetAtt": [
               "authsaigeapp16dc1619e",
@@ -257,7 +263,7 @@
     "apisaigeAppAPI": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saigedev-133739-deployment/amplify-cfn-templates/api/saigeAppAPI-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saige-105932-deployment/amplify-cfn-templates/api/saigeAppAPI-cloudformation-template.json",
         "Parameters": {
           "functionsaigeapp101983377Name": {
             "Fn::GetAtt": [
@@ -271,15 +277,38 @@
               "Outputs.Arn"
             ]
           },
-          "env": "saigedev"
+          "env": "saige"
+        }
+      }
+    },
+    "apisaigeAPP1API": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saige-105932-deployment/amplify-cfn-templates/api/saigeAPP1API-cloudformation-template.json",
+        "Parameters": {
+          "functionsaigeapp101983377Name": {
+            "Fn::GetAtt": [
+              "functionsaigeapp101983377",
+              "Outputs.Name"
+            ]
+          },
+          "functionsaigeapp101983377Arn": {
+            "Fn::GetAtt": [
+              "functionsaigeapp101983377",
+              "Outputs.Arn"
+            ]
+          },
+          "env": "saige"
         }
       }
     },
     "authsaigeapp16dc1619e": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saigedev-133739-deployment/amplify-cfn-templates/auth/saigeapp16dc1619e-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saige-105932-deployment/amplify-cfn-templates/auth/saigeapp16dc1619e-cloudformation-template.json",
         "Parameters": {
+          "identityPoolName": "saigeapp16dc1619e_identitypool_d75dcbb6",
+          "allowUnauthenticatedIdentities": false,
           "resourceNameTruncated": "saigea6dc1619e",
           "userPoolName": "saigeapp16dc1619e_userpool_6dc1619e",
           "autoVerifiedAttributes": "email",
@@ -302,7 +331,7 @@
           "userpoolClientSetAttributes": false,
           "sharedId": "6dc1619e",
           "resourceName": "saigeapp16dc1619e",
-          "authSelections": "userPoolOnly",
+          "authSelections": "identityPoolAndUserPool",
           "useDefault": "manual",
           "userPoolGroupList": "userdev",
           "serviceName": "Cognito",
@@ -337,14 +366,14 @@
           "authTriggerConnections": "{\"triggerType\":\"DefineAuthChallenge\",\"lambdaFunctionName\":\"saigeapp16dc1619eDefineAuthChallenge\"},{\"triggerType\":\"CreateAuthChallenge\",\"lambdaFunctionName\":\"saigeapp16dc1619eCreateAuthChallenge\"},{\"triggerType\":\"VerifyAuthChallengeResponse\",\"lambdaFunctionName\":\"saigeapp16dc1619eVerifyAuthChallengeResponse\"}",
           "permissions": "",
           "hostedUIProviderCreds": "[]",
-          "env": "saigedev"
+          "env": "saige"
         }
       }
     },
     "authuserPoolGroups": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saigedev-133739-deployment/amplify-cfn-templates/auth/userPoolGroups-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saige-105932-deployment/amplify-cfn-templates/auth/userPoolGroups-cloudformation-template.json",
         "Parameters": {
           "AuthRoleArn": {
             "Fn::GetAtt": [
@@ -376,70 +405,279 @@
               "Outputs.AppClientID"
             ]
           },
-          "env": "saigedev"
+          "authsaigeapp16dc1619eIdentityPoolId": {
+            "Fn::GetAtt": [
+              "authsaigeapp16dc1619e",
+              "Outputs.IdentityPoolId"
+            ]
+          },
+          "env": "saige"
         }
       }
     },
     "functionsaigeapp101983377": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saigedev-133739-deployment/amplify-cfn-templates/function/saigeapp101983377-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saige-105932-deployment/amplify-cfn-templates/function/saigeapp101983377-cloudformation-template.json",
         "Parameters": {
-          "deploymentBucketName": "amplify-saigeapp1-saigedev-133739-deployment",
+          "deploymentBucketName": "amplify-saigeapp1-saige-105932-deployment",
           "s3Key": "amplify-builds/saigeapp101983377-4941444f31306d594f2f-build.zip",
-          "env": "saigedev"
-        }
-      }
-    },
-    "functionsaigeapp1f41b9062": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saigedev-133739-deployment/amplify-cfn-templates/function/saigeapp1f41b9062-cloudformation-template.json",
-        "Parameters": {
-          "deploymentBucketName": "amplify-saigeapp1-saigedev-133739-deployment",
-          "s3Key": "amplify-builds/saigeapp1f41b9062-76313765786b62536972-build.zip",
-          "env": "saigedev"
-        }
-      }
-    },
-    "functionsaigeapp16dc1619eDefineAuthChallenge": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saigedev-133739-deployment/amplify-cfn-templates/function/saigeapp16dc1619eDefineAuthChallenge-cloudformation-template.json",
-        "Parameters": {
-          "modules": "captcha-define-challenge",
-          "resourceName": "saigeapp16dc1619eDefineAuthChallenge",
-          "deploymentBucketName": "amplify-saigeapp1-saigedev-133739-deployment",
-          "s3Key": "amplify-builds/saigeapp16dc1619eDefineAuthChallenge-6e6a3768504a7a386e4b-build.zip",
-          "env": "saigedev"
+          "env": "saige"
         }
       }
     },
     "functionsaigeapp16dc1619eCreateAuthChallenge": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saigedev-133739-deployment/amplify-cfn-templates/function/saigeapp16dc1619eCreateAuthChallenge-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saige-105932-deployment/amplify-cfn-templates/function/saigeapp16dc1619eCreateAuthChallenge-cloudformation-template.json",
         "Parameters": {
           "modules": "captcha-create-challenge",
           "resourceName": "saigeapp16dc1619eCreateAuthChallenge",
-          "deploymentBucketName": "amplify-saigeapp1-saigedev-133739-deployment",
+          "deploymentBucketName": "amplify-saigeapp1-saige-105932-deployment",
           "s3Key": "amplify-builds/saigeapp16dc1619eCreateAuthChallenge-34314a32433949376c52-build.zip",
-          "env": "saigedev"
+          "env": "saige"
+        }
+      }
+    },
+    "functionsaigeapp16dc1619eDefineAuthChallenge": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saige-105932-deployment/amplify-cfn-templates/function/saigeapp16dc1619eDefineAuthChallenge-cloudformation-template.json",
+        "Parameters": {
+          "modules": "captcha-define-challenge",
+          "resourceName": "saigeapp16dc1619eDefineAuthChallenge",
+          "deploymentBucketName": "amplify-saigeapp1-saige-105932-deployment",
+          "s3Key": "amplify-builds/saigeapp16dc1619eDefineAuthChallenge-6e6a3768504a7a386e4b-build.zip",
+          "env": "saige"
         }
       }
     },
     "functionsaigeapp16dc1619eVerifyAuthChallengeResponse": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saigedev-133739-deployment/amplify-cfn-templates/function/saigeapp16dc1619eVerifyAuthChallengeResponse-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saige-105932-deployment/amplify-cfn-templates/function/saigeapp16dc1619eVerifyAuthChallengeResponse-cloudformation-template.json",
         "Parameters": {
           "modules": "captcha-verify",
           "resourceName": "saigeapp16dc1619eVerifyAuthChallengeResponse",
           "RECAPTCHASECRET": "6Lc13pApAAAAAEM0w4kNyq32A3Dbl_KkT4RjPa8t",
-          "deploymentBucketName": "amplify-saigeapp1-saigedev-133739-deployment",
+          "deploymentBucketName": "amplify-saigeapp1-saige-105932-deployment",
           "s3Key": "amplify-builds/saigeapp16dc1619eVerifyAuthChallengeResponse-304355562f4a65663664-build.zip",
-          "env": "saigedev"
+          "env": "saige"
         }
+      }
+    },
+    "functionsaigeapp1f41b9062": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-saigeapp1-saige-105932-deployment/amplify-cfn-templates/function/saigeapp1f41b9062-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-saigeapp1-saige-105932-deployment",
+          "s3Key": "amplify-builds/saigeapp1f41b9062-76313765786b62536972-build.zip",
+          "env": "saige"
+        }
+      }
+    },
+    "UpdateRolesWithIDPFunction": {
+      "DependsOn": [
+        "AuthRole",
+        "UnauthRole",
+        "authsaigeapp16dc1619e"
+      ],
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "ZipFile": {
+            "Fn::Join": [
+              "\n",
+              [
+                "const response = require('cfn-response');",
+                "const { IAMClient, GetRoleCommand, UpdateAssumeRolePolicyCommand } = require('@aws-sdk/client-iam');",
+                "exports.handler = function(event, context) {",
+                "    // Don't return promise, response.send() marks context as done internally",
+                "    const ignoredPromise = handleEvent(event, context)",
+                "};",
+                "async function handleEvent(event, context) {",
+                "    try {",
+                "        let authRoleName = event.ResourceProperties.authRoleName;",
+                "        let unauthRoleName = event.ResourceProperties.unauthRoleName;",
+                "        let idpId = event.ResourceProperties.idpId;",
+                "        let authParamsJson = {",
+                "            'Version': '2012-10-17',",
+                "            'Statement': [{",
+                "                'Effect': 'Allow',",
+                "                'Principal': {'Federated': 'cognito-identity.amazonaws.com'},",
+                "                'Action': 'sts:AssumeRoleWithWebIdentity',",
+                "                'Condition': {",
+                "                    'StringEquals': {'cognito-identity.amazonaws.com:aud': idpId},",
+                "                    'ForAnyValue:StringLike': {'cognito-identity.amazonaws.com:amr': 'authenticated'}",
+                "                }",
+                "            }]",
+                "        };",
+                "        let unauthParamsJson = {",
+                "            'Version': '2012-10-17',",
+                "            'Statement': [{",
+                "                'Effect': 'Allow',",
+                "                'Principal': {'Federated': 'cognito-identity.amazonaws.com'},",
+                "                'Action': 'sts:AssumeRoleWithWebIdentity',",
+                "                'Condition': {",
+                "                    'StringEquals': {'cognito-identity.amazonaws.com:aud': idpId},",
+                "                    'ForAnyValue:StringLike': {'cognito-identity.amazonaws.com:amr': 'unauthenticated'}",
+                "                }",
+                "            }]",
+                "        };",
+                "        if (event.RequestType === 'Delete') {",
+                "            try {",
+                "                delete authParamsJson.Statement[0].Condition;",
+                "                delete unauthParamsJson.Statement[0].Condition;",
+                "                authParamsJson.Statement[0].Effect = 'Deny'",
+                "                unauthParamsJson.Statement[0].Effect = 'Deny'",
+                "                let authParams = {PolicyDocument: JSON.stringify(authParamsJson), RoleName: authRoleName};",
+                "                let unauthParams = {PolicyDocument: JSON.stringify(unauthParamsJson), RoleName: unauthRoleName};",
+                "                const iam = new IAMClient({region: event.ResourceProperties.region});",
+                "                let res = await Promise.all([",
+                "                    iam.send(new GetRoleCommand({RoleName: authParams.RoleName})),",
+                "                    iam.send(new GetRoleCommand({RoleName: unauthParams.RoleName}))",
+                "                ]);",
+                "                res = await Promise.all([",
+                "                    iam.send(new UpdateAssumeRolePolicyCommand(authParams)),",
+                "                    iam.send(new UpdateAssumeRolePolicyCommand(unauthParams))",
+                "                ]);",
+                "                response.send(event, context, response.SUCCESS, {});",
+                "            } catch (err) {",
+                "                console.log(err.stack);",
+                "                response.send(event, context, response.SUCCESS, {Error: err});",
+                "            }",
+                "        } else if (event.RequestType === 'Update' || event.RequestType === 'Create') {",
+                "            const iam = new IAMClient({region: event.ResourceProperties.region});",
+                "            let authParams = {PolicyDocument: JSON.stringify(authParamsJson), RoleName: authRoleName};",
+                "            let unauthParams = {PolicyDocument: JSON.stringify(unauthParamsJson), RoleName: unauthRoleName};",
+                "            const res = await Promise.all([",
+                "                iam.send(new UpdateAssumeRolePolicyCommand(authParams)),",
+                "                iam.send(new UpdateAssumeRolePolicyCommand(unauthParams))",
+                "            ]);",
+                "            response.send(event, context, response.SUCCESS, {});",
+                "        }",
+                "    } catch (err) {",
+                "        console.log(err.stack);",
+                "        response.send(event, context, response.FAILED, {Error: err});",
+                "    }",
+                "};"
+              ]
+            ]
+          }
+        },
+        "Handler": "index.handler",
+        "Runtime": "nodejs18.x",
+        "Timeout": 300,
+        "Role": {
+          "Fn::GetAtt": [
+            "UpdateRolesWithIDPFunctionRole",
+            "Arn"
+          ]
+        }
+      }
+    },
+    "UpdateRolesWithIDPFunctionOutputs": {
+      "Type": "Custom::LambdaCallout",
+      "Properties": {
+        "ServiceToken": {
+          "Fn::GetAtt": [
+            "UpdateRolesWithIDPFunction",
+            "Arn"
+          ]
+        },
+        "region": {
+          "Ref": "AWS::Region"
+        },
+        "idpId": {
+          "Fn::GetAtt": [
+            "authsaigeapp16dc1619e",
+            "Outputs.IdentityPoolId"
+          ]
+        },
+        "authRoleName": {
+          "Ref": "AuthRole"
+        },
+        "unauthRoleName": {
+          "Ref": "UnauthRole"
+        }
+      }
+    },
+    "UpdateRolesWithIDPFunctionRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "RoleName": {
+          "Fn::Join": [
+            "",
+            [
+              {
+                "Ref": "AuthRole"
+              },
+              "-idp"
+            ]
+          ]
+        },
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "lambda.amazonaws.com"
+                ]
+              },
+              "Action": [
+                "sts:AssumeRole"
+              ]
+            }
+          ]
+        },
+        "Policies": [
+          {
+            "PolicyName": "UpdateRolesWithIDPFunctionPolicy",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "logs:CreateLogGroup",
+                    "logs:CreateLogStream",
+                    "logs:PutLogEvents"
+                  ],
+                  "Resource": "arn:aws:logs:*:*:*"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "iam:UpdateAssumeRolePolicy",
+                    "iam:GetRole"
+                  ],
+                  "Resource": {
+                    "Fn::GetAtt": [
+                      "AuthRole",
+                      "Arn"
+                    ]
+                  }
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "iam:UpdateAssumeRolePolicy",
+                    "iam:GetRole"
+                  ],
+                  "Resource": {
+                    "Fn::GetAtt": [
+                      "UnauthRole",
+                      "Arn"
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
       }
     }
   }

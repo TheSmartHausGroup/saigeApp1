@@ -1,4 +1,6 @@
 {
+  "identityPoolName": "saigeapp16dc1619e_identitypool_d75dcbb6",
+  "allowUnauthenticatedIdentities": false,
   "resourceNameTruncated": "saigea6dc1619e",
   "userPoolName": "saigeapp16dc1619e_userpool_6dc1619e",
   "autoVerifiedAttributes": [
@@ -31,7 +33,7 @@
   "userpoolClientSetAttributes": false,
   "sharedId": "6dc1619e",
   "resourceName": "saigeapp16dc1619e",
-  "authSelections": "userPoolOnly",
+  "authSelections": "identityPoolAndUserPool",
   "useDefault": "manual",
   "userPoolGroupList": [
     "userdev"

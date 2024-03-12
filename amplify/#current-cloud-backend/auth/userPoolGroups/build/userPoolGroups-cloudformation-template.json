@@ -15,6 +15,10 @@
       "Type": "String",
       "Default": "authsaigeapp16dc1619eUserPoolId"
     },
+    "authsaigeapp16dc1619eIdentityPoolId": {
+      "Type": "String",
+      "Default": "authsaigeapp16dc1619eIdentityPoolId"
+    },
     "authsaigeapp16dc1619eAppClientID": {
       "Type": "String",
       "Default": "authsaigeapp16dc1619eAppClientID"
@@ -43,7 +47,62 @@
         },
         "Description": "override success",
         "GroupName": "userdev",
-        "Precedence": 1
+        "Precedence": 1,
+        "RoleArn": {
+          "Fn::GetAtt": [
+            "userdevGroupRole",
+            "Arn"
+          ]
+        }
+      }
+    },
+    "userdevGroupRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Sid": "",
+              "Effect": "Allow",
+              "Principal": {
+                "Federated": "cognito-identity.amazonaws.com"
+              },
+              "Action": "sts:AssumeRoleWithWebIdentity",
+              "Condition": {
+                "StringEquals": {
+                  "cognito-identity.amazonaws.com:aud": {
+                    "Ref": "authsaigeapp16dc1619eIdentityPoolId"
+                  }
+                },
+                "ForAnyValue:StringLike": {
+                  "cognito-identity.amazonaws.com:amr": "authenticated"
+                }
+              }
+            }
+          ]
+        },
+        "RoleName": {
+          "Fn::Join": [
+            "",
+            [
+              {
+                "Ref": "authsaigeapp16dc1619eUserPoolId"
+              },
+              "-userdevGroupRole"
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "userdevGroupRole": {
+      "Value": {
+        "Fn::GetAtt": [
+          "userdevGroupRole",
+          "Arn"
+        ]
       }
     }
   }
