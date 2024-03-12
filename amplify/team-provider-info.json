@@ -146,13 +146,32 @@
         "userPoolGroups": {}
       },
       "function": {
-        "saigeapp101983377": {},
-        "saigeapp16dc1619eCreateAuthChallenge": {},
-        "saigeapp16dc1619eDefineAuthChallenge": {},
-        "saigeapp16dc1619eVerifyAuthChallengeResponse": {
-          "RECAPTCHASECRET": "6Lc13pApAAAAAEM0w4kNyq32A3Dbl_KkT4RjPa8t"
+        "saigeapp101983377": {
+          "deploymentBucketName": "amplify-saigeapp1-saigeapp-112130-deployment",
+          "s3Key": "amplify-builds/saigeapp101983377-4941444f31306d594f2f-build.zip"
         },
-        "saigeapp1f41b9062": {}
+        "saigeapp16dc1619eCreateAuthChallenge": {
+          "deploymentBucketName": "amplify-saigeapp1-saigeapp-112130-deployment",
+          "s3Key": "amplify-builds/saigeapp16dc1619eCreateAuthChallenge-34314a32433949376c52-build.zip"
+        },
+        "saigeapp16dc1619eDefineAuthChallenge": {
+          "deploymentBucketName": "amplify-saigeapp1-saigeapp-112130-deployment",
+          "s3Key": "amplify-builds/saigeapp16dc1619eDefineAuthChallenge-6e6a3768504a7a386e4b-build.zip"
+        },
+        "saigeapp16dc1619eVerifyAuthChallengeResponse": {
+          "RECAPTCHASECRET": "6Lc13pApAAAAAEM0w4kNyq32A3Dbl_KkT4RjPa8t",
+          "deploymentBucketName": "amplify-saigeapp1-saigeapp-112130-deployment",
+          "s3Key": "amplify-builds/saigeapp16dc1619eVerifyAuthChallengeResponse-304355562f4a65663664-build.zip"
+        },
+        "saigeapp1f41b9062": {
+          "deploymentBucketName": "amplify-saigeapp1-saigeapp-112130-deployment",
+          "s3Key": "amplify-builds/saigeapp1f41b9062-76313765786b62536972-build.zip"
+        }
+      },
+      "api": {
+        "saigeAPP1API": {},
+        "saigeAppAPI": {},
+        "saigeApp1API2": {}
       }
     }
   }
