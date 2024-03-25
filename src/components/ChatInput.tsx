@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Grid, TextField, Button, CircularProgress, Tooltip } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import MicIcon from '@mui/icons-material/Mic';
@@ -11,7 +11,7 @@ interface ChatInputProps {
   onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onSendMessage: () => void;
   sendAudioChunk: (audioBlob: Blob) => void;
-  onSendEmail: () => void; // Function to handle sending the conversation via email
+  onSendEmail: () => void;
 }
 
 const ChatInput: React.FC<ChatInputProps> = ({
@@ -25,28 +25,79 @@ const ChatInput: React.FC<ChatInputProps> = ({
   const [recording, setRecording] = useState(false);
   const [chatInitiated, setChatInitiated] = useState(false);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const silenceDetectorRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleSendMessage = () => {
     if (!isWaiting && input.trim()) {
-      onSendMessage(); // Calls the onSendMessage function passed as a prop
-      setChatInitiated(true); // Mark the chat as initiated once a message is sent
-      // No need to call setInput("") here as it should be handled in Chat component
+      onSendMessage();
+      setChatInitiated(true);
     }
   };
-
 
   const startRecording = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      mediaRecorderRef.current = new MediaRecorder(stream);
-      mediaRecorderRef.current.ondataavailable = (event) => {
+      const mediaRecorder = new MediaRecorder(stream);
+      mediaRecorderRef.current = mediaRecorder;
+
+      let audioChunks: Blob[] = [];
+
+      mediaRecorder.ondataavailable = (event) => {
         if (event.data.size > 0) {
-          sendAudioChunk(event.data);
+          audioChunks.push(event.data);
         }
       };
-      mediaRecorderRef.current.start(1000); // Emit audio chunks every 1 second
+
+      mediaRecorder.onstop = () => {
+        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+        sendAudioChunk(audioBlob);
+        audioChunks = [];
+      };
+
+      mediaRecorder.start();
+
+      // Detect silence
+      const audioContext = new AudioContext();
+      const source = audioContext.createMediaStreamSource(stream);
+      const analyser = audioContext.createAnalyser();
+      analyser.fftSize = 2048;
+      const bufferLength = analyser.fftSize;
+      const dataArray = new Uint8Array(bufferLength);
+
+      const checkSilence = () => {
+        analyser.getByteTimeDomainData(dataArray);
+        let sum = 0;
+        for (let i = 0; i < bufferLength; i++) {
+          const x = dataArray[i] / 128.0 - 1.0;
+          sum += x * x;
+        }
+        const rms = Math.sqrt(sum / bufferLength);
+        if (rms < 0.01) { // Threshold for silence
+          if (silenceDetectorRef.current === null) {
+            silenceDetectorRef.current = setTimeout(() => {
+              mediaRecorder.stop();
+              audioContext.close();
+              setRecording(false);
+            }, 3000); // Stop after 3 seconds of silence
+          }
+        } else {
+          clearTimeout(silenceDetectorRef.current!);
+          silenceDetectorRef.current = null;
+        }
+      };
+
+      const intervalId = setInterval(checkSilence, 100); // Check every 100ms
+
+      mediaRecorder.onstop = () => {
+        clearInterval(intervalId);
+        if (silenceDetectorRef.current) {
+          clearTimeout(silenceDetectorRef.current);
+        }
+        audioContext.close();
+      };
+
       setRecording(true);
-      setChatInitiated(true); // Also mark the chat as initiated when recording starts
+      setChatInitiated(true);
     } catch (err) {
       console.error('Error starting audio recording:', err);
     }
@@ -59,8 +110,14 @@ const ChatInput: React.FC<ChatInputProps> = ({
     }
   };
 
-  
-  // Reset input field state function omitted for brevity
+  // Cleanup effect to ensure no leaks
+  useEffect(() => {
+    return () => {
+      if (mediaRecorderRef.current && recording) {
+        mediaRecorderRef.current.stop();
+      }
+    };
+  }, [recording]);
 
   return (
     <div className="chatInputContainer">
