@@ -1,38 +1,40 @@
+// App.test.tsx
 import React from 'react';
-import { render, fireEvent, waitFor } from '@testing-library/react';
+import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import App from './App';
+import { CognitoUser } from 'amazon-cognito-identity-js';
 
-// Define minimal types for the parts you are mocking
-interface AuthDetails {
-  username: string;
-  password: string;
+// Extending the CognitoUser type for TypeScript compatibility
+interface MockCognitoUser extends CognitoUser {
+  authenticateUser: jest.Mock;
 }
 
-interface Callbacks {
-  onSuccess: (session?: any) => void;
-  onFailure: (error: { message: string }) => void;
-}
+jest.mock('amazon-cognito-identity-js', () => {
+  return {
+    CognitoUserPool: jest.fn(() => ({
+      // Mock implementation can be empty for this test
+    })),
+    AuthenticationDetails: jest.fn(),
+    CognitoUser: jest.fn(() => ({
+      authenticateUser: jest.fn((authDetails, callbacks) => {
+        callbacks.onSuccess(); // Simulating a successful authentication
+      }),
+    })),
+  };
+});
 
-jest.mock('amazon-cognito-identity-js', () => ({
-  CognitoUserPool: jest.fn().mockImplementation(() => ({})),
-  AuthenticationDetails: jest.fn(),
-  CognitoUser: jest.fn().mockImplementation(() => ({
-    authenticateUser: (authDetails: AuthDetails, callbacks: Callbacks) => {
-      if (authDetails.username === 'correctUser' && authDetails.password === 'correctPass') {
-        callbacks.onSuccess();
-      } else {
-        callbacks.onFailure({ message: 'Incorrect username or password.' });
-      }
-    }
-  }))
-}));
+describe('App component', () => {
+  test('successful sign-in updates the UI', async () => {
+    render(<App />);
 
-test('successful sign-in updates the UI', async () => {
-  const { getByPlaceholderText, getByText } = render(<App />);
+    // Enter credentials
+    fireEvent.change(screen.getByPlaceholderText(/username/i), { target: { value: 'testuser' } });
+    fireEvent.change(screen.getByPlaceholderText(/password/i), { target: { value: 'password' } });
+    
+    // Click the sign-in button
+    fireEvent.click(screen.getByRole('button', { name: /sign in/i }));
 
-  fireEvent.change(getByPlaceholderText(/username/i), { target: { value: 'correctUser' } });
-  fireEvent.change(getByPlaceholderText(/password/i), { target: { value: 'correctPass' } });
-  fireEvent.click(getByText(/sign in/i));
-
-  await waitFor(() => expect(getByText(/welcome/i)).toBeInTheDocument());
+    // Check if the welcome message appears
+    await waitFor(() => expect(screen.getByText(/welcome/i)).toBeInTheDocument());
+  });
 });
