@@ -34,14 +34,15 @@ const SignUp: React.FC<SignUpProps> = ({ onSignUpSuccess }) => {
     ];
 
     // Signing up the user
-    userPool.signUp(username, password, attributeList, null, (err, result) => {
-      if (err || !result) {
-        alert(err?.message || JSON.stringify(err));
-        return;
-      }
-      onSignUpSuccess(username); // Invoke the success callback
-      console.log('User name is ' + result.user.getUsername());
-    });
+    userPool.signUp(username, password, attributeList, [], (err, result) => {
+        if (err || !result) {
+          alert(err?.message || JSON.stringify(err));
+          return;
+        }
+        onSignUpSuccess(username);
+        console.log('User name is ' + result.user.getUsername());
+      });
+      
   };
 
   return (
