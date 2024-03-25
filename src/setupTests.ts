@@ -20,18 +20,15 @@ class MockAudioContext {
     }
   }
   
-
 // Mock for AudioContext
 global.AudioContext = MockAudioContext as any;
 
 // Define a mock for MediaRecorder including the isTypeSupported static method
 const mockMediaRecorder = jest.fn().mockImplementation(() => ({
-  start: jest.fn(),
-  stop: jest.fn(),
-  onDataAvailable: jest.fn(),
-  onstop: jest.fn(),
-  // Mock other methods as needed
-}));
+    start: jest.fn(() => console.log("start called")),
+    stop: jest.fn(() => console.log("stop called")),
+  }));
+  
 
 // Directly assign isTypeSupported to the mock function object
 (mockMediaRecorder as any).isTypeSupported = jest.fn(() => true);

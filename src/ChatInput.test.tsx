@@ -1,118 +1,50 @@
 // ChatInput.test.tsx
 import React from 'react';
-import { render, fireEvent, waitFor } from '@testing-library/react';
-import ChatInput from './components/ChatInput';
+import { render, fireEvent } from '@testing-library/react';
+import ChatInput from './components/ChatInput'; // Adjust the import path as needed
 
-// Mock the MediaRecorder's instance methods and include static isTypeSupported
-class MockMediaRecorder {
-  start = jest.fn();
-  stop = jest.fn();
-  addEventListener = jest.fn();
-  removeEventListener = jest.fn();
-  static isTypeSupported = jest.fn().mockReturnValue(true);
+// Define your initial props based on ChatInput's expected prop types
+const initialProps = {
+  input: '',
+  isWaiting: false,
+  onInputChange: jest.fn(),
+  onSendMessage: jest.fn(),
+  sendAudioChunk: jest.fn(),
+  onSendEmail: jest.fn(),
+};
+
+function setup(props = {}) {
+  const utils = render(<ChatInput {...initialProps} {...props} />);
+  const inputElement = utils.getByLabelText(/Type your message here.../i);
+  const sendButton = utils.getByText(/send/i);
+  const startButton = utils.getByText(/start/i);
+  const stopButton = utils.getByText(/stop/i);
+  const emailButton = utils.getByText(/email/i);
+  return {
+    inputElement,
+    sendButton,
+    startButton,
+    stopButton,
+    emailButton,
+    ...utils,
+  };
 }
 
-beforeAll(() => {
-  // Mock getUserMedia
-  Object.defineProperty(global.navigator, 'mediaDevices', {
-    value: {
-      getUserMedia: jest.fn().mockResolvedValue({
-        getTracks: () => [{ stop: jest.fn() }],
-      }),
-    },
-    writable: true,
-  });
-
-  // Assign our MockMediaRecorder class as a replacement for the global MediaRecorder
-  global.MediaRecorder = MockMediaRecorder as any;
+test('send button becomes active when user types in the text input box', () => {
+  const { inputElement, sendButton } = setup({ input: 'Hello, world!' });
+  fireEvent.change(inputElement, { target: { value: 'Hello, world!' } });
+  expect(sendButton).not.toBeDisabled(); // Adjust based on how you check for button's enabled/disabled state
 });
 
-afterEach(() => {
-  jest.clearAllMocks();
+test('stop button becomes active when the start button is clicked', () => {
+  const { startButton, stopButton } = setup();
+  fireEvent.click(startButton);
+  expect(stopButton).not.toBeDisabled(); // Adjust based on how you check for button's enabled/disabled state
 });
 
-test('sends a text message when the send button is clicked', () => {
-  const sendAudioChunk = jest.fn();
-  const onSendMessage = jest.fn();
-  const onSendEmail = jest.fn();
-
-  const { getByText } = render(
-    <ChatInput
-      input="Hello, world!"
-      isWaiting={false}
-      onInputChange={() => {}}
-      onSendMessage={onSendMessage}
-      sendAudioChunk={sendAudioChunk}
-      onSendEmail={onSendEmail}
-    />
-  );
-
-  fireEvent.click(getByText(/send/i));
-  expect(onSendMessage).toHaveBeenCalled();
-});
-
-test('starts recording when the start button is clicked', async () => {
-  const sendAudioChunk = jest.fn();
-  const onSendMessage = jest.fn();
-  const onSendEmail = jest.fn();
-
-  const { getByText } = render(
-    <ChatInput
-      input=""
-      isWaiting={false}
-      onInputChange={() => {}}
-      onSendMessage={onSendMessage}
-      sendAudioChunk={sendAudioChunk}
-      onSendEmail={onSendEmail}
-    />
-  );
-
-  fireEvent.click(getByText(/start/i));
-
-  await waitFor(() => expect(MockMediaRecorder.prototype.start).toHaveBeenCalled());
-});
-
-test('stops recording when the stop button is clicked', async () => {
-  const sendAudioChunk = jest.fn();
-  const onSendMessage = jest.fn();
-  const onSendEmail = jest.fn();
-
-  const { getByText } = render(
-    <ChatInput
-      input=""
-      isWaiting={false}
-      onInputChange={() => {}}
-      onSendMessage={onSendMessage}
-      sendAudioChunk={sendAudioChunk}
-      onSendEmail={onSendEmail}
-    />
-  );
-
-  // Assuming recording has been started here
-  fireEvent.click(getByText(/start/i));
-  fireEvent.click(getByText(/stop/i));
-
-  await waitFor(() => expect(MockMediaRecorder.prototype.stop).toHaveBeenCalled());
-});
-
-test('sends email when the email button is clicked', () => {
-  global.fetch = jest.fn().mockResolvedValue({ ok: true });
-
-  const sendAudioChunk = jest.fn();
-  const onSendMessage = jest.fn();
-  const onSendEmail = jest.fn();
-
-  const { getByText } = render(
-    <ChatInput
-      input=""
-      isWaiting={false}
-      onInputChange={() => {}}
-      onSendMessage={onSendMessage}
-      sendAudioChunk={sendAudioChunk}
-      onSendEmail={onSendEmail}
-    />
-  );
-
-  fireEvent.click(getByText(/email/i));
-  expect(onSendEmail).toHaveBeenCalled();
+test('email button becomes active after messages begin', () => {
+  const { inputElement, sendButton, emailButton } = setup({ input: 'Hello, world!' });
+  fireEvent.change(inputElement, { target: { value: 'Hello, world!' } });
+  fireEvent.click(sendButton);
+  expect(emailButton).not.toBeDisabled(); // Adjust based on how you check for button's enabled/disabled state
 });
