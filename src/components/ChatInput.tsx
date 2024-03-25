@@ -58,7 +58,6 @@ const ChatInput: React.FC<ChatInputProps> = ({
 
       // Detect silence
       const audioContext = new AudioContext();
-      const source = audioContext.createMediaStreamSource(stream);
       const analyser = audioContext.createAnalyser();
       analyser.fftSize = 2048;
       const bufferLength = analyser.fftSize;
