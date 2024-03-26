@@ -7,7 +7,7 @@ interface SignUpProps {
 }
 
 const SignUp: React.FC<SignUpProps> = ({ onSignUpSuccess }) => {
-  const [selectedCountryCode, setSelectedCountryCode] = useState<string>(countryCodes[0].code);
+  const [selectedCountryCode, setSelectedCountryCode] = useState<string>('');
   const [firstName, setFirstName] = useState<string>('');
   const [lastName, setLastName] = useState<string>('');
   const [username, setUsername] = useState<string>('');
@@ -56,20 +56,19 @@ const SignUp: React.FC<SignUpProps> = ({ onSignUpSuccess }) => {
   return (
     <div className="signup-overlay">
       <form onSubmit={handleSubmit}>
-        <label>First Name<input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} required /></label>
-        <label>Last Name<input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} required /></label>
-        <label>Username<input type="text" value={username} onChange={(e) => setUsername(e.target.value)} required /></label>
-        <label>Email<input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required /></label>
-        <label>Country Code
-          <select value={selectedCountryCode} onChange={handleCountryChange} aria-label="Country Code">
-            {countryCodes.map((country) => (
-              <option key={country.code} value={country.code}>{country.name} {country.flag}</option>
-            ))}
-          </select>
-        </label>
-        <label>Phone Number<input type="tel" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} placeholder="Phone Number (no country code)" required /></label>
-        <label>Date of Birth<input type="date" value={dateOfBirth} onChange={(e) => setDateOfBirth(e.target.value)} required /></label>
-        <label>Password<input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required /></label>
+        <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} placeholder="First Name" required />
+        <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} placeholder="Last Name" required />
+        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" required />
+        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
+        <select value={selectedCountryCode} onChange={handleCountryChange} defaultValue="">
+          <option value="" disabled>Select Country Code</option>
+          {countryCodes.map((country) => (
+            <option key={country.code} value={country.code}>{country.name} {country.flag}</option>
+          ))}
+        </select>
+        <input type="tel" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} placeholder="Phone Number" required />
+        <input type="date" value={dateOfBirth} onChange={(e) => setDateOfBirth(e.target.value)} placeholder="Date of Birth" required />
+        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
         <button type="submit" disabled={isLoading}>{isLoading ? 'Signing Up...' : 'Sign Up'}</button>
       </form>
     </div>
@@ -77,3 +76,4 @@ const SignUp: React.FC<SignUpProps> = ({ onSignUpSuccess }) => {
 };
 
 export default SignUp;
+
