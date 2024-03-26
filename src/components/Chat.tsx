@@ -9,13 +9,13 @@ interface ChatProps {
 
 const Chat: React.FC<ChatProps> = ({ messages }) => {
   return (
-    <div className="chat-container">
-      {/* Iterate over messages and render each one */}
+    <div className="chat-messages">
       {messages.map((message) => (
         <Message key={message.id} message={message} />
       ))}
     </div>
   );
 };
+
 
 export default Chat;
