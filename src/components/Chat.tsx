@@ -7,16 +7,16 @@ import MessageList from './MessageList';
 
 const Chat = () => {
   const [ws, setWs] = useState<WebSocket | null>(null);
-  const [messages, setMessages] = useState<Array<MessageDto>>([]);
+  const [messages, setMessages] = useState<Array<MessageDto>>([
+    new MessageDto(uuidv4(), false, "Hi, I'm sAIge. How can I help you today?", 'text'), // Initial greeting from sAIge
+  ]);
   const [input, setInput] = useState<string>("");
 
-  // Ensure wsEndpoint and apiEndpoint are defined, providing fallback values as needed.
-  // It's crucial that these fallback values are valid URLs to avoid runtime errors.
+  // Define WebSocket and API endpoints
   const wsEndpoint = process.env.REACT_APP_WS_ENDPOINT || 'wss://fallback.example.com';
   const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'https://fallback.example.com/api';
 
   useEffect(() => {
-    // Check if wsEndpoint is a valid URL before attempting to create a WebSocket connection
     if (!wsEndpoint) {
       console.error('WebSocket endpoint URL is not defined.');
       return;
@@ -25,31 +25,22 @@ const Chat = () => {
     const websocket = new WebSocket(wsEndpoint);
     setWs(websocket);
 
-    websocket.onopen = () => {
-      console.log('WebSocket connection established');
-    };
-
+    websocket.onopen = () => console.log('WebSocket connection established');
     websocket.onmessage = (event) => {
       const incomingMessage = JSON.parse(event.data);
       setMessages(prevMessages => [...prevMessages, new MessageDto(incomingMessage.id, incomingMessage.isUser, incomingMessage.content, incomingMessage.type)]);
     };
-
-    websocket.onerror = (error) => {
-      console.error('WebSocket error:', error);
-    };
-
+    websocket.onerror = (error) => console.error('WebSocket error:', error);
     websocket.onclose = () => {
       console.log('WebSocket connection closed');
       setWs(null);
     };
 
-    return () => {
-      websocket.close();
-    };
-  }, [wsEndpoint]); // Reacting to changes in wsEndpoint
+    return () => websocket.close();
+  }, [wsEndpoint]);
 
   const handleSendMessage = () => {
-    if (input.trim() !== "" && ws) {
+    if (input.trim() && ws) {
       const newMessage = new MessageDto(uuidv4(), true, input, 'text');
       setMessages(prevMessages => [...prevMessages, newMessage]);
       ws.send(JSON.stringify({ message: input }));
@@ -61,15 +52,10 @@ const Chat = () => {
     if (ws) {
       const reader = new FileReader();
       reader.onload = () => {
-        if (reader.result) {
-          ws.send(reader.result);
-        } else {
-          console.error('Failed to read audio chunk');
-        }
+        if (reader.result) ws.send(reader.result);
+        else console.error('Failed to read audio chunk');
       };
-      reader.onerror = (error) => {
-        console.error('Error reading audio chunk:', error);
-      };
+      reader.onerror = (error) => console.error('Error reading audio chunk:', error);
       reader.readAsArrayBuffer(audioBlob);
     }
   };
@@ -78,7 +64,6 @@ const Chat = () => {
     const emailContent = messages.map(msg => `${msg.isUser ? 'User' : 'sAIge'}: ${msg.content}`).join("\n");
   
     try {
-      // Use apiEndpoint for making the fetch call
       if (!apiEndpoint) {
         console.error('API endpoint for sending email is not defined.');
         return;
@@ -86,16 +71,11 @@ const Chat = () => {
 
       const response = await fetch(`${apiEndpoint}/sendEmail`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ content: emailContent }),
       });
   
-      if (!response.ok) {
-        throw new Error('Failed to send email');
-      }
-      
+      if (!response.ok) throw new Error('Failed to send email');
       console.log("Email sent successfully.");
     } catch (error) {
       console.error("Failed to send email:", error);
