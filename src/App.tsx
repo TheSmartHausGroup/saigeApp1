@@ -4,14 +4,13 @@ import ChatInput from './components/ChatInput';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import Navbar from './components/Navbar';
-import { MessageDto } from './models/MessageDto'; // Correct import path assumed
+import { MessageDto } from './models/MessageDto';
 import './index.css';
 
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [user, setUser] = useState<{ username: string } | null>(null);
   const [isWaiting, setIsWaiting] = useState<boolean>(false);
-  // Initialize messages state with a welcome message using MessageDto
   const [messages, setMessages] = useState<Array<MessageDto>>([
     new MessageDto(
       'welcome-msg', // Assuming a static ID for the welcome message
@@ -37,26 +36,45 @@ const App: React.FC = () => {
   const signOut = useCallback(() => {
     setIsAuthenticated(false);
     setUser(null);
-    // Reset messages with just the welcome message upon sign out
     setMessages([new MessageDto('welcome-msg', false, 'What can we do together today?', 'text', new Date(), 'sent')]);
   }, []);
 
   const handleSendMessage = useCallback((message: string, audioBlob?: Blob) => {
-    // Creating a new message using MessageDto
     const newMessage = new MessageDto(
-      Math.random().toString(36).substring(2, 15), // Generating a pseudo-random ID for simplicity
-      true, // This message is from the user
+      Math.random().toString(36).substring(2, 15),
+      true,
       message,
-      'text', // Assuming 'text' for manually entered messages
-      new Date(), // Optional: current timestamp
-      'sent' // Optional: Assuming the message is immediately sent for simplicity
+      'text',
+      new Date(),
+      'sent'
     );
     setMessages(messages => [...messages, newMessage]);
-  }, []);
+  }, [messages]);
 
-  const handleSendEmail = useCallback(() => {
-    // Implement your email sending logic here
-  }, []);
+  const handleSendEmail = useCallback(async () => {
+    const emailData = {
+      messages: messages.map(msg => ({ content: msg.content, sender: msg.isUser ? 'User' : 'Saige' })),
+    };
+
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(emailData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const result = await response.json();
+      console.log('Email sent successfully:', result);
+    } catch (error) {
+      console.error('Error sending email:', error);
+    }
+  }, [messages]);
 
   return (
     <div className="App">
