@@ -2,9 +2,10 @@
 import React from 'react';
 
 interface NavbarProps {
-  user: { username: string } | null;
-  onSignOut: () => void;
-}
+    isAuthenticated: boolean;
+    user: { username: string } | null;
+    onSignOut: () => void;
+  }
 
 const Navbar: React.FC<NavbarProps> = ({ user, onSignOut }) => {
   return (
