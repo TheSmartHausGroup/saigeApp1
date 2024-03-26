@@ -1,99 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import { Container } from '@mui/material';
-import { v4 as uuidv4 } from 'uuid';
-import { MessageDto } from '../models/MessageDto';
-import ChatInput from './ChatInput';
-import MessageList from './MessageList';
+import React, { useEffect, useState } from 'react';
+import Message from './Message'; // Assuming this component displays individual messages
+import { MessageDto } from '../models/MessageDto'; // Assuming this is your data model for messages
 
-const Chat = () => {
-  const [ws, setWs] = useState<WebSocket | null>(null);
-  const [messages, setMessages] = useState<Array<MessageDto>>([
-    new MessageDto(uuidv4(), false, "Hi, I'm sAIge. How can I help you today?", 'text'), // Initial greeting from sAIge
-  ]);
-  const [input, setInput] = useState<string>("");
-
-  // Define WebSocket and API endpoints
-  const wsEndpoint = process.env.REACT_APP_WS_ENDPOINT || 'wss://fallback.example.com';
-  const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'https://fallback.example.com/api';
+const Chat: React.FC = () => {
+  const [messages, setMessages] = useState<Array<MessageDto>>([]);
 
   useEffect(() => {
-    if (!wsEndpoint) {
-      console.error('WebSocket endpoint URL is not defined.');
-      return;
-    }
+    // Placeholder for loading initial messages or setting up WebSocket listeners
+    // For demonstration, adding a welcome message
+    setMessages([
+      ...messages,
+      new MessageDto('welcome-id', false, 'Welcome to sAIge chat!', 'text'),
+    ]);
+  }, []);
 
-    const websocket = new WebSocket(wsEndpoint);
-    setWs(websocket);
-
-    websocket.onopen = () => console.log('WebSocket connection established');
-    websocket.onmessage = (event) => {
-      const incomingMessage = JSON.parse(event.data);
-      setMessages(prevMessages => [...prevMessages, new MessageDto(incomingMessage.id, incomingMessage.isUser, incomingMessage.content, incomingMessage.type)]);
-    };
-    websocket.onerror = (error) => console.error('WebSocket error:', error);
-    websocket.onclose = () => {
-      console.log('WebSocket connection closed');
-      setWs(null);
-    };
-
-    return () => websocket.close();
-  }, [wsEndpoint]);
-
-  const handleSendMessage = () => {
-    if (input.trim() && ws) {
-      const newMessage = new MessageDto(uuidv4(), true, input, 'text');
-      setMessages(prevMessages => [...prevMessages, newMessage]);
-      ws.send(JSON.stringify({ message: input }));
-      setInput("");
-    }
-  };
-
-  const sendAudioChunk = async (audioBlob: Blob) => {
-    if (ws) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.result) ws.send(reader.result);
-        else console.error('Failed to read audio chunk');
-      };
-      reader.onerror = (error) => console.error('Error reading audio chunk:', error);
-      reader.readAsArrayBuffer(audioBlob);
-    }
-  };
-
-  const onSendEmail = async () => {
-    const emailContent = messages.map(msg => `${msg.isUser ? 'User' : 'sAIge'}: ${msg.content}`).join("\n");
-  
-    try {
-      if (!apiEndpoint) {
-        console.error('API endpoint for sending email is not defined.');
-        return;
-      }
-
-      const response = await fetch(`${apiEndpoint}/sendEmail`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ content: emailContent }),
-      });
-  
-      if (!response.ok) throw new Error('Failed to send email');
-      console.log("Email sent successfully.");
-    } catch (error) {
-      console.error("Failed to send email:", error);
-    }
+  // Function to add messages to the chat, can be expanded or modified as needed
+  const addMessageToChat = (newMessage: MessageDto) => {
+    setMessages([...messages, newMessage]);
   };
 
   return (
-    <Container>
-      <MessageList messages={messages} />
-      <ChatInput
-        input={input}
-        isWaiting={!ws}
-        onInputChange={(e) => setInput(e.target.value)}
-        onSendMessage={handleSendMessage}
-        sendAudioChunk={sendAudioChunk}
-        onSendEmail={onSendEmail}
-      />
-    </Container>
+    <div className="chat-container">
+      {messages.map((message) => (
+        <Message key={message.id} message={message} />
+      ))}
+    </div>
   );
 };
 

@@ -2,18 +2,22 @@
 import React from 'react';
 
 interface NavbarProps {
-  username: string;
+  user: { username: string } | null;
   onSignOut: () => void;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ username, onSignOut }) => {
+const Navbar: React.FC<NavbarProps> = ({ user, onSignOut }) => {
   return (
-    <nav className="navbar">
-      <div className="nav-content">
-        <div className="welcome-message">Welcome, {username}!</div>
-        <button onClick={onSignOut} className="sign-out-btn">Sign Out</button>
+    <div className="navbar">
+      <div className="welcome-message">
+        {user && <h1>Welcome, {user.username}!</h1>}
       </div>
-    </nav>
+      {user && (
+        <button onClick={onSignOut} className="sign-out-button">
+          Sign out
+        </button>
+      )}
+    </div>
   );
 };
 
