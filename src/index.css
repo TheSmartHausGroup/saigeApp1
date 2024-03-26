@@ -17,23 +17,36 @@ body {
   align-items: center;
   justify-content: flex-start; /* Adjust content to start from the top */
   height: 100vh;
+  overflow: hidden; /* Prevent scrolling on the body */
   background-image: url('https://app-pics103815-dev.s3.amazonaws.com/sAIgeImage');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
-  padding-top: 60px; /* Space for navbar */
+  padding-top: 20px; /* Space for navbar */
 }
 
 /* Styles for the navbar */
 .navbar {
   background-color: #43708f;
-  padding: 10px 10px;
-  width: 100%;
+  padding: 10px 20px;
+  height: 30px;
+  width: 90%; /* Set the width to 90% of its parent */
   position: fixed;
   top: 0;
-  left: 0;
-  z-index: 10; /* Ensure navbar is above other content */
+  left: 50%; /* Position the left edge of the navbar at the center of its parent */
+  transform: translateX(-50%); /* Offset the navbar to the left by half its width */
+  z-index: 10;
   color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+
+.navbar .welcome-message h1 {
+  font-size: 1rem; /* Adjust size as needed */
+  margin: 0;
 }
 
 .sign-out-btn {
@@ -100,6 +113,30 @@ body {
   border-bottom: 2px solid #43708f;
 }
 
+/* Container for chat messages */
+.chat-messages {
+  height: 500px; /* Fixed height; adjust as needed */
+  overflow-y: auto; /* Enable vertical scrolling when content overflows */
+  margin-bottom: 10px; /* Space between messages and chat input */
+  padding: 10px; /* Padding inside the message list for aesthetics */
+}
+
+.chatInputContainer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff; /* Or any color that fits your design */
+  box-shadow: 0 -2px 4px rgba(0,0,0,0.1); /* Optional: adds a subtle shadow for depth */
+  z-index: 20; /* Ensure it's above other content */
+}
+
+
+/* Ensure ChatInput is fixed at the bottom */
+.chat-input {
+  flex-shrink: 0; /* Prevent ChatInput from shrinking */
+}
+
 /* Adjustments for smaller screens */
 @media (max-width: 768px) {
   .auth-overlay {
@@ -110,5 +147,8 @@ body {
 @media (max-width: 480px) {
   .auth-overlay {
     width: 95%;
+  }
+  .chat-messages {
+    height: 300px; /* Adjust for smaller screens */
   }
 }
