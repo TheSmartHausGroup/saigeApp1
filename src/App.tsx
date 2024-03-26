@@ -4,14 +4,24 @@ import ChatInput from './components/ChatInput';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import Navbar from './components/Navbar';
-import { MessageDto } from './models/MessageDto';
+import { MessageDto } from './models/MessageDto'; // Correct import path assumed
 import './index.css';
 
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [user, setUser] = useState<{ username: string } | null>(null);
   const [isWaiting, setIsWaiting] = useState<boolean>(false);
-  const [messages, setMessages] = useState<Array<MessageDto>>([]);
+  // Initialize messages state with a welcome message using MessageDto
+  const [messages, setMessages] = useState<Array<MessageDto>>([
+    new MessageDto(
+      'welcome-msg', // Assuming a static ID for the welcome message
+      false, // Assuming this message is not from the user
+      'What can we do together today?',
+      'text', // Assuming 'text' type for simple messages
+      new Date(), // Optional: current timestamp
+      'sent' // Optional: status of the message
+    )
+  ]);
   const [activeTab, setActiveTab] = useState<'signIn' | 'signUp'>('signIn');
 
   const onSignInSuccess = useCallback((username: string) => {
@@ -27,11 +37,21 @@ const App: React.FC = () => {
   const signOut = useCallback(() => {
     setIsAuthenticated(false);
     setUser(null);
-    setMessages([]);
+    // Reset messages with just the welcome message upon sign out
+    setMessages([new MessageDto('welcome-msg', false, 'What can we do together today?', 'text', new Date(), 'sent')]);
   }, []);
 
   const handleSendMessage = useCallback((message: string, audioBlob?: Blob) => {
-    // Include logic for handling both text and audio messages here
+    // Creating a new message using MessageDto
+    const newMessage = new MessageDto(
+      Math.random().toString(36).substring(2, 15), // Generating a pseudo-random ID for simplicity
+      true, // This message is from the user
+      message,
+      'text', // Assuming 'text' for manually entered messages
+      new Date(), // Optional: current timestamp
+      'sent' // Optional: Assuming the message is immediately sent for simplicity
+    );
+    setMessages(messages => [...messages, newMessage]);
   }, []);
 
   const handleSendEmail = useCallback(() => {

@@ -113,11 +113,14 @@ body {
 
 /* Container for chat messages */
 .chat-messages {
-  height: 500px; /* Fixed height; adjust as needed */
-  overflow-y: auto; /* Enable vertical scrolling when content overflows */
-  margin-bottom: 10px; /* Space between messages and chat input */
-  padding: 10px; /* Padding inside the message list for aesthetics */
+  width: 100%;
+  max-height: 700px; /* Example: set a maximum height */
+  overflow-y: auto;
+  margin-top: 80px; /* Adjust this value to the height of the navbar + desired space */
+  margin-bottom: 60px; /* Space above the chatInput container */
+  padding: 20px 60px; /* Adjusted padding */
 }
+
 
 .chatInputContainer {
   position: fixed;
@@ -127,6 +130,7 @@ body {
   background-color: #fff; /* Or any color that fits your design */
   box-shadow: 0 -2px 4px rgba(0,0,0,0.1); /* Optional: adds a subtle shadow for depth */
   z-index: 20; /* Ensure it's above other content */
+  align-items: center
 }
 
 
@@ -134,6 +138,28 @@ body {
 .chat-input {
   flex-shrink: 0; /* Prevent ChatInput from shrinking */
 }
+
+/* Assuming .chat-messages uses display: flex and flex-direction: column */
+.message {
+  display: flex;
+  max-width: 80%; /* Maximum width for each message bubble */
+  padding: 10px;
+  margin-bottom: 8px; /* Space between messages */
+  border-radius: 20px;
+  word-wrap: break-word;
+}
+
+.message-saige {
+  align-self: flex-start;
+  background-color: #f0f0f0;
+}
+
+.message-user {
+  align-self: flex-end;
+  background-color: #009688;
+  color: white;
+}
+
 
 /* Adjustments for smaller screens */
 @media (max-width: 768px) {
