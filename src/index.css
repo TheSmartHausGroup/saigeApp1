@@ -10,56 +10,43 @@ html, body {
   -moz-osx-font-smoothing: grayscale; /* Smooths fonts on Firefox on macOS */
 }
 
-/* Styles for the body to center content and apply a background image */
+/* Styles for the body to apply flex layout and background image */
 body {
-  display: flex; /* Enables flexbox layout */
-  justify-content: center; /* Centers content horizontally */
-  align-items: center; /* Centers content vertically */
-  background-image: url('https://app-pics103815-dev.s3.amazonaws.com/sAIgeImage'); /* Background image */
-  background-size: cover; /* Scales the background image to cover the entire container */
-  background-position: center; /* Centers the background image */
-  background-attachment: fixed; /* Fixes the background image during scroll */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* Adjust content to start from the top */
+  height: 100vh;
+  background-image: url('https://app-pics103815-dev.s3.amazonaws.com/sAIgeImage');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  padding-top: 60px; /* Space for navbar */
 }
 
 /* Styles for the navbar */
 .navbar {
-  background-color: #43708f; /* Navbar background color */
-  padding: 10px 20px; /* Padding for the navbar */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  background-color: #43708f;
+  padding: 10px 20px;
   width: 100%;
-  position: fixed; /* Fixed at the top */
+  position: fixed;
   top: 0;
   left: 0;
-  z-index: 1000; /* Ensure navbar is above other elements */
-}
-
-.welcome-message {
-  color: #fff; /* Text color for contrast */
+  z-index: 1000; /* Ensure navbar is above other content */
+  color: white;
 }
 
 .sign-out-btn {
   background-color: #365f7a;
-  color: white;
   border: none;
   padding: 5px 10px;
   cursor: pointer;
   border-radius: 5px;
+  color: white;
 }
 
 .sign-out-btn:hover {
-  background-color: #2a4d5e; /* Darker on hover */
-}
-
-/* Body content styling */
-.content {
-  margin-top: 60px; /* Adjust based on navbar height */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
+  background-color: #2a4d5e;
 }
 
 /* Authentication overlay styling */
@@ -73,39 +60,33 @@ body {
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  display: flex;
-  flex-direction: column;
-  z-index: 10; /* Ensure it's above other content */
+  z-index: 10; /* Above other content */
 }
 
-/* Styling for input and button elements inside auth-overlay */
+/* Styles for inputs and buttons inside auth-overlay */
 .auth-overlay input,
 .auth-overlay select,
 .auth-overlay button {
   padding: 10px;
-  margin-bottom: 10px;
+  margin: 10px 0;
   border: 1px solid #ccc;
   border-radius: 4px;
-  width: calc(100% - 20px); /* Full width minus padding */
+  width: 100%; /* Full width */
+  box-sizing: border-box; /* Include padding and border in element's size */
 }
 
 .auth-overlay button {
   background-color: #43708f;
   color: white;
   font-weight: bold;
+  cursor: pointer;
 }
 
 .auth-overlay button:hover {
   background-color: #365f7a;
 }
 
-/* Styles for tabs within the auth-overlay */
-.tabs {
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 20px;
-}
-
+/* Tabs and tab content styling */
 .tabs button {
   background: none;
   border: none;
@@ -119,15 +100,15 @@ body {
   border-bottom: 2px solid #43708f;
 }
 
-/* Responsive adjustments */
+/* Adjustments for smaller screens */
 @media (max-width: 768px) {
   .auth-overlay {
-    width: 80%; /* Wider on small screens */
+    width: 80%;
   }
 }
 
 @media (max-width: 480px) {
   .auth-overlay {
-    width: 95%; /* Almost full width on very small screens */
+    width: 95%;
   }
 }
