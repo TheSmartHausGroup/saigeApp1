@@ -10,6 +10,35 @@ html, body {
   -moz-osx-font-smoothing: grayscale; /* Smooths fonts on Firefox on macOS */
 }
 
+.navbar {
+  background-color: #f5f5f5; /* Light gray background */
+  padding: 10px 20px; /* Padding around the navbar */
+}
+
+.nav-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.welcome-message {
+  flex: 1;
+  text-align: center;
+}
+
+.sign-out-btn {
+  background-color: #43708f;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.sign-out-btn:hover {
+  background-color: #365f7a;
+}
+
 /* Body styling for content alignment and background */
 body {
   display: flex;
