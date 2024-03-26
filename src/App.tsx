@@ -11,7 +11,8 @@ const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [user, setUser] = useState<{ username: string } | null>(null);
   const [isWaiting, setIsWaiting] = useState<boolean>(false);
-  const [messages, setMessages] = useState<Array<MessageDto>>([]); // Ensure this matches your MessageDto type
+  const [messages, setMessages] = useState<Array<MessageDto>>([]);
+  const [activeTab, setActiveTab] = useState<'signIn' | 'signUp'>('signIn');
 
   const onSignInSuccess = useCallback((username: string) => {
     setIsAuthenticated(true);
@@ -26,12 +27,11 @@ const App: React.FC = () => {
   const signOut = useCallback(() => {
     setIsAuthenticated(false);
     setUser(null);
-    setMessages([]); // Clear messages on sign out
+    setMessages([]);
   }, []);
 
   const handleSendMessage = useCallback((message: string, audioBlob?: Blob) => {
     // Include logic for handling both text and audio messages here
-    // Ensure messages are added to the 'messages' state accordingly
   }, []);
 
   const handleSendEmail = useCallback(() => {
@@ -51,9 +51,14 @@ const App: React.FC = () => {
           />
         </>
       ) : (
-        <div className="auth-container">
-          <SignIn onSignInSuccess={onSignInSuccess} />
-          <SignUp onSignUpSuccess={onSignUpSuccess} />
+        <div className="auth-overlay">
+          <div className="tabs">
+            <button onClick={() => setActiveTab('signIn')} disabled={activeTab === 'signIn'}>Sign In</button>
+            <button onClick={() => setActiveTab('signUp')} disabled={activeTab === 'signUp'}>Sign Up</button>
+          </div>
+          <div className="auth-container">
+            {activeTab === 'signIn' ? <SignIn onSignInSuccess={onSignInSuccess} /> : <SignUp onSignUpSuccess={onSignUpSuccess} />}
+          </div>
         </div>
       )}
     </div>
