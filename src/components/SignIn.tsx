@@ -8,14 +8,15 @@ interface SignInProps {
 const SignIn: React.FC<SignInProps> = ({ onSignInSuccess }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(''); // Added for error feedback
 
   const handleSignIn = (event: React.FormEvent) => {
     event.preventDefault();
-    
-    // Set these values according to your Cognito User Pool
+    setError(''); // Clear previous errors
+
     const userPool = new CognitoUserPool({
-      UserPoolId: process.env.REACT_APP_USER_POOL_ID || '', // Provide a fallback value or handle missing environment variable
-      ClientId: process.env.REACT_APP_CLIENT_ID || '', // Provide a fallback value or handle missing environment variable
+      UserPoolId: process.env.REACT_APP_USER_POOL_ID || '',
+      ClientId: process.env.REACT_APP_CLIENT_ID || '',
     });
 
     const authenticationDetails = new AuthenticationDetails({
@@ -33,13 +34,12 @@ const SignIn: React.FC<SignInProps> = ({ onSignInSuccess }) => {
     cognitoUser.authenticateUser(authenticationDetails, {
       onSuccess: (result) => {
         console.log('Authentication success', result);
-        onSignInSuccess(username); // Notify the parent component
+        onSignInSuccess(username);
       },
       onFailure: (err) => {
         console.error('Authentication failed', err);
-        // Optionally, inform the user of the failure
+        setError(err.message || 'An error occurred.'); // Set error feedback
       },
-      // Consider handling additional cases like MFA, newPasswordRequired, etc.
     });
   };
 
@@ -60,6 +60,7 @@ const SignIn: React.FC<SignInProps> = ({ onSignInSuccess }) => {
         required
       />
       <button type="submit">Sign In</button>
+      {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display error feedback */}
     </form>
   );
 };
