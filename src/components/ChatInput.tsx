@@ -88,7 +88,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, isWaiting }) => {
             onClick={isRecording ? stopRecording : startRecording}
             disabled={isWaiting}
           >
-            {isRecording ? 'Stop Recording' : 'Start Recording'}
+            {isRecording ? 'Stop Talking' : 'Talk to me'}
           </Button>
           <Tooltip title="Email conversation">
             <span>
