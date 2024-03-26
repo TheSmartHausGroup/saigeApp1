@@ -63,7 +63,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, isWaiting }) => {
         <Grid item xs={12}>
           <TextField
             fullWidth
-            label="Type your message here..."
+            label="What do you want to do today..."
             variant="outlined"
             value={input}
             onChange={(e) => setInput(e.target.value)}
