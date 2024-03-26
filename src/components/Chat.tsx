@@ -1,26 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import Message from './Message'; // Assuming this component displays individual messages
-import { MessageDto } from '../models/MessageDto'; // Assuming this is your data model for messages
+import React from 'react';
+import Message from './Message'; // Component to display individual messages
+import { MessageDto, MessageType } from '../models/MessageDto'; // Correct import of MessageDto
 
-const Chat: React.FC = () => {
-  const [messages, setMessages] = useState<Array<MessageDto>>([]);
+// Prop types for the Chat component
+interface ChatProps {
+  messages: MessageDto[];
+}
 
-  useEffect(() => {
-    // Placeholder for loading initial messages or setting up WebSocket listeners
-    // For demonstration, adding a welcome message
-    setMessages([
-      ...messages,
-      new MessageDto('welcome-id', false, 'Welcome to sAIge chat!', 'text'),
-    ]);
-  }, []);
-
-  // Function to add messages to the chat, can be expanded or modified as needed
-  const addMessageToChat = (newMessage: MessageDto) => {
-    setMessages([...messages, newMessage]);
-  };
-
+const Chat: React.FC<ChatProps> = ({ messages }) => {
   return (
     <div className="chat-container">
+      {/* Iterate over messages and render each one */}
       {messages.map((message) => (
         <Message key={message.id} message={message} />
       ))}

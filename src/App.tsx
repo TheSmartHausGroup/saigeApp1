@@ -1,48 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import Chat from './components/Chat';
 import ChatInput from './components/ChatInput';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import Navbar from './components/Navbar';
+import { MessageDto } from './models/MessageDto';
 import './index.css';
 
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [user, setUser] = useState<{ username: string } | null>(null);
+  const [isWaiting, setIsWaiting] = useState<boolean>(false);
+  const [messages, setMessages] = useState<Array<MessageDto>>([]); // Ensure this matches your MessageDto type
 
-  // Handlers for sign-in and sign-up success
-  const onSignInSuccess = (username: string) => {
+  const onSignInSuccess = useCallback((username: string) => {
     setIsAuthenticated(true);
     setUser({ username });
-  };
+  }, []);
 
-  const onSignUpSuccess = (username: string) => {
+  const onSignUpSuccess = useCallback((username: string) => {
     setIsAuthenticated(true);
     setUser({ username });
-  };
+  }, []);
 
-  // Handler for signing out
-  const signOut = () => {
+  const signOut = useCallback(() => {
     setIsAuthenticated(false);
     setUser(null);
-  };
+    setMessages([]); // Clear messages on sign out
+  }, []);
+
+  const handleSendMessage = useCallback((message: string, audioBlob?: Blob) => {
+    // Include logic for handling both text and audio messages here
+    // Ensure messages are added to the 'messages' state accordingly
+  }, []);
+
+  const handleSendEmail = useCallback(() => {
+    // Implement your email sending logic here
+  }, []);
 
   return (
     <div className="App">
-      <Navbar isAuthenticated={isAuthenticated} user={user} onSignOut={signOut} />
-      {isAuthenticated ? (
-        <main className="chat-area">
-          <Chat />
-          <ChatInput input={''} isWaiting={false} onInputChange={function (event: React.ChangeEvent<HTMLInputElement>): void {
-            throw new Error('Function not implemented.');
-          } } onSendMessage={function (): void {
-            throw new Error('Function not implemented.');
-          } } sendAudioChunk={function (audioBlob: Blob): void {
-            throw new Error('Function not implemented.');
-          } } onSendEmail={function (): void {
-            throw new Error('Function not implemented.');
-          } } />
-        </main>
+      <Navbar user={user} onSignOut={signOut} isAuthenticated={isAuthenticated} />
+      {isAuthenticated && user ? (
+        <>
+          <Chat messages={messages} />
+          <ChatInput
+            isWaiting={isWaiting}
+            onSendMessage={handleSendMessage}
+            onSendEmail={handleSendEmail}
+          />
+        </>
       ) : (
         <div className="auth-container">
           <SignIn onSignInSuccess={onSignInSuccess} />
