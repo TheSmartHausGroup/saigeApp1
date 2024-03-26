@@ -10,24 +10,37 @@ html, body {
   -moz-osx-font-smoothing: grayscale; /* Smooths fonts on Firefox on macOS */
 }
 
-.navbar {
-  background-color: #f5f5f5; /* Light gray background */
-  padding: 10px 20px; /* Padding around the navbar */
+/* Styles for the body to center content and apply a background image */
+body {
+  display: flex; /* Enables flexbox layout */
+  justify-content: center; /* Centers content horizontally */
+  align-items: center; /* Centers content vertically */
+  background-image: url('https://app-pics103815-dev.s3.amazonaws.com/sAIgeImage'); /* Background image */
+  background-size: cover; /* Scales the background image to cover the entire container */
+  background-position: center; /* Centers the background image */
+  background-attachment: fixed; /* Fixes the background image during scroll */
 }
 
-.nav-content {
+/* Styles for the navbar */
+.navbar {
+  background-color: #43708f; /* Navbar background color */
+  padding: 10px 20px; /* Padding for the navbar */
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
+  position: fixed; /* Fixed at the top */
+  top: 0;
+  left: 0;
+  z-index: 1000; /* Ensure navbar is above other elements */
 }
 
 .welcome-message {
-  flex: 1;
-  text-align: center;
+  color: #fff; /* Text color for contrast */
 }
 
 .sign-out-btn {
-  background-color: #43708f;
+  background-color: #365f7a;
   color: white;
   border: none;
   padding: 5px 10px;
@@ -36,18 +49,17 @@ html, body {
 }
 
 .sign-out-btn:hover {
-  background-color: #365f7a;
+  background-color: #2a4d5e; /* Darker on hover */
 }
 
-/* Body styling for content alignment and background */
-body {
+/* Body content styling */
+.content {
+  margin-top: 60px; /* Adjust based on navbar height */
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  background-image: url('https://app-pics103815-dev.s3.amazonaws.com/sAIgeImage');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
+  justify-content: center;
+  width: 100%;
 }
 
 /* Authentication overlay styling */
@@ -66,94 +78,56 @@ body {
   z-index: 10; /* Ensure it's above other content */
 }
 
-.content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.message-container, .chat-container, .input-container {
-  width: 100%;
-
-/* Tabs container styling */
-.tabs {
-  display: flex;
-  background-color: #eee; /* Lighter grey for inactive tabs background */
-  border-bottom: 1px solid #ddd;
-}
-
-/* Inactive tabs styling */
-.tabs button {
-  flex: 1;
-  padding: 12px 0;
-  border: none;
-  background-color: #e0e0e0; /* Slightly darker grey for inactive tabs */
-  color: #333; /* Ensures readability */
-  cursor: pointer;
-  outline: none;
-  transition: background-color 0.3s;
-}
-
-/* Active tab styling */
-.tabs button.active {
-  background-color: #43708f; /* Active tab color */
-  color: white; /* Text color for active tab */
-  font-weight: bold;
-  border-bottom: 3px solid #43708f; /* Emphasizes the active tab */
-}
-
-/* Content area styling */
-.tabContent {
-  padding: 20px;
-  overflow-y: auto; /* Allows scrolling for overflow content */
-}
-
-/* Form styling */
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-/* Input, select, and button styling for uniformity */
-input, select, button {
+/* Styling for input and button elements inside auth-overlay */
+.auth-overlay input,
+.auth-overlay select,
+.auth-overlay button {
   padding: 10px;
+  margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  font-size: 16px; /* Enhances readability */
-  width: 100%; /* Ensures full width within parent container */
-  box-sizing: border-box; /* Includes padding and border in the element's total width and height */
+  width: calc(100% - 20px); /* Full width minus padding */
 }
 
-/* Button styling */
-button {
-  background-color: #43708f; /* Button background color */
-  color: white; /* Button text color */
+.auth-overlay button {
+  background-color: #43708f;
+  color: white;
+  font-weight: bold;
+}
+
+.auth-overlay button:hover {
+  background-color: #365f7a;
+}
+
+/* Styles for tabs within the auth-overlay */
+.tabs {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.tabs button {
+  background: none;
+  border: none;
+  padding: 10px;
   cursor: pointer;
-  transition: background-color 0.3s; /* Smooth transition for hover effect */
+  color: #43708f;
 }
 
-/* Button hover effect */
-button:hover {
-  background-color: #365f7a; /* Darker shade for hover state */
+.tabs button.active {
+  font-weight: bold;
+  border-bottom: 2px solid #43708f;
 }
 
-/* Responsive design adjustments */
+/* Responsive adjustments */
 @media (max-width: 768px) {
-  .authOverlay {
-    width: 90%;
-    min-height: 300px; /* Adjusts height on smaller screens */
+  .auth-overlay {
+    width: 80%; /* Wider on small screens */
   }
 }
 
 @media (max-width: 480px) {
-  /* Further adjusts for very small screens */
-  form {
-    gap: 8px; /* Reduces space between form elements */
+  .auth-overlay {
+    width: 95%; /* Almost full width on very small screens */
   }
-  input, select, button {
-    font-size: 14px; /* Reduces font size for space efficiency */
-  }
-}
 }
