@@ -1,7 +1,7 @@
 sAIge Chat Application README
 sAIge is an intelligent virtual assistant chat application designed to provide an enriched communication experience through real-time messaging. It supports text and audio messages, offering users the capability to send voice recordings directly within the chat. Additionally, sAIge enables users to compile and email conversation transcripts effortlessly. This application leverages the power of React on the frontend, combined with the robustness of AWS services including Lambda for serverless compute, S3 for storage, and Cognito for secure authentication, creating a seamless and scalable chat solution.
 
-Features
+Features:
 User Authentication: Utilizes AWS Cognito for robust user authentication, ensuring secure signup and login functionalities with support for multi-factor authentication (MFA) and encryption of sensitive user data.
 Real-Time Messaging: Implements WebSocket technology for live, bidirectional communication between clients and servers, allowing users to send and receive text messages instantaneously.
 Audio Messaging: Leverages the MediaRecorder API for capturing audio directly from the user's microphone, enabling the recording and transmission of voice messages. Audio streams are processed and optionally compressed before being sent.
