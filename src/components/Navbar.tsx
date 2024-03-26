@@ -7,19 +7,22 @@ interface NavbarProps {
     onSignOut: () => void;
   }
 
-const Navbar: React.FC<NavbarProps> = ({ user, onSignOut }) => {
-  return (
-    <div className="navbar">
-      <div className="welcome-message">
-        {user && <h1>Welcome, {user.username}!</h1>}
+  const Navbar: React.FC<NavbarProps> = ({ user, onSignOut }) => {
+    return (
+      <div className="navbar">
+        {user && (
+          <>
+            <div className="welcome-message">
+              <h1>Welcome, {user.username}!</h1>
+            </div>
+            <button onClick={onSignOut} className="sign-out-btn">
+              Sign out
+            </button>
+          </>
+        )}
       </div>
-      {user && (
-        <button onClick={onSignOut} className="sign-out-button">
-          Sign out
-        </button>
-      )}
-    </div>
-  );
-};
+    );
+  };
+  
 
 export default Navbar;
