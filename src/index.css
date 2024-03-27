@@ -28,10 +28,9 @@ html, body {
   box-sizing: border-box;
 }
 
-/* Navbar styling */
+/* Navbar full-width styling */
 .navbar {
   width: 100%;
-  padding: 10px 20px;
   background-color: #43708f;
   color: white;
   position: fixed;
@@ -39,9 +38,19 @@ html, body {
   left: 0;
   right: 0;
   display: flex;
-  justify-content: space-between;
+  justify-content: center; /* Center the inner container */
   align-items: center;
   z-index: 10;
+  padding: 1px 0; /* Adjust padding as needed */
+}
+
+/* Navbar content container */
+.navbar-content {
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px; /* Optional: You can set a max-width to prevent the navbar from becoming too wide on large screens */
 }
 
 /* Chat container */
