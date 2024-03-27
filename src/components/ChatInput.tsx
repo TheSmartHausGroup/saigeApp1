@@ -28,18 +28,18 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, isWaiting, onSendE
       try {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
         mediaRecorderRef.current = new MediaRecorder(stream);
-        let audioChunks: BlobPart[] | undefined = [];
-
+        let audioChunks: BlobPart[] = []; // Initialized outside of any conditional logic
+  
         mediaRecorderRef.current.ondataavailable = event => {
           audioChunks.push(event.data);
         };
-
+  
         mediaRecorderRef.current.onstop = () => {
           const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
           onSendMessage('', audioBlob);
-          audioChunks = [];
+          // No need to clear audioChunks here as it's scoped to the function
         };
-
+  
         mediaRecorderRef.current.start();
         setIsRecording(true);
       } catch (error) {
