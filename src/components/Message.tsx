@@ -1,16 +1,24 @@
 // src/components/Message.tsx
 import React from 'react';
 import { MessageDto } from "../models/MessageDto";
+import { Theme } from '../components/colorScheme'; // Adjust the import path as necessary
 
-const Message: React.FC<{ message: MessageDto }> = ({ message }) => {
+interface MessageProps {
+  message: MessageDto;
+  theme: Theme;
+}
+
+const Message: React.FC<MessageProps> = ({ message, theme }) => {
   const alignment = message.isUser ? "right" : "left";
   const messageStyles = {
     textAlign: alignment as 'right' | 'left',
     margin: "8px",
   };
+
+  // Use theme properties for styling message bubbles
   const bubbleStyles = {
-    color: message.isUser ? "#ffffff" : "#000000",
-    backgroundColor: message.isUser ? "#1186fe" : "#eaeaea",
+    color: theme.textColor, // Text color from theme
+    backgroundColor: message.isUser ? theme.messageBubbleColor : theme.chatInputBgColor, // Background color based on user
     padding: "15px",
     borderRadius: "8px",
     display: 'inline-block',
