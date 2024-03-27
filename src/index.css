@@ -123,15 +123,14 @@ body {
 }
 
 .chat-container {
-  width: 85%; /* As specified */
-  background-color: #f5f5f5; /* Example background color */
-  /* Additional styling */
+  width: 85%;
+  background-color: #f5f5f5;
   padding: 20px;
-  margin: 80px auto; /* Increased top margin pushes the container lower */
-  margin-bottom: 20px; /* Adds some space below the container */
+  margin: 100px auto 20px; /* Increase the top margin to push the container lower */
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
+
 
 
 
