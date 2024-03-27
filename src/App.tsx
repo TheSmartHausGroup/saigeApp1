@@ -16,9 +16,12 @@ const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'signIn' | 'signUp'>('signIn');
   const [theme, setTheme] = useState<Theme>(defaultTheme);
   const [ws, setWs] = useState<WebSocket | null>(null);
+
   const tabStyle = {
     cursor: 'pointer',
     padding: '10px',
+    marginRight: '10px', // Added for spacing between tabs
+    color: '#43708f', // Set your desired color here
   };
   
   const activeTabStyle = {
@@ -27,37 +30,25 @@ const App: React.FC = () => {
     fontWeight: 'bold',
   };
 
-  // Use the provided WebSocket endpoint from your .env
+  // WebSocket and API endpoints from .env
   const wsEndpoint = process.env.REACT_APP_WS_ENDPOINT;
-
-  // Use the provided REST API endpoint from your .env for email transcript
   const apiEndpoint = process.env.REACT_APP_API_ENDPOINT;
 
-  // Establish WebSocket connection
+  // WebSocket connection
   useEffect(() => {
     if (wsEndpoint) {
       const webSocket = new WebSocket(wsEndpoint);
-      webSocket.onopen = () => {
-        console.log('WebSocket Connected');
-      };
-      webSocket.onmessage = (event) => {
-        console.log('Message from server:', event.data);
-      };
-      webSocket.onerror = (error) => {
-        console.log('WebSocket Error', error);
-      };
+      webSocket.onopen = () => console.log('WebSocket Connected');
+      webSocket.onmessage = (event) => console.log('Message from server:', event.data);
+      webSocket.onerror = (error) => console.log('WebSocket Error', error);
       setWs(webSocket);
-
       return () => webSocket.close();
     }
   }, [wsEndpoint]);
 
   const sendWebSocketMessage = (data: any) => {
-    if (ws && ws.readyState === WebSocket.OPEN) {
-      ws.send(JSON.stringify(data));
-    } else {
-      console.log('WebSocket is not connected.');
-    }
+    if (ws && ws.readyState === WebSocket.OPEN) ws.send(JSON.stringify(data));
+    else console.log('WebSocket is not connected.');
   };
 
   const handleSendMessage = useCallback((message: string, audioBlob?: Blob) => {
@@ -104,12 +95,7 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="chat-app-wrapper" style={{
-      background: theme.isImage ? `url(${theme.backgroundColor})` : theme.backgroundColor,
-      color: theme.textColor,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center center',
-    }}>
+    <div className="chat-app-wrapper" style={{ background: theme.isImage ? `url(${theme.backgroundColor})` : theme.backgroundColor, color: theme.textColor, backgroundSize: 'cover', backgroundPosition: 'center center' }}>
       <Navbar user={user} onSignOut={() => setIsAuthenticated(false)} isAuthenticated={isAuthenticated} currentThemeName={theme.name as ThemeName} switchTheme={switchTheme} />
       {isAuthenticated && user ? (
         <>
@@ -120,7 +106,6 @@ const App: React.FC = () => {
         <div className="auth-overlay">
           <div className="auth-tabs">
             <span style={activeTab === 'signIn' ? activeTabStyle : tabStyle} onClick={() => setActiveTab('signIn')}>Sign In</span>
-            &nbsp;|&nbsp;
             <span style={activeTab === 'signUp' ? activeTabStyle : tabStyle} onClick={() => setActiveTab('signUp')}>Sign Up</span>
           </div>
           {activeTab === 'signIn' ? <SignIn onSignInSuccess={(username) => setIsAuthenticated(true)} /> : <SignUp onSignUpSuccess={(username) => setIsAuthenticated(true)} />}
