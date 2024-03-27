@@ -8,10 +8,10 @@ import EmailIcon from '@mui/icons-material/Email';
 interface ChatInputProps {
   onSendMessage: (message: string, audioBlob?: Blob) => void;
   isWaiting: boolean;
-  onSendEmail: () => void; // Add this line
+  onSendEmail: () => void;
 }
 
-const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, isWaiting }) => {
+const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, isWaiting, onSendEmail }) => {
   const [input, setInput] = useState('');
   const [isRecording, setIsRecording] = useState(false);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -23,20 +23,20 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, isWaiting }) => {
     }
   };
 
-  const startRecording = async () => {
+  const handleStartRecording = async () => {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
         mediaRecorderRef.current = new MediaRecorder(stream);
-        let audioChunks: BlobPart[] = [];
+        let audioChunks: BlobPart[] | undefined = [];
 
-        mediaRecorderRef.current.ondataavailable = (e) => {
-          audioChunks.push(e.data);
+        mediaRecorderRef.current.ondataavailable = event => {
+          audioChunks.push(event.data);
         };
 
         mediaRecorderRef.current.onstop = () => {
           const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-          onSendMessage('', audioBlob); // Changed undefined to '' for the message argument
+          onSendMessage('', audioBlob);
           audioChunks = [];
         };
 
@@ -50,7 +50,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, isWaiting }) => {
     }
   };
 
-  const stopRecording = () => {
+  const handleStopRecording = () => {
     if (mediaRecorderRef.current) {
       mediaRecorderRef.current.stop();
       setIsRecording(false);
@@ -65,6 +65,8 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, isWaiting }) => {
             fullWidth
             label="What do you want to do today..."
             variant="outlined"
+            multiline
+            maxRows={5}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleSendMessage()}
@@ -85,17 +87,15 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, isWaiting }) => {
             variant="contained"
             color="secondary"
             startIcon={isRecording ? <StopIcon /> : <MicIcon />}
-            onClick={isRecording ? stopRecording : startRecording}
+            onClick={isRecording ? handleStopRecording : handleStartRecording}
             disabled={isWaiting}
           >
-            {isRecording ? 'Stop Talking' : 'Talk to me'}
+            {isRecording ? 'Stop Recording' : 'Start Recording'}
           </Button>
           <Tooltip title="Email conversation">
-            <span>
-              <Button variant="contained" startIcon={<EmailIcon />} disabled={true}>
-                Email
-              </Button>
-            </span>
+            <Button variant="contained" startIcon={<EmailIcon />} onClick={onSendEmail} disabled={isWaiting}>
+              Email
+            </Button>
           </Tooltip>
           {isWaiting && <CircularProgress />}
         </Grid>
