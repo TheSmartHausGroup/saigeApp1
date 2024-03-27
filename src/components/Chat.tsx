@@ -1,27 +1,24 @@
 import React, { useEffect, useRef } from 'react';
-import Message from './Message'; // Ensure this import path is correct
-import { MessageDto } from '../models/MessageDto'; // Ensure this import path is correct
+import MessageList from './MessageList'; // Import MessageList instead of Message
+import { MessageDto } from '../models/MessageDto';
 
 interface ChatProps {
   messages: MessageDto[];
 }
 
 const Chat: React.FC<ChatProps> = ({ messages }) => {
-  const endOfMessagesRef = useRef<HTMLDivElement | null>(null); // Reference to an empty div at the end of the messages
+  const endOfMessagesRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (endOfMessagesRef.current) {
       endOfMessagesRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  }, [messages]); // This effect runs every time the messages array changes
+  }, [messages]);
 
   return (
     <div className="chat-messages">
-      {messages.map((message) => (
-        <Message key={message.id} message={message} />
-      ))}
-      {/* Invisible element at the end of the messages to scroll to */}
-      <div ref={endOfMessagesRef} />
+      <MessageList messages={messages} />
+      <div ref={endOfMessagesRef} /> {/* Keeps the scroll to bottom functionality */}
     </div>
   );
 };
