@@ -1,4 +1,3 @@
-// App.tsx
 import React, { useState, useCallback } from 'react';
 import Chat from './components/Chat';
 import ChatInput from './components/ChatInput';
@@ -6,7 +5,7 @@ import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import Navbar from './components/Navbar';
 import { MessageDto } from './models/MessageDto';
-import { colorSchemes, defaultTheme, Theme, ThemeName } from './components/colorScheme'; // Adjust the import path as necessary
+import { colorSchemes, defaultTheme, Theme, ThemeName } from './components/colorScheme';
 import './index.css';
 
 const App: React.FC = () => {
@@ -14,10 +13,10 @@ const App: React.FC = () => {
   const [user, setUser] = useState<{ username: string } | null>(null);
   const [isWaiting, setIsWaiting] = useState<boolean>(false);
   const [messages, setMessages] = useState<Array<MessageDto>>([
-    new MessageDto('welcome-msg', false, 'What can we do together today?', 'text', new Date(), 'sent')
+    new MessageDto('welcome-msg', false, 'What can we do together today?', 'text', new Date(), 'sent'),
   ]);
   const [activeTab, setActiveTab] = useState<'signIn' | 'signUp'>('signIn');
-  const [theme, setTheme] = useState<Theme>(defaultTheme); // Use Theme type here
+  const [theme, setTheme] = useState<Theme>(defaultTheme);
 
   const onSignInSuccess = useCallback((username: string) => {
     setIsAuthenticated(true);
@@ -44,14 +43,28 @@ const App: React.FC = () => {
     // Email sending logic
   }, [messages]);
 
-  // Function to switch themes
-  const switchTheme = useCallback((themeName: string) => {
-    const newTheme = colorSchemes[themeName as keyof typeof colorSchemes];
+  const switchTheme = useCallback((themeName: ThemeName) => {
+    const newTheme = colorSchemes[themeName];
     setTheme(newTheme);
   }, []);
 
+  const tabStyle = {
+    color: '#43708f', // Tab text color
+    cursor: 'pointer',
+  };
+
+  const activeTabStyle = {
+    borderBottom: '2px solid #43708f', // Active tab underline color
+    color: '#43708f',
+  };
+
   return (
-    <div className="chat-app-wrapper" style={{ background: theme.isImage ? `url(${theme.backgroundColor})` : theme.backgroundColor, color: theme.textColor }}>
+    <div className="chat-app-wrapper" style={{
+      background: theme.isImage ? `url(${theme.backgroundColor})` : theme.backgroundColor,
+      color: theme.textColor,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center center',
+    }}>
       <Navbar user={user} onSignOut={signOut} isAuthenticated={isAuthenticated} currentThemeName={theme.name as ThemeName} switchTheme={switchTheme} />
       {isAuthenticated && user ? (
         <>
@@ -60,7 +73,17 @@ const App: React.FC = () => {
         </>
       ) : (
         <div className="auth-overlay">
+          <div className="auth-tabs">
+            <span style={activeTab === 'signIn' ? {...tabStyle, ...activeTabStyle} : tabStyle} onClick={() => setActiveTab('signIn')}>Sign In</span>
+            &nbsp;|&nbsp;
+            <span style={activeTab === 'signUp' ? {...tabStyle, ...activeTabStyle} : tabStyle} onClick={() => setActiveTab('signUp')}>Sign Up</span>
+          </div>
           {activeTab === 'signIn' ? <SignIn onSignInSuccess={onSignInSuccess} /> : <SignUp onSignUpSuccess={onSignUpSuccess} />}
+          {activeTab === 'signIn' ? (
+            <button onClick={() => onSignInSuccess('testUser')}>Sign In</button>
+          ) : (
+            <button onClick={() => onSignUpSuccess('testUser')}>Sign Up</button>
+          )}
         </div>
       )}
     </div>
