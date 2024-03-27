@@ -95,9 +95,10 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="chat-app-wrapper" style={{ background: theme.isImage ? `url(${theme.backgroundColor})` : theme.backgroundColor, color: theme.textColor, backgroundSize: 'cover', backgroundPosition: 'center center' }}>
-      <Navbar user={user} onSignOut={() => setIsAuthenticated(false)} isAuthenticated={isAuthenticated} currentThemeName={theme.name as ThemeName} switchTheme={switchTheme} />
-      {isAuthenticated && user ? (
+    <div className="chat-app-wrapper" style={{ /* Your wrapper styles */ }}>
+      {/* Conditionally render Navbar only if authenticated */}
+      {isAuthenticated && <Navbar user={user} onSignOut={() => setIsAuthenticated(false)} isAuthenticated={isAuthenticated} currentThemeName={theme.name as ThemeName} switchTheme={switchTheme} />}
+      {isAuthenticated ? (
         <>
           <Chat messages={messages} theme={theme} />
           <ChatInput isWaiting={isWaiting} onSendMessage={handleSendMessage} onSendEmail={onSendEmail} theme={theme} />
@@ -106,6 +107,7 @@ const App: React.FC = () => {
         <div className="auth-overlay">
           <div className="auth-tabs">
             <span style={activeTab === 'signIn' ? activeTabStyle : tabStyle} onClick={() => setActiveTab('signIn')}>Sign In</span>
+            &nbsp;|&nbsp;
             <span style={activeTab === 'signUp' ? activeTabStyle : tabStyle} onClick={() => setActiveTab('signUp')}>Sign Up</span>
           </div>
           {activeTab === 'signIn' ? <SignIn onSignInSuccess={(username) => setIsAuthenticated(true)} /> : <SignUp onSignUpSuccess={(username) => setIsAuthenticated(true)} />}
