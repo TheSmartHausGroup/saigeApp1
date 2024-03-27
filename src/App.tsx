@@ -44,7 +44,7 @@ const App: React.FC = () => {
   }, [messages]);
 
   const switchTheme = useCallback((themeName: ThemeName) => {
-    const newTheme = colorSchemes[themeName];
+    const newTheme = colorSchemes[themeName as ThemeName];
     setTheme(newTheme);
   }, []);
 
