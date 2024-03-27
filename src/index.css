@@ -28,21 +28,24 @@ html, body {
   box-sizing: border-box;
 }
 
-/* Navbar full-width styling */
+
+/* Navbar styling  */
 .navbar {
-  width: 100%;
+  width: 90%;
+  padding: 10px 20px; /* Adjust padding as needed */
   background-color: #43708f;
   color: white;
   position: fixed;
   top: 0;
-  left: 0;
-  right: 0;
+  left: 50%; /* Center the navbar */
+  transform: translateX(-50%); /* Offset by half of its own width to center */
   display: flex;
-  justify-content: center; /* Center the inner container */
+  justify-content: space-between; /* Adjust this to layout inner items */
   align-items: center;
   z-index: 10;
-  padding: 1px 0; /* Adjust padding as needed */
+  height: 30px; /* Set the height of the navbar */
 }
+
 
 /* Navbar content container */
 .navbar-content {
