@@ -66,7 +66,7 @@ const SignUp: React.FC<SignUpProps> = ({ onSignUpSuccess }) => {
             <option key={country.code} value={country.code}>{country.name} {country.flag}</option>
           ))}
         </select>
-        <input type="tel" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} placeholder="Phone Number" required />
+        <input type="tel" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} placeholder="Phone Number (XXX) XXX-XXXX" required />
         <input type="date" value={dateOfBirth} onChange={(e) => setDateOfBirth(e.target.value)} placeholder="Date of Birth" required />
         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
         <button type="submit" disabled={isLoading}>{isLoading ? 'Signing Up...' : 'Sign Up'}</button>
