@@ -77,30 +77,33 @@ const App: React.FC = () => {
   }, [messages]);
 
   return (
-    <div className="App">
-      <Navbar user={user} onSignOut={signOut} isAuthenticated={isAuthenticated} />
-      {isAuthenticated && user ? (
-        <>
-          <Chat messages={messages} />
-          <ChatInput
-            isWaiting={isWaiting}
-            onSendMessage={handleSendMessage}
-            onSendEmail={handleSendEmail}
-          />
-        </>
-      ) : (
-        <div className="auth-overlay">
-          <div className="tabs">
-            <button onClick={() => setActiveTab('signIn')} disabled={activeTab === 'signIn'}>Sign In</button>
-            <button onClick={() => setActiveTab('signUp')} disabled={activeTab === 'signUp'}>Sign Up</button>
+    <div className="chat-app-wrapper"> {/* Make sure this wrapper is here */}
+      <div className="App">
+        <Navbar user={user} onSignOut={signOut} isAuthenticated={isAuthenticated} />
+        {isAuthenticated && user ? (
+          <>
+            <Chat messages={messages} />
+            <ChatInput
+              isWaiting={isWaiting}
+              onSendMessage={handleSendMessage}
+              onSendEmail={handleSendEmail}
+            />
+          </>
+        ) : (
+          <div className="auth-overlay">
+            <div className="tabs">
+              <button onClick={() => setActiveTab('signIn')} disabled={activeTab === 'signIn'}>Sign In</button>
+              <button onClick={() => setActiveTab('signUp')} disabled={activeTab === 'signUp'}>Sign Up</button>
+            </div>
+            <div className="auth-container">
+              {activeTab === 'signIn' ? <SignIn onSignInSuccess={onSignInSuccess} /> : <SignUp onSignUpSuccess={onSignUpSuccess} />}
+            </div>
           </div>
-          <div className="auth-container">
-            {activeTab === 'signIn' ? <SignIn onSignInSuccess={onSignInSuccess} /> : <SignUp onSignUpSuccess={onSignUpSuccess} />}
-          </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div> {/* This closes the "App" div */}
+    </div> /* This closes the "chat-app-wrapper" div */
   );
+  
 };
 
 export default App;
