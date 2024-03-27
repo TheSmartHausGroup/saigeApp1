@@ -11,15 +11,14 @@ const Navbar: React.FC<NavbarProps> = ({ user, onSignOut }) => {
   return (
     <div className="navbar">
       <div className="navbar-content">
-        {user && (
+        {user ? (
           <>
-            <div className="welcome-message">
-              <h1>Welcome, {user.username}!</h1>
-            </div>
-            <button onClick={onSignOut} className="sign-out-btn">
-              Sign out
-            </button>
+            <div className="welcome-message">Welcome, {user.username}!</div>
+            <button onClick={onSignOut} className="sign-out-btn">Sign out</button>
           </>
+        ) : (
+          // Optionally, display something else when no user is logged in
+          <div className="placeholder-content"></div>
         )}
       </div>
     </div>
