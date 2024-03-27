@@ -49,7 +49,7 @@ html, body {
 
 /* Welcome message styling */
 .welcome-message {
-  font-size: 18px; /* Font size for the welcome message */
+  font-size: 14px; /* Font size for the welcome message */
   color: white; /* Text color for the welcome message */
 }
 
