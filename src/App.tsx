@@ -17,6 +17,24 @@ const App: React.FC = () => {
   const [theme, setTheme] = useState<Theme>(defaultTheme);
   const [ws, setWs] = useState<WebSocket | null>(null);
 
+  const onSignInSuccess = useCallback((username: string) => {
+    setIsAuthenticated(true);
+    setUser({ username });
+    setMessages([
+      ...messages,
+      new MessageDto('welcome-msg', false, 'What can we do together today?', 'text', new Date(), 'received'),
+    ]);
+  }, [messages]);
+
+  const onSignUpSuccess = useCallback((username: string) => {
+    setIsAuthenticated(true);
+    setUser({ username });
+    setMessages([
+      ...messages,
+      new MessageDto('welcome-msg', false, 'What can we do together today?', 'text', new Date(), 'received'),
+    ]);
+  }, [messages]);
+
   const tabStyle = {
     cursor: 'pointer',
     padding: '10px',
