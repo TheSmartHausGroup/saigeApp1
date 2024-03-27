@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import Chat from './components/Chat';
 import ChatInput from './components/ChatInput';
 import SignIn from './components/SignIn';
@@ -12,51 +12,96 @@ const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [user, setUser] = useState<{ username: string } | null>(null);
   const [isWaiting, setIsWaiting] = useState<boolean>(false);
-  const [messages, setMessages] = useState<Array<MessageDto>>([
-    new MessageDto('welcome-msg', false, 'What can we do together today?', 'text', new Date(), 'sent'),
-  ]);
+  const [messages, setMessages] = useState<Array<MessageDto>>([]);
   const [activeTab, setActiveTab] = useState<'signIn' | 'signUp'>('signIn');
   const [theme, setTheme] = useState<Theme>(defaultTheme);
+  const [ws, setWs] = useState<WebSocket | null>(null);
+  const tabStyle = {
+    cursor: 'pointer',
+    padding: '10px',
+  };
+  
+  const activeTabStyle = {
+    ...tabStyle,
+    borderBottom: '2px solid #43708f',
+    fontWeight: 'bold',
+  };
 
-  const onSignInSuccess = useCallback((username: string) => {
-    setIsAuthenticated(true);
-    setUser({ username });
-  }, []);
+  // Use the provided WebSocket endpoint from your .env
+  const wsEndpoint = process.env.REACT_APP_WS_ENDPOINT;
 
-  const onSignUpSuccess = useCallback((username: string) => {
-    setIsAuthenticated(true);
-    setUser({ username });
-  }, []);
+  // Use the provided REST API endpoint from your .env for email transcript
+  const apiEndpoint = process.env.REACT_APP_API_ENDPOINT;
 
-  const signOut = useCallback(() => {
-    setIsAuthenticated(false);
-    setUser(null);
-    setMessages([new MessageDto('welcome-msg', false, 'What can we do together today?', 'text', new Date(), 'sent')]);
-  }, []);
+  // Establish WebSocket connection
+  useEffect(() => {
+    if (wsEndpoint) {
+      const webSocket = new WebSocket(wsEndpoint);
+      webSocket.onopen = () => {
+        console.log('WebSocket Connected');
+      };
+      webSocket.onmessage = (event) => {
+        console.log('Message from server:', event.data);
+      };
+      webSocket.onerror = (error) => {
+        console.log('WebSocket Error', error);
+      };
+      setWs(webSocket);
+
+      return () => webSocket.close();
+    }
+  }, [wsEndpoint]);
+
+  const sendWebSocketMessage = (data: any) => {
+    if (ws && ws.readyState === WebSocket.OPEN) {
+      ws.send(JSON.stringify(data));
+    } else {
+      console.log('WebSocket is not connected.');
+    }
+  };
 
   const handleSendMessage = useCallback((message: string, audioBlob?: Blob) => {
-    const newMessage = new MessageDto(Math.random().toString(36).substring(2, 15), true, message, 'text', new Date(), 'sent');
-    setMessages(messages => [...messages, newMessage]);
-  }, [messages]);
+    if (message.trim()) {
+      const newMessage = new MessageDto(Math.random().toString(36).substring(2, 15), true, message, 'text', new Date(), 'sent');
+      setMessages(messages => [...messages, newMessage]);
+      sendWebSocketMessage({ type: 'text', content: message });
+    } else if (audioBlob) {
+      const reader = new FileReader();
+      reader.readAsDataURL(audioBlob);
+      reader.onloadend = () => {
+        sendWebSocketMessage({ type: 'audio', content: reader.result });
+      };
+    }
+  }, [ws]);
 
-  const handleSendEmail = useCallback(async () => {
-    // Email sending logic
-  }, [messages]);
+  const onSendEmail = useCallback(() => {
+    if (apiEndpoint && messages.length > 0 && user?.username) {
+      const emailContent = messages.map(msg => `${msg.isUser ? 'User' : 'sAIge'}: ${msg.content}`).join('\n');
+
+      fetch(apiEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: user.username, // Assuming you store the user's email in the username field. Adjust as needed.
+          content: emailContent,
+        }),
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Email sent successfully', data);
+      })
+      .catch(error => {
+        console.error('Error sending email', error);
+      });
+    }
+  }, [apiEndpoint, messages, user?.username]);
 
   const switchTheme = useCallback((themeName: ThemeName) => {
-    const newTheme = colorSchemes[themeName as ThemeName];
+    const newTheme = colorSchemes[themeName];
     setTheme(newTheme);
   }, []);
-
-  const tabStyle = {
-    color: '#43708f', // Tab text color
-    cursor: 'pointer',
-  };
-
-  const activeTabStyle = {
-    borderBottom: '2px solid #43708f', // Active tab underline color
-    color: '#43708f',
-  };
 
   return (
     <div className="chat-app-wrapper" style={{
@@ -65,25 +110,20 @@ const App: React.FC = () => {
       backgroundSize: 'cover',
       backgroundPosition: 'center center',
     }}>
-      <Navbar user={user} onSignOut={signOut} isAuthenticated={isAuthenticated} currentThemeName={theme.name as ThemeName} switchTheme={switchTheme} />
+      <Navbar user={user} onSignOut={() => setIsAuthenticated(false)} isAuthenticated={isAuthenticated} currentThemeName={theme.name as ThemeName} switchTheme={switchTheme} />
       {isAuthenticated && user ? (
         <>
           <Chat messages={messages} theme={theme} />
-          <ChatInput isWaiting={isWaiting} onSendMessage={handleSendMessage} onSendEmail={handleSendEmail} theme={theme} />
+          <ChatInput isWaiting={isWaiting} onSendMessage={handleSendMessage} onSendEmail={onSendEmail} theme={theme} />
         </>
       ) : (
         <div className="auth-overlay">
           <div className="auth-tabs">
-            <span style={activeTab === 'signIn' ? {...tabStyle, ...activeTabStyle} : tabStyle} onClick={() => setActiveTab('signIn')}>Sign In</span>
+            <span style={activeTab === 'signIn' ? activeTabStyle : tabStyle} onClick={() => setActiveTab('signIn')}>Sign In</span>
             &nbsp;|&nbsp;
-            <span style={activeTab === 'signUp' ? {...tabStyle, ...activeTabStyle} : tabStyle} onClick={() => setActiveTab('signUp')}>Sign Up</span>
+            <span style={activeTab === 'signUp' ? activeTabStyle : tabStyle} onClick={() => setActiveTab('signUp')}>Sign Up</span>
           </div>
-          {activeTab === 'signIn' ? <SignIn onSignInSuccess={onSignInSuccess} /> : <SignUp onSignUpSuccess={onSignUpSuccess} />}
-          {activeTab === 'signIn' ? (
-            <button onClick={() => onSignInSuccess('testUser')}>Sign In</button>
-          ) : (
-            <button onClick={() => onSignUpSuccess('testUser')}>Sign Up</button>
-          )}
+          {activeTab === 'signIn' ? <SignIn onSignInSuccess={(username) => setIsAuthenticated(true)} /> : <SignUp onSignUpSuccess={(username) => setIsAuthenticated(true)} />}
         </div>
       )}
     </div>
