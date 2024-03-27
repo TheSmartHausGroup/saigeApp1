@@ -121,6 +121,7 @@ html, body {
   justify-content: space-between;
   align-items: center;
   z-index: 1000; /* Ensure it's above other elements */
+  border-radius: 10px; /* Rounds the corners */
 }
 
 /* Navbar content container */
@@ -158,7 +159,7 @@ html, body {
   max-height: 600px; /* Set this to a fixed size */
   margin: 60px auto; /* Adjust top margin to align under navbar */
   padding: 20px;
-  background-color: #ffffff30;
+  background-color: #f5f5f500; /* Control background color of chat messages here */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   display: flex;
@@ -171,21 +172,27 @@ html, body {
   flex-grow: 1; /* Allow this area to fill the container */
   overflow-y: auto; /* Scrollbar appears here when content overflows */
   padding: 0 20px;
+  background-color: #f5f5f500; /* Control background color of chat messages here */
+  border-radius: 10px; /* Rounds the corners */
 }
-
 
 /* Chat input container styling */
 .chatInputContainer {
-  width: 100%;
+  width: 90%; /* Adjusted to 90% width */
+  max-width: 800px; /* Optional: you can set a max-width */
+  margin: 0 auto; /* Centers the container horizontally */
   padding: 10px 20px;
   background-color: #fff;
   box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
   position: fixed;
   bottom: 0;
+  left: 5%; /* Half of the remaining 10% (100% - 90%) */
+  right: 5%; /* Ensures equal spacing on both sides */
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 5;
+  border-radius: 10px; /* Rounds the corners */
 }
 
 /* Authentication overlay */
