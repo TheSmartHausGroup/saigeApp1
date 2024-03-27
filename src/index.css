@@ -156,8 +156,8 @@ html, body {
 /* Chat container styling */
 .chat-container {
   width: 85%;
-  max-height: 600px; /* Set this to a fixed size */
-  margin: 60px auto; /* Adjust top margin to align under navbar */
+  max-height: 650px; /* Set this to a fixed size */
+  margin: 10px auto; /* Adjust top margin to align under navbar */
   padding: 20px;
   background-color: #f5f5f500; /* Control background color of chat messages here */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
