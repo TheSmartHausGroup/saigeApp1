@@ -1,3 +1,4 @@
+// App.tsx
 import React, { useState, useCallback } from 'react';
 import Chat from './components/Chat';
 import ChatInput from './components/ChatInput';
@@ -5,6 +6,7 @@ import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import Navbar from './components/Navbar';
 import { MessageDto } from './models/MessageDto';
+import { colorSchemes, defaultTheme, Theme, ThemeName } from './components/colorScheme'; // Adjust the import path as necessary
 import './index.css';
 
 const App: React.FC = () => {
@@ -15,6 +17,7 @@ const App: React.FC = () => {
     new MessageDto('welcome-msg', false, 'What can we do together today?', 'text', new Date(), 'sent')
   ]);
   const [activeTab, setActiveTab] = useState<'signIn' | 'signUp'>('signIn');
+  const [theme, setTheme] = useState<Theme>(defaultTheme); // Use Theme type here
 
   const onSignInSuccess = useCallback((username: string) => {
     setIsAuthenticated(true);
@@ -41,19 +44,19 @@ const App: React.FC = () => {
     // Email sending logic
   }, [messages]);
 
+  // Function to switch themes
+  const switchTheme = useCallback((themeName: string) => {
+    const newTheme = colorSchemes[themeName as keyof typeof colorSchemes];
+    setTheme(newTheme);
+  }, []);
+
   return (
-    <div className="chat-app-wrapper">
-      <Navbar user={user} onSignOut={signOut} isAuthenticated={isAuthenticated} />
+    <div className="chat-app-wrapper" style={{ background: theme.isImage ? `url(${theme.backgroundColor})` : theme.backgroundColor, color: theme.textColor }}>
+      <Navbar user={user} onSignOut={signOut} isAuthenticated={isAuthenticated} currentThemeName={theme.name as ThemeName} switchTheme={switchTheme} />
       {isAuthenticated && user ? (
         <>
-          <div className="chat-container">
-            <Chat messages={messages} />
-          </div>
-          <ChatInput
-            isWaiting={isWaiting}
-            onSendMessage={handleSendMessage}
-            onSendEmail={handleSendEmail}
-          />
+          <Chat messages={messages} theme={theme} />
+          <ChatInput isWaiting={isWaiting} onSendMessage={handleSendMessage} onSendEmail={handleSendEmail} theme={theme} />
         </>
       ) : (
         <div className="auth-overlay">

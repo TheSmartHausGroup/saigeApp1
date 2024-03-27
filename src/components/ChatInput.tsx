@@ -4,14 +4,16 @@ import SendIcon from '@mui/icons-material/Send';
 import MicIcon from '@mui/icons-material/Mic';
 import StopIcon from '@mui/icons-material/Stop';
 import EmailIcon from '@mui/icons-material/Email';
+import { Theme } from '../components/colorScheme'; // Adjust the import path as necessary
 
 interface ChatInputProps {
   onSendMessage: (message: string, audioBlob?: Blob) => void;
   isWaiting: boolean;
   onSendEmail: () => void;
+  theme: Theme; // Ensure theme is passed correctly
 }
 
-const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, isWaiting, onSendEmail }) => {
+const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, isWaiting, onSendEmail, theme }) => {
   const [input, setInput] = useState('');
   const [isRecording, setIsRecording] = useState(false);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -58,7 +60,10 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, isWaiting, onSendE
   };
 
   return (
-    <div className="chatInputContainer">
+    <div className="chatInputContainer" style={{
+      backgroundColor: theme.chatInputBgColor, // Dynamically set the chat input container background
+      color: theme.textColor, // Set text color dynamically
+    }}>
       <Grid container spacing={2} justifyContent="center" alignItems="center">
         <Grid item xs={12}>
           <TextField
@@ -71,29 +76,37 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, isWaiting, onSendE
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleSendMessage()}
             disabled={isWaiting || isRecording}
+            // Apply theme colors to the TextField if needed
           />
         </Grid>
         <Grid item>
+          {/* Apply theme to buttons */}
           <Button
             variant="contained"
-            color="primary"
             startIcon={<SendIcon />}
             onClick={handleSendMessage}
             disabled={isWaiting || isRecording || !input.trim()}
+            sx={{ backgroundColor: theme.buttonColor, '&:hover': { backgroundColor: theme.buttonColor } }} // Apply theme color
           >
             Send
           </Button>
           <Button
             variant="contained"
-            color="secondary"
             startIcon={isRecording ? <StopIcon /> : <MicIcon />}
             onClick={isRecording ? handleStopRecording : handleStartRecording}
             disabled={isWaiting}
+            sx={{ backgroundColor: theme.buttonColor, '&:hover': { backgroundColor: theme.buttonColor } }} // Apply theme color
           >
             {isRecording ? 'Stop Recording' : 'Start Recording'}
           </Button>
           <Tooltip title="Email conversation">
-            <Button variant="contained" startIcon={<EmailIcon />} onClick={onSendEmail} disabled={isWaiting}>
+            <Button
+              variant="contained"
+              startIcon={<EmailIcon />}
+              onClick={onSendEmail}
+              disabled={isWaiting}
+              sx={{ backgroundColor: theme.buttonColor, '&:hover': { backgroundColor: theme.buttonColor } }} // Apply theme color
+            >
               Email
             </Button>
           </Tooltip>

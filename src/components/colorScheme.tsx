@@ -1,4 +1,15 @@
-const colorSchemes = {
+// Defining the interface for a theme
+export interface Theme {
+  name: string;
+  backgroundColor: string;
+  textColor: string;
+  buttonColor: string;
+  messageBubbleColor: string;
+  chatInputBgColor: string;
+  isImage: boolean;
+}
+
+export const colorSchemes = {
     saige: {
       name: "Saige",
       backgroundColor: 'url("https://app-pics103815-dev.s3.amazonaws.com/sAIgeImage")',
@@ -45,5 +56,7 @@ const colorSchemes = {
       isImage: false,
     }
   };
+
+  export type ThemeName = keyof typeof colorSchemes;
 
   export const defaultTheme = colorSchemes.saige; // Default theme
