@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import MessageList from './MessageList'; // Import MessageList instead of Message
+import MessageList from './MessageList'; // Ensure this import is correct
 import { MessageDto } from '../models/MessageDto';
 
 interface ChatProps {
@@ -16,9 +16,11 @@ const Chat: React.FC<ChatProps> = ({ messages }) => {
   }, [messages]);
 
   return (
-    <div className="chat-messages">
-      <MessageList messages={messages} />
-      <div ref={endOfMessagesRef} /> {/* Keeps the scroll to bottom functionality */}
+    <div className="chat-container"> {/* Added class for the Chat container */}
+      <div className="chat-messages">
+        <MessageList messages={messages} />
+        <div ref={endOfMessagesRef} />
+      </div>
     </div>
   );
 };

@@ -111,6 +111,31 @@ body {
   border-bottom: 2px solid #43708f;
 }
 
+
+.chat-app-wrapper {
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  justify-content: flex-start; /* Align children to the start */
+  align-items: center; /* Center children horizontally */
+  height: 100vh; /* Full viewport height */
+  width: 100%; /* Full viewport width */
+  padding-top: 50px; /* Push everything down from the top */
+}
+
+.chat-container {
+  width: 85%; /* As specified */
+  background-color: #f5f5f5; /* Example background color */
+  /* Additional styling */
+  padding: 20px;
+  margin: 80px auto; /* Increased top margin pushes the container lower */
+  margin-bottom: 20px; /* Adds some space below the container */
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+
+
+
 /* Container for chat messages */
 .chat-messages {
   width: 100%;
