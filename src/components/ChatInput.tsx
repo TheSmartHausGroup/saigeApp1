@@ -71,12 +71,17 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, isWaiting, onSendE
             label="What do you want to do today..."
             variant="outlined"
             multiline
-            maxRows={5}
+            minRows={1} // Ensures it starts with a single row
+            maxRows={5} // Allows expansion up to 5 rows as input grows
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleSendMessage()}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault(); // Prevents the default action to avoid inserting a newline
+                handleSendMessage(); // Adjust this if your function needs the event or additional parameters
+              }
+            }}
             disabled={isWaiting || isRecording}
-            // Apply theme colors to the TextField if needed
           />
         </Grid>
         <Grid item>
