@@ -106,7 +106,7 @@ html, body {
   z-index: 5;
 }
 
-/* Additional styles */
+/* Authentication overlay */
 .auth-overlay {
   position: fixed;
   top: 50%;
@@ -140,19 +140,6 @@ html, body {
 
 .auth-overlay button:hover {
   background-color: #365f7a;
-}
-
-.sign-out-btn {
-  background-color: #365f7a;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  border-radius: 5px;
-  color: white;
-}
-
-.sign-out-btn:hover {
-  background-color: #2a4d5e;
 }
 
 /* Responsive adjustments */
