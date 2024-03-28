@@ -1,155 +1,170 @@
-/* Global Styles */
-:root {
-  /* Color scheme and sizes */
-  --bg-color: #43708f;
-  --text-color: white;
-  --input-bg-color: #fff;
-  --input-border-color: #ccc;
-  --button-bg-color: #61dafb;
-  --button-hover-bg-color: #36576f;
-  --message-window-margin-bottom: 60px;
-  --chat-input-height: 60px;
-}
-
-body {
-  margin: 0;
-  padding: 0;
+/* Global settings */
+html, body {
+  margin: 0; /* Removes the margin around the <html> and <body> elements */
+  padding: 0; /* Removes the padding inside the <html> and <body> elements */
+  height: 100%; /* Ensures <html> and <body> occupy full viewport height */
+  width: 100%; /* Ensures <html> and <body> occupy full viewport width */
+  overflow: hidden; /* Prevents scrolling for the entire page */
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  background-image: url('https://app-pics103815-dev.s3.amazonaws.com/sAIgeImage');
-  background-size: cover; /* Ensure the background covers the entire viewport */
-  background-position: center; /* Center the background image */
-  background-attachment: fixed; /* Keep the background fixed during scrolling */
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; /* Sets the font stack for the web app */
+  background-color: #f5f5f5; /* Sets the background color of the web page */
+  color: #333; /* Sets the default text color */
+  -webkit-font-smoothing: antialiased; /* Enhances text rendering on WebKit browsers (e.g., Safari) */
+  -moz-osx-font-smoothing: grayscale; /* Enhances text rendering on Firefox (Mac OS) */
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+/* Master app wrapper */
+.chat-app-wrapper {
+  display: flex; /* Uses flexbox layout for its children (Chat, Input, etc.) */
+  flex-direction: column; /* Stacks children vertically */
+  align-items: center; /* Centers children horizontally */
+  width: 100%; /* Full width of its parent */
+  height: 100vh; /* Full viewport height */
+  overflow: hidden; /* Prevents scrolling within the app wrapper */
+  background-image: url('https://app-pics103815-dev.s3.amazonaws.com/sAIgeImage'); /* Background image for the app */
+  background-size: cover; /* Covers the entire background without stretching the image */
+  background-position: center; /* Centers the background image */
+  background-attachment: fixed; /* Background image doesn't scroll with the page */
+  padding: 60px 20px 20px; /* Top padding 60px, horizontal padding 20px, bottom padding 20px */
+  box-sizing: border-box; /* Includes padding and border in the element's total width and height */
 }
 
-/* App Component Specific Styles */
-.App {
-  text-align: center;
+/* Navbar styling */
+.navbar {
+  width: 90%; /* Navbar width as a percentage of its parent width */
+  height: 60px; /* Fixed height of the navbar */
+  padding: 0 20px; /* Horizontal padding 20px, no vertical padding */
+  background-color: #43708f; /* Background color of the navbar */
+  color: white; /* Text color within the navbar */
+  position: fixed; /* Navbar is positioned relative to the viewport */
+  top: 0; /* Aligns navbar to the top of the viewport */
+  left: 50%; /* Positions the navbar halfway across the viewport */
+  transform: translateX(-50%); /* Moves navbar back to the left by half its width to center it */
+  display: flex; /* Uses flexbox layout for items within the navbar */
+  justify-content: space-between; /* Distributes items within the navbar with space between them */
+  align-items: center; /* Centers items vertically within the navbar */
+  z-index: 1000; /* Ensures navbar is above other elements */
+  border-radius: 10px; /* Rounds the corners of the navbar */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Welcome message styling */
+.welcome-message {
+  font-size: 14px; /* Font size for the welcome message */
+  color: white; /* Text color for the welcome message */
 }
 
-.App-header {
-  background-color: #282c3490;
-  height: 50px;
-  min-height: auto;
-  padding: 10px 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(6px + 2vmin);
-  width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
+/* Sign-out button styling */
+.sign-out-btn {
+  background-color: #365f7a; /* Background color for the sign-out button */
+  border: none; /* Removes the border from the sign-out button */
+  padding: 8px 15px; /* Padding inside the sign-out button */
+  cursor: pointer; /* Changes the cursor to a pointer when hovering over the button */
+  border-radius: 5px; /* Rounds the corners of the sign-out button */
+  color: white; /* Text color of the sign-out button */
+  font-size: 14px; /* Font size of the text inside the sign-out button */
 }
 
-.messageWindow {
-  margin-top: 80px;
-  flex-grow: 1;
-  overflow-y: auto;
-  margin-bottom: var(--message-window-margin-bottom);
-  height: calc(90vh - 140px); /* Dynamically calculate height */
-  overflow: auto;
+.sign-out-btn:hover {
+  background-color: #2a4d5e; /* Changes the background color of the sign-out button on hover */
 }
 
-.custom-input {
-  background-color: #fff;
-  color: #000;
-  width: 100%;
+/* Chat container styling */
+.chat-container {
+  width: 85%; /* Sets the width of the chat container to 85% of its parent */
+  max-height: 650px; /* Maximum height allowed for the chat container */
+  margin: 10px auto; /* Centers the chat container horizontally with a 10px margin from the top */
+  padding: 20px; /* Padding inside the chat container for its contents */
+  background-color: #f5f5f500; /* Semi-transparent background color (hex format with alpha) */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow around the chat container */
+  border-radius: 8px; /* Rounds the corners of the chat container */
+  display: flex; /* Enables a flexbox layout inside the chat container */
+  flex-direction: column; /* Stacks child elements vertically */
+  overflow: hidden; /* Hides any content that overflows the container's box */
 }
 
+/* Chat messages styling */
+.chat-messages {
+  flex-grow: 1; /* Allows the chat messages area to expand to fill available space */
+  overflow-y: auto; /* Enables vertical scrolling if the content overflows */
+  padding: 0 20px; /* Horizontal padding for the messages, with no vertical padding */
+  background-color: #f5f5f500; /* Semi-transparent background color */
+  border-radius: 10px; /* Rounds the corners of the messages area */
+}
+
+/* Chat input container styling */
 .chatInputContainer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  min-height: var(--chat-input-height);
-  background-color: #282c3490;
-  padding: 5px;
-  box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
-  box-sizing: border-box;
+  width: 90%; /* Sets the width of the input container to 90% of its parent */
+  min-height: 50px; /* Control the minimum height */
+  max-height: 100px; /* Control the maximum height */
+  max-width: 800px; /* Maximum width of the input container */
+  margin: 0 auto; /* Centers the input container horizontally */
+  padding: 10px 20px; /* Padding inside the input container */
+  background-color: #fff; /* Background color of the input container */
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* Shadow effect below the input container */
+  position: fixed; /* Fixes the input container's position relative to the viewport */
+  bottom: 0; /* Aligns the input container to the bottom of the viewport */
+  left: 5%; /* Positions the input container starting from 5% of the left side */
+  right: 5%; /* Ensures the input container is centered with 5% margin from the right side */
+  display: flex; /* Enables a flexbox layout inside the input container */
+  justify-content: space-between; /* Distributes items inside the container with space between them */
+  align-items: center; /* Centers items vertically inside the container */
+  z-index: 5; /* Sets the stack order of the input container */
+  border-radius: 10px; /* Rounds the corners of the input container */
 }
 
-.App-link, button {
-  color: var(--button-bg-color);
+/* Authentication overlay styling */
+.auth-overlay {
+  position: fixed; /* Fixes the overlay's position relative to the viewport */
+  top: 50%; /* Positions the overlay at the center of the viewport vertically */
+  left: 50%; /* Positions the overlay at the center of the viewport horizontally */
+  transform: translate(-50%, -50%); /* Adjusts the overlay's position to be truly centered */
+  width: 400px; /* Sets a fixed width for the overlay */
+  background-color: #ffffff; /* Sets the background color of the overlay */
+  border-radius: 8px; /* Rounds the corners of the overlay */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a shadow effect around the overlay */
+  padding: 20px; /* Padding inside the overlay */
+  z-index: 15; /* Sets the stack order of the overlay, ensuring it appears above other elements */
 }
 
-/* Button Styling */
-button {
-  background-color: var(--button-bg-color);
-  padding: 8px 15px;
-  border: none;
-  border-radius: 5px;
+/* Input fields, select elements, and buttons within the authentication overlay */
+.auth-overlay input,
+.auth-overlay select,
+.auth-overlay button {
+  padding: 10px; /* Padding inside each element */
+  margin: 10px 0; /* Vertical margin with no horizontal margin */
+  border: 1px solid #ccc; /* Border color and thickness */
+  border-radius: 4px; /* Rounds the corners of each element */
+  width: 100%; /* Ensures each element occupies the full width of its parent */
+  box-sizing: border-box; /* Includes padding and border in the element's total width and height */
 }
 
-button:hover {
-  background-color: var(--button-hover-bg-color);
+/* Button styling within the authentication overlay */
+.auth-overlay button {
+  background-color: #43708f; /* Background color of the buttons */
+  color: white; /* Text color of the buttons */
+  font-weight: bold; /* Makes the text bold */
+  cursor: pointer; /* Changes the cursor to a pointer when hovering over the buttons */
 }
 
-/* Animations and Media Queries */
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Button hover effect within the authentication overlay */
+.auth-overlay button:hover {
+  background-color: #365f7a; /* Changes the background color on hover */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
+/* Responsive adjustments for tablets */
 @media (max-width: 768px) {
-  .App-header {
-    padding: 5px 15px;
-    font-size: calc(5px + 1.5vmin);
-  }
-
-  .messageWindow {
-    height: 60vh;
-    margin-top: 60px;
-  }
-
-  .chatInputContainer {
-    padding: 3px;
-    min-height: 50px;
-  }
-
-  button {
-    padding: 6px 10px;
-    font-size: 0.8rem;
+  .chat-container, .chatInputContainer {
+    width: 95%; /* Adjusts the width for better spacing on smaller screens */
+    margin-left: auto; /* Keeps the container centered */
+    margin-right: auto; /* Keeps the container centered */
   }
 }
 
+/* Responsive adjustments for mobile devices */
 @media (max-width: 480px) {
-  .App-header {
-    font-size: calc(4px + 1.5vmin);
-  }
-
-  .messageWindow {
-    height: 50vh;
-  }
-
-  .chatInputContainer, .custom-input {
-    padding: 2px;
-    width: calc(100% - 4px);
+  .chat-container, .chatInputContainer {
+    width: 100%; /* Full width on very small screens for maximum space utilization */
+    margin: 60px 0 0; /* Adjusts the top margin to ensure visibility and spacing */
+    padding: 15px; /* Adjusts padding for better spacing on small devices */
   }
 }
