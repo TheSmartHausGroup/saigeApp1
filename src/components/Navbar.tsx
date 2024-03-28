@@ -19,16 +19,18 @@ const Navbar: React.FC<NavbarProps> = ({ user, onSignOut, switchTheme, currentTh
           <div className="welcome-message"> {/* Div for displaying a welcome message. */}
             <h1>Welcome, {user.username}!</h1> {/* Displays the user's username in a welcome message. */}
           </div>
+          {/* Associates the label with the select element for accessibility. */}
+          <label htmlFor="themeSelect" style={{ marginRight: '10px' }}>
+            Change theme:
+          </label>
           <select 
-            onChange={(e) => switchTheme(e.target.value as ThemeName)} /* Handler for changing the theme. Casts the event target value to ThemeName. */
-            value={currentThemeName} /* Sets the select value to the current theme name, making it a controlled component. */
+            id="themeSelect"
+            onChange={(e) => switchTheme(e.target.value as ThemeName)} // Handler for changing the theme. Casts the event target value to ThemeName.
+            value={currentThemeName} // Sets the select value to the current theme name, making it a controlled component.
           >
-            <option value="" disabled> {/* Disabled option that prompts users to change the theme. */}
-              Change Theme
-            </option>
-            {Object.keys(colorSchemes).map((key) => ( /* Maps over the keys of the colorSchemes object to create an option for each theme. */
-              <option key={key} value={key}> {/* Option element for a theme, using the theme key as the value and key prop. */}
-                {colorSchemes[key as keyof typeof colorSchemes].name} {/* Displays the name of the theme as the option text. */}
+            {Object.keys(colorSchemes).map((key) => ( // Maps over the keys of the colorSchemes object to create an option for each theme.
+              <option key={key} value={key}> {/*} Option element for a theme, using the theme key as the value and key prop.*/}
+                {colorSchemes[key as keyof typeof colorSchemes].name} {/*// Displays the name of the theme as the option text.*/}
               </option>
             ))}
           </select>
