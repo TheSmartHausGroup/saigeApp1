@@ -11,16 +11,17 @@ interface MessageProps {
 // Functional component definition accepting MessageProps. Destructures props for direct access to message and theme.
 const Message: React.FC<MessageProps> = ({ message, theme }) => {
   const alignment = message.isUser ? "right" : "left"; // Determines text alignment based on whether the message was sent by the user.
+  
   // Styles for the outer div that aligns the message bubble left or right.
   const messageStyles = {
     textAlign: alignment as 'right' | 'left', // Ensures TypeScript understands the alignment values are limited to 'right' or 'left'.
     margin: "8px", // Adds a margin around each message for spacing.
   };
 
-  // Dynamic styles for the message bubble, utilizing the theme for colors and adding padding and rounded corners for appearance.
+  // Updated dynamic styles for the message bubble, utilizing the theme for colors
   const bubbleStyles = {
-    color: theme.textColor, // Applies the text color from the theme to the message text.
-    backgroundColor: message.isUser ? theme.userMessageBubbleColor : theme.chatInputBgColor, // Background color changes based on whether the message is from the user or not, using theme colors.
+    color: message.isUser ? theme.userMessageTextColor : theme.saigeMessageTextColor, // Dynamically sets text color based on the sender.
+    backgroundColor: message.isUser ? theme.userMessageBubbleColor : theme.saigeMessageBubbleColor, // Sets background color based on the sender.
     padding: "15px", // Adds padding inside the bubble for spacing around the text.
     borderRadius: "8px", // Rounds the corners of the bubble for a modern, chat-like appearance.
     display: 'inline-block', // Makes the bubble size according to its content while allowing it to be aligned by textAlign.
@@ -28,11 +29,11 @@ const Message: React.FC<MessageProps> = ({ message, theme }) => {
 
   // Returns JSX for the message component, splitting the message content by newline characters and rendering each part with a <br /> for proper formatting.
   return (
-    <div style={messageStyles}>{/* Applies alignment styles to this wrapper div. */}
-      <div style={bubbleStyles}>{/* Applies bubble styling to this inner div. */}
-        {message.content.split("\n").map((text, index) => (/* Splits message content at newline characters and maps over each line. */
-          <React.Fragment key={index}>{/* Uses React.Fragment to avoid adding unnecessary DOM elements, with a key for React's list rendering requirements. */}
-            {text}<br />{/* Displays a line of text followed by a line break. */}
+    <div style={messageStyles}> {/*Applies alignment styles to this wrapper div.*/}
+      <div style={bubbleStyles}> {/*Applies bubble styling to this inner div.*/}
+        {message.content.split("\n").map((text, index) => ( /*Splits message content at newline characters and maps over each line. */
+          <React.Fragment key={index}> {/*Uses React.Fragment to avoid adding unnecessary DOM elements, with a key for React's list rendering requirements.*/}
+            {text}<br /> {/*Displays a line of text followed by a line break.*/}
           </React.Fragment>
         ))}
       </div>
@@ -41,4 +42,3 @@ const Message: React.FC<MessageProps> = ({ message, theme }) => {
 };
 
 export default Message; // Exports the Message component for use elsewhere in the application.
-
