@@ -13,6 +13,7 @@ html, body {
   -moz-osx-font-smoothing: grayscale; /* Enhances text rendering on Firefox (Mac OS) */
 }
 
+
 /* Master app wrapper */
 .chat-app-wrapper {
   display: flex; /* Uses flexbox layout for its children (Chat, Input, etc.) */
@@ -28,6 +29,7 @@ html, body {
   padding: 60px 20px 20px; /* Top padding 60px, horizontal padding 20px, bottom padding 20px */
   box-sizing: border-box; /* Includes padding and border in the element's total width and height */
 }
+
 
 /* Navbar styling */
 .navbar {
@@ -47,6 +49,14 @@ html, body {
   border-radius: 10px; /* Rounds the corners of the navbar */
 }
 
+
+/* Welcome message styling */
+.welcome-message {
+  font-size: 28px; /* Font size for the welcome message */
+  color: rgb(255, 255, 255); /* Text color for the welcome message */
+}
+
+
 /* Groups theme switcher elements (label and select) together */
 .theme-switcher {
   display: flex; /* Enables flexbox layout for the theme switcher container */
@@ -54,26 +64,24 @@ html, body {
   margin-left: auto; /* Automatically spaces the theme switcher to the far right, next to the sign-out button */
 }
 
+
 /* Styling for the theme label within the theme switcher */
 .theme-label {
   margin-right: 10px; /* Adds spacing to the right of the label to separate it from the dropdown */
 }
+
 
 /* Styling for the theme select dropdown */
 .theme-select {
   margin-right: 20px; /* Adds spacing to the right of the select dropdown for separation from other elements or padding */
 }
 
+
 /* Ensures the sign-out button is aligned to the right */
 .sign-out-btn {
   margin-left: 10px; /* Adds margin to the left of the sign-out button to ensure it has space from preceding elements */
 }
 
-/* Welcome message styling */
-.welcome-message {
-  font-size: 28px; /* Font size for the welcome message */
-  color: rgb(255, 255, 255); /* Text color for the welcome message */
-}
 
 /* Sign-out button styling */
 .sign-out-btn {
@@ -90,6 +98,7 @@ html, body {
   background-color: #2a4d5e; /* Changes the background color of the sign-out button on hover */
 }
 
+
 /* Chat container styling */
 .chat-container {
   width: 85%; /* Sets the width of the chat container to 85% of its parent */
@@ -104,6 +113,7 @@ html, body {
   overflow: hidden; /* Hides any content that overflows the container's box */
 }
 
+
 /* Chat messages styling */
 .chat-messages {
   flex-grow: 1; /* Allows the chat messages area to expand to fill available space */
@@ -112,6 +122,7 @@ html, body {
   background-color: #f5f5f500; /* Semi-transparent background color */
   border-radius: 10px; /* Rounds the corners of the messages area */
 }
+
 
 /* Chat input container styling */
 .chatInputContainer {
@@ -134,6 +145,7 @@ html, body {
   border-radius: 10px; /* Rounds the corners of the input container */
 }
 
+
 /* Authentication overlay styling */
 .auth-overlay {
   position: fixed; /* Fixes the overlay's position relative to the viewport */
@@ -148,6 +160,7 @@ html, body {
   z-index: 15; /* Sets the stack order of the overlay, ensuring it appears above other elements */
 }
 
+
 /* Input fields, select elements, and buttons within the authentication overlay */
 .auth-overlay input,
 .auth-overlay select,
@@ -160,6 +173,7 @@ html, body {
   box-sizing: border-box; /* Includes padding and border in the element's total width and height */
 }
 
+
 /* Button styling within the authentication overlay */
 .auth-overlay button {
   background-color: #43708f; /* Background color of the buttons */
@@ -168,10 +182,12 @@ html, body {
   cursor: pointer; /* Changes the cursor to a pointer when hovering over the buttons */
 }
 
+
 /* Button hover effect within the authentication overlay */
 .auth-overlay button:hover {
   background-color: #365f7a; /* Changes the background color on hover */
 }
+
 
 /* Responsive adjustments for tablets */
 @media (max-width: 768px) {
@@ -181,6 +197,7 @@ html, body {
     margin-right: auto; /* Keeps the container centered */
   }
 }
+
 
 /* Responsive adjustments for mobile devices */
 @media (max-width: 480px) {
