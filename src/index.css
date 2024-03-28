@@ -155,19 +155,25 @@ html, body {
 }
 
 
-/* Authentication overlay styling */
 .auth-overlay {
   position: fixed; /* Fixes the overlay's position relative to the viewport */
   top: 50%; /* Positions the overlay at the center of the viewport vertically */
   left: 50%; /* Positions the overlay at the center of the viewport horizontally */
   transform: translate(-50%, -50%); /* Adjusts the overlay's position to be truly centered */
-  width: 400px; /* Sets a fixed width for the overlay */
+  width: 400px; /* Sets the width of the overlay */
+  height: 225px; /* Sets the height of the overlay */
   background-color: #ffffff; /* Sets the background color of the overlay */
   border-radius: 8px; /* Rounds the corners of the overlay */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a shadow effect around the overlay */
   padding: 20px; /* Padding inside the overlay */
   z-index: 15; /* Sets the stack order of the overlay, ensuring it appears above other elements */
+  display: flex; /* Uses flex layout to help content center align */
+  flex-direction: column; /* Stacks children vertically */
+  justify-content: center; /* Centers content vertically in the container */
+  align-items: center; /* Centers content horizontally */
 }
+
+
 
 
 /* Input fields, select elements, and buttons within the authentication overlay */
