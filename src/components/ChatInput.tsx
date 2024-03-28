@@ -1,135 +1,108 @@
-import React, { useState, useRef } from 'react'; // Imports React, useState hook for state management, useRef hook for accessing DOM elements.
-import { TextField, Button, Grid, Tooltip, CircularProgress } from '@mui/material'; // Imports components from Material-UI for UI design.
-import SendIcon from '@mui/icons-material/Send'; // Import send icon for the send button.
-import MicIcon from '@mui/icons-material/Mic'; // Import microphone icon for the start recording button.
-import StopIcon from '@mui/icons-material/Stop'; // Import stop icon for the stop recording button.
-import EmailIcon from '@mui/icons-material/Email'; // Import email icon for the email button.
-import { Theme } from '../components/colorScheme'; // Adjust the import path as necessary to import the Theme interface for theme styling.
+// Import statements to include necessary libraries and components.
+import React, { useState, useRef } from 'react'; // React library hooks for managing state and references.
+import { TextField, Button, Grid, Tooltip, CircularProgress } from '@mui/material'; // UI components from Material UI.
+import SendIcon from '@mui/icons-material/Send'; // Icon for the send message button.
+import MicIcon from '@mui/icons-material/Mic'; // Icon for the start recording button.
+import StopIcon from '@mui/icons-material/Stop'; // Icon for the stop recording button.
+import EmailIcon from '@mui/icons-material/Email'; // Icon for the email button.
+import { Theme } from '../components/colorScheme'; // Theme interface for applying custom styles.
 
-// Defines the props for ChatInput component, including functions for sending messages and emails, a boolean indicating if the app is waiting for an operation to complete, and the theme for styling.
+// Defining the props that the ChatInput component will accept.
 interface ChatInputProps {
-  onSendMessage: (message: string, audioBlob?: Blob) => void; // Function to call when a message or audio is sent.
-  isWaiting: boolean; // Indicates if the app is waiting for an operation (like sending a message) to complete.
-  onSendEmail: () => void; // Function to call when sending an email.
-  theme: Theme; // Theme object for applying styles.
+  onSendMessage: (message: string, audioBlob?: Blob) => void; // Function to handle text message sending.
+  onSendAudioChunk: (audioChunk: Blob) => void; // Function to handle sending audio chunks as they are recorded.
+  isWaiting: boolean; // Indicates whether the app is currently processing a request.
+  onSendEmail: () => void; // Function to handle sending the conversation via email.
+  theme: Theme; // Theme object for styling components according to a selected theme.
 }
 
-// Functional component definition accepting props defined in ChatInputProps.
-const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, isWaiting, onSendEmail, theme }) => {
-  const [input, setInput] = useState(''); // State for storing the input field's text value.
+// The ChatInput functional component definition.
+const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, onSendAudioChunk, isWaiting, onSendEmail, theme }) => {
+  const [input, setInput] = useState(''); // State for storing the current value of the text input.
   const [isRecording, setIsRecording] = useState(false); // State to track whether audio recording is in progress.
-  const mediaRecorderRef = useRef<MediaRecorder | null>(null); // Ref for accessing the MediaRecorder instance.
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null); // Ref to hold the MediaRecorder instance for audio recording.
 
-  // Handler function for sending the message. Clears the input field upon sending.
+  // Function to handle sending a text message.
   const handleSendMessage = () => {
-    if (input.trim()) { // Checks if the input is not just whitespace.
-      onSendMessage(input); // Calls the onSendMessage prop function with the input text.
-      setInput(''); // Resets the input field to empty.
+    if (input.trim()) { // Checks if the input is not empty or whitespace.
+      onSendMessage(input); // Calls the onSendMessage function with the input text.
+      setInput(''); // Resets the text input to be empty after sending.
     }
   };
 
-  // Handler function for starting the audio recording.
+  // Function to initiate audio recording.
   const handleStartRecording = async () => {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) { // Checks if the browser supports audio recording.
       try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true }); // Requests access to the microphone.
-        mediaRecorderRef.current = new MediaRecorder(stream); // Creates a new MediaRecorder instance with the audio stream.
-        let audioChunks: BlobPart[] = []; // Initializes an array to store audio chunks.
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true }); // Requests access to the user's microphone.
+        mediaRecorderRef.current = new MediaRecorder(stream); // Creates a new MediaRecorder object with the obtained audio stream.
 
+        // Event handler for when audio data is available.
         mediaRecorderRef.current.ondataavailable = event => {
-          audioChunks.push(event.data); // Collects audio data chunks as they become available.
+          if (event.data.size > 0) {
+            onSendAudioChunk(event.data); // Sends each audio chunk to the onSendAudioChunk function.
+          }
         };
-  
-        mediaRecorderRef.current.onstop = () => {
-          const audioBlob = new Blob(audioChunks, { type: 'audio/wav' }); // Creates a Blob from the audio chunks when recording stops.
-          onSendMessage('', audioBlob); // Calls the onSendMessage prop function with the audio blob.
-        };
-  
-        mediaRecorderRef.current.start(); // Starts recording.
-        setIsRecording(true); // Sets isRecording state to true.
+
+        mediaRecorderRef.current.start(250); // Starts recording, with a timeslice of 250ms to ensure chunks are emitted regularly.
+
+        setIsRecording(true); // Sets the recording state to true, indicating recording has started.
       } catch (error) {
         console.error('Audio recording error:', error); // Logs any errors that occur during recording setup.
       }
     } else {
-      console.error('Audio recording not supported in this browser.'); // Logs if audio recording is not supported.
+      console.error('Audio recording not supported in this browser.'); // Logs if audio recording is not supported in the user's browser.
     }
   };
 
-  // Handler function for stopping the audio recording.
+  // Function to stop audio recording.
   const handleStopRecording = () => {
-    if (mediaRecorderRef.current) { // Checks if there is a MediaRecorder instance.
+    if (mediaRecorderRef.current) { // Checks if there is an existing MediaRecorder instance.
       mediaRecorderRef.current.stop(); // Stops the recording.
-      setIsRecording(false); // Sets isRecording state to false.
+      setIsRecording(false); // Sets the recording state to false, indicating recording has stopped.
     }
   };
 
-  // JSX for the chat input UI.
+  // JSX to render the chat input UI.
   return (
-    <div className="chatInputContainer" style={{
-      backgroundColor: theme.chatInputBgColor, // Applies the background color from the theme to the chat input container.
-      color: theme.textColor, // Applies the text color from the theme.
-    }}>
-      <Grid container spacing={2} justifyContent="center" alignItems="center"> {/* Uses Material-UI Grid for layout. */}
+    <div className="chatInputContainer" style={{ backgroundColor: theme.chatInputBgColor, color: theme.textColor }}>
+      {/* Grid container for layout. */}
+      <Grid container spacing={2} justifyContent="center" alignItems="center">
+        {/* Grid item for the text input field. */}
         <Grid item xs={12}>
           <TextField
-            fullWidth // Makes the TextField take up the full width of its container.
-            label="Type your message here..." // Placeholder text for the input field.
-            variant="outlined" // Style of the TextField border.
-            multiline // Allows multiple lines of input.
-            minRows={1} // Starts with a single row of input.
-            maxRows={5} // Allows the input field to expand up to 5 rows as more text is entered.
-            value={input} // Binds the input state to the TextField value.
+            fullWidth
+            label="Type your message here..."
+            variant="outlined"
+            multiline
+            minRows={1}
+            maxRows={5}
+            value={input}
             onChange={(e) => setInput(e.target.value)} // Updates the input state as the user types.
-            onKeyDown={(e) => { // Triggers when a key is pressed in the input field.
-              if (e.key === 'Enter' && !e.shiftKey) { // Checks if the Enter key is pressed without the Shift key.
-                e.preventDefault(); // Prevents the default Enter key action (submitting a form or inserting a newline).
-                handleSendMessage(); // Calls the handleSendMessage function.
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) { // Triggers send on Enter key (excluding when Shift is held for newlines).
+                e.preventDefault();
+                handleSendMessage();
               }
             }}
-            disabled={isWaiting || isRecording} // Disables the input field if the app is waiting or recording.
-            className="chat-text-input" // Adding a className prop here
+            disabled={isWaiting || isRecording} // Disables the text field when waiting for a response or during recording.
+            className="chat-text-input"
             InputProps={{
               style: {
-                height: '40px', // Directly sets the height of the input field
-                padding: '5px 10px', // Adjusts the padding inside the input field
+                height: '40px', 
+                padding: '5px 10px',
               },
             }}
           />
         </Grid>
+        {/* Grid item for action buttons (send, record, email). */}
         <Grid item>
-          {/* Send button with an icon. Disabled if the app is waiting, recording, or the input is empty. */}
-          <Button
-            variant="contained" // Filled button style.
-            startIcon={<SendIcon />} // Icon displayed at the start of the button.
-            onClick={handleSendMessage} // Calls the handleSendMessage function when clicked.
-            disabled={isWaiting || isRecording || !input.trim()} // Disables the button based on the specified conditions.
-            sx={{ backgroundColor: theme.buttonColor, '&:hover': { backgroundColor: theme.buttonColor } }} // Applies the button color from the theme and ensures it remains the same on hover.
-          >
-            Send
-          </Button>
-          {/* Button to start or stop recording, with the icon and action changing based on whether recording is in progress. */}
-          <Button
-            variant="contained" // Filled button style.
-            startIcon={isRecording ? <StopIcon /> : <MicIcon />} // Changes the icon based on the isRecording state.
-            onClick={isRecording ? handleStopRecording : handleStartRecording} // Toggles between starting and stopping recording.
-            disabled={isWaiting} // Disables the button if the app is waiting for an operation to complete.
-            sx={{ backgroundColor: theme.buttonColor, '&:hover': { backgroundColor: theme.buttonColor } }} // Applies the button color from the theme.
-          >
-            {isRecording ? 'Stop' : 'Start'} {/*} Changes the button text based on the isRecording state.*/}
-          </Button>
-          {/* Tooltip wrapping an Email button, providing additional information on hover. */}
+          <Button variant="contained" startIcon={<SendIcon />} onClick={handleSendMessage} disabled={isWaiting || isRecording || !input.trim()}>Send</Button>
+          <Button variant="contained" startIcon={isRecording ? <StopIcon /> : <MicIcon />} onClick={isRecording ? handleStopRecording : handleStartRecording} disabled={isWaiting}> {isRecording ? 'Stop' : 'Start'} </Button>
           <Tooltip title="Email conversation">
-            <Button
-              variant="contained" // Filled button style.
-              startIcon={<EmailIcon />} // Email icon displayed at the start of the button.
-              onClick={onSendEmail} // Calls the onSendEmail prop function when clicked.
-              disabled={isWaiting} // Disables the button if the app is waiting for an operation to complete.
-              sx={{ backgroundColor: theme.buttonColor, '&:hover': { backgroundColor: theme.buttonColor } }} // Applies the button color from the theme.
-            >
-              Email
-            </Button>
+            <Button variant="contained" startIcon={<EmailIcon />} onClick={onSendEmail} disabled={isWaiting}>Email</Button>
           </Tooltip>
-          {isWaiting && <CircularProgress />} {/* Shows a loading spinner if the app is waiting for an operation to complete. */}
+          {isWaiting && <CircularProgress />} {/* Shows a loading spinner if waiting for a process to complete. */}
         </Grid>
       </Grid>
     </div>
