@@ -47,6 +47,28 @@ html, body {
   border-radius: 10px; /* Rounds the corners of the navbar */
 }
 
+/* Groups theme switcher elements (label and select) together */
+.theme-switcher {
+  display: flex; /* Enables flexbox layout for the theme switcher container */
+  align-items: center; /* Centers items vertically within the container */
+  margin-left: auto; /* Automatically spaces the theme switcher to the far right, next to the sign-out button */
+}
+
+/* Styling for the theme label within the theme switcher */
+.theme-label {
+  margin-right: 10px; /* Adds spacing to the right of the label to separate it from the dropdown */
+}
+
+/* Styling for the theme select dropdown */
+.theme-select {
+  margin-right: 20px; /* Adds spacing to the right of the select dropdown for separation from other elements or padding */
+}
+
+/* Ensures the sign-out button is aligned to the right */
+.sign-out-btn {
+  margin-left: 10px; /* Adds margin to the left of the sign-out button to ensure it has space from preceding elements */
+}
+
 /* Welcome message styling */
 .welcome-message {
   font-size: 14px; /* Font size for the welcome message */
