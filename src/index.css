@@ -94,6 +94,7 @@ html, body {
   font-size: 14px; /* Font size of the text inside the sign-out button */
 }
 
+
 .sign-out-btn:hover {
   background-color: #2a4d5e; /* Changes the background color of the sign-out button on hover */
 }
@@ -143,6 +144,14 @@ html, body {
   align-items: center; /* Centers items vertically inside the container */
   z-index: 5; /* Sets the stack order of the input container */
   border-radius: 10px; /* Rounds the corners of the input container */
+}
+
+
+/* Styling for the chat text input within the chat input container */
+.chatInputContainer .chat-text-input {
+  padding: 5px 10px; /* Reduces spacing inside the input box */
+  height: 30px; /* Adjust as necessary to change the height of the input field */
+  /* Add any other styling rules needed for the text input field here */
 }
 
 
