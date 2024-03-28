@@ -69,8 +69,13 @@ const App: React.FC = () => {
     }
   }, [messages, user?.username]); // Depend on messages and user state.
 
-  // Callback to switch the app's theme.
-  const switchTheme = useCallback((themeName: ThemeName) => { setTheme(colorSchemes[themeName]); }, []); // Update theme state.
+// Callback to switch the app's theme.
+const switchTheme = useCallback((themeName: ThemeName) => {
+  console.log("Switching to theme:", themeName); // Log the theme being switched to
+  setTheme(colorSchemes[themeName]); // Update the theme state with the selected theme
+  console.log("New theme set:", colorSchemes[themeName]); // Optionally log the new theme object for verification
+}, []);
+
 
   // Render function for the App component.
   return (
