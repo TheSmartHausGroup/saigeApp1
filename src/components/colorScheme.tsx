@@ -32,7 +32,7 @@ export const colorSchemes = {
     backgroundColor: '#FFFFFF', // Assuming a fallback or default color
     backgroundImage: 'https://app-pics103815-dev.s3.amazonaws.com/sAIgeImage',
     textColor: '#4E4E4E', // White text for contrast on darker backgrounds or images
-    buttonColor: '#4CAF50', // Vibrant green for buttons, providing a pop of color
+    buttonColor: '#43708f', // Steel blue for buttons, providing a pop of color
     userMessageBubbleColor: '#0084FF', // Bright blue for the user's message bubbles for easy identification
     userMessageTextColor: '#FFFFFF', // White text within the user's message bubbles for readability
     saigeMessageBubbleColor: '#FFFFFF', // White for Saige's message bubbles, contrasting with the user's
