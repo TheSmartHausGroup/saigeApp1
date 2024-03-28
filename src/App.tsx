@@ -10,8 +10,8 @@ import './index.css';
 
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [user,] = useState<{ username: string } | null>(null);
-  const [isWaiting,] = useState<boolean>(false);
+  const [user] = useState<{ username: string } | null>(null);
+  const [isWaiting] = useState<boolean>(false);
   const [messages, setMessages] = useState<Array<MessageDto>>([
     new MessageDto('welcome-msg', false, 'What can we do together today?', 'text', new Date(), 'sent'),
   ]);
@@ -48,10 +48,10 @@ const App: React.FC = () => {
     }
   }, [wsEndpoint]);
 
-  const sendWebSocketMessage = (data: any) => {
+  const sendWebSocketMessage = useCallback((data: any) => {
     if (ws && ws.readyState === WebSocket.OPEN) ws.send(JSON.stringify(data));
     else console.log('WebSocket is not connected.');
-  };
+  }, [ws]); // Now, `ws` is the only dependency
 
   const handleSendMessage = useCallback((message: string, audioBlob?: Blob) => {
     if (message.trim()) {
@@ -98,7 +98,6 @@ const App: React.FC = () => {
 
   return (
     <div className="chat-app-wrapper" style={{ /* Your wrapper styles */ }}>
-      {/* Conditionally render Navbar only if authenticated */}
       {isAuthenticated && <Navbar user={user} onSignOut={() => setIsAuthenticated(false)} isAuthenticated={isAuthenticated} currentThemeName={theme.name as ThemeName} switchTheme={switchTheme} />}
       {isAuthenticated ? (
         <>
