@@ -65,7 +65,7 @@ const App: React.FC = () => {
         sendWebSocketMessage({ type: 'audio', content: reader.result });
       };
     }
-  }, [ws]);
+  }, [sendWebSocketMessage]);
 
   const onSendEmail = useCallback(() => {
     if (apiEndpoint && messages.length > 0 && user?.username) {
