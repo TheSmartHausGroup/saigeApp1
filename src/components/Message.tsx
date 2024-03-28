@@ -20,7 +20,7 @@ const Message: React.FC<MessageProps> = ({ message, theme }) => {
   // Dynamic styles for the message bubble, utilizing the theme for colors and adding padding and rounded corners for appearance.
   const bubbleStyles = {
     color: theme.textColor, // Applies the text color from the theme to the message text.
-    backgroundColor: message.isUser ? theme.messageBubbleColor : theme.chatInputBgColor, // Background color changes based on whether the message is from the user or not, using theme colors.
+    backgroundColor: message.isUser ? theme.userMessageBubbleColor : theme.chatInputBgColor, // Background color changes based on whether the message is from the user or not, using theme colors.
     padding: "15px", // Adds padding inside the bubble for spacing around the text.
     borderRadius: "8px", // Rounds the corners of the bubble for a modern, chat-like appearance.
     display: 'inline-block', // Makes the bubble size according to its content while allowing it to be aligned by textAlign.
