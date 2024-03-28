@@ -13,6 +13,7 @@ html, body {
   -moz-osx-font-smoothing: grayscale; /* Enhances text rendering on Firefox (Mac OS) */
 }
 
+
 /* Master app wrapper */
 .chat-app-wrapper {
   display: flex; /* Uses flexbox layout for its children (Chat, Input, etc.) */
@@ -28,6 +29,7 @@ html, body {
   padding: 60px 20px 20px; /* Top padding 60px, horizontal padding 20px, bottom padding 20px */
   box-sizing: border-box; /* Includes padding and border in the element's total width and height */
 }
+
 
 /* Navbar styling */
 .navbar {
@@ -47,11 +49,39 @@ html, body {
   border-radius: 10px; /* Rounds the corners of the navbar */
 }
 
+
 /* Welcome message styling */
 .welcome-message {
-  font-size: 14px; /* Font size for the welcome message */
-  color: white; /* Text color for the welcome message */
+  font-size: 28px; /* Font size for the welcome message */
+  color: rgb(255, 255, 255); /* Text color for the welcome message */
 }
+
+
+/* Groups theme switcher elements (label and select) together */
+.theme-switcher {
+  display: flex; /* Enables flexbox layout for the theme switcher container */
+  align-items: center; /* Centers items vertically within the container */
+  margin-left: auto; /* Automatically spaces the theme switcher to the far right, next to the sign-out button */
+}
+
+
+/* Styling for the theme label within the theme switcher */
+.theme-label {
+  margin-right: 10px; /* Adds spacing to the right of the label to separate it from the dropdown */
+}
+
+
+/* Styling for the theme select dropdown */
+.theme-select {
+  margin-right: 20px; /* Adds spacing to the right of the select dropdown for separation from other elements or padding */
+}
+
+
+/* Ensures the sign-out button is aligned to the right */
+.sign-out-btn {
+  margin-left: 10px; /* Adds margin to the left of the sign-out button to ensure it has space from preceding elements */
+}
+
 
 /* Sign-out button styling */
 .sign-out-btn {
@@ -64,9 +94,11 @@ html, body {
   font-size: 14px; /* Font size of the text inside the sign-out button */
 }
 
+
 .sign-out-btn:hover {
   background-color: #2a4d5e; /* Changes the background color of the sign-out button on hover */
 }
+
 
 /* Chat container styling */
 .chat-container {
@@ -82,6 +114,7 @@ html, body {
   overflow: hidden; /* Hides any content that overflows the container's box */
 }
 
+
 /* Chat messages styling */
 .chat-messages {
   flex-grow: 1; /* Allows the chat messages area to expand to fill available space */
@@ -91,11 +124,11 @@ html, body {
   border-radius: 10px; /* Rounds the corners of the messages area */
 }
 
+
 /* Chat input container styling */
 .chatInputContainer {
   width: 90%; /* Sets the width of the input container to 90% of its parent */
   min-height: 50px; /* Control the minimum height */
-  max-height: 100px; /* Control the maximum height */
   max-width: 800px; /* Maximum width of the input container */
   margin: 0 auto; /* Centers the input container horizontally */
   padding: 10px 20px; /* Padding inside the input container */
@@ -110,21 +143,38 @@ html, body {
   align-items: center; /* Centers items vertically inside the container */
   z-index: 5; /* Sets the stack order of the input container */
   border-radius: 10px; /* Rounds the corners of the input container */
+  overflow: visible; /* Ensures that the container can grow with its content */
 }
 
-/* Authentication overlay styling */
+
+/* Styling for the chat text input within the chat input container */
+.chatInputContainer .chat-text-input {
+  padding: 5px 10px; /* Reduces spacing inside the input box */
+  height: 20px; /* Adjust as necessary to change the height of the input field */
+  /* Add any other styling rules needed for the text input field here */
+}
+
+
 .auth-overlay {
   position: fixed; /* Fixes the overlay's position relative to the viewport */
   top: 50%; /* Positions the overlay at the center of the viewport vertically */
   left: 50%; /* Positions the overlay at the center of the viewport horizontally */
   transform: translate(-50%, -50%); /* Adjusts the overlay's position to be truly centered */
-  width: 400px; /* Sets a fixed width for the overlay */
+  width: 400px; /* Sets the width of the overlay */
+  height: 225px; /* Sets the height of the overlay */
   background-color: #ffffff; /* Sets the background color of the overlay */
   border-radius: 8px; /* Rounds the corners of the overlay */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a shadow effect around the overlay */
   padding: 20px; /* Padding inside the overlay */
   z-index: 15; /* Sets the stack order of the overlay, ensuring it appears above other elements */
+  display: flex; /* Uses flex layout to help content center align */
+  flex-direction: column; /* Stacks children vertically */
+  justify-content: center; /* Centers content vertically in the container */
+  align-items: center; /* Centers content horizontally */
 }
+
+
+
 
 /* Input fields, select elements, and buttons within the authentication overlay */
 .auth-overlay input,
@@ -138,6 +188,7 @@ html, body {
   box-sizing: border-box; /* Includes padding and border in the element's total width and height */
 }
 
+
 /* Button styling within the authentication overlay */
 .auth-overlay button {
   background-color: #43708f; /* Background color of the buttons */
@@ -146,10 +197,12 @@ html, body {
   cursor: pointer; /* Changes the cursor to a pointer when hovering over the buttons */
 }
 
+
 /* Button hover effect within the authentication overlay */
 .auth-overlay button:hover {
   background-color: #365f7a; /* Changes the background color on hover */
 }
+
 
 /* Responsive adjustments for tablets */
 @media (max-width: 768px) {
@@ -159,6 +212,7 @@ html, body {
     margin-right: auto; /* Keeps the container centered */
   }
 }
+
 
 /* Responsive adjustments for mobile devices */
 @media (max-width: 480px) {
