@@ -14,6 +14,15 @@ export interface Theme {
   navbarButtonColor: string; // Background color for navbar buttons (e.g., sign out)
   navbarButtonTextColor: string; // Text color for navbar buttons
   isImage: boolean; // Indicates if the background is an image
+  secondaryButtonColor: string; // Color for secondary buttons, used for less prominent actions to distinguish them from primary actions.
+  errorColor: string; // Color used to indicate errors or negative outcomes, such as failed message delivery.
+  successColor: string; // Color indicating successful operations, like message sent or settings saved.
+  linkColor: string; // Color for hyperlinks within chat messages or interface elements, making them stand out.
+  disabledButtonBgColor: string; // Background color for disabled buttons, indicating that the button is not interactive.
+  disabledButtonTextColor: string; // Text color for disabled buttons, complementing the background to maintain readability.
+  readReceiptSentColor: string; // Color indicating a message has been sent but not yet delivered to the recipient.
+  readReceiptDeliveredColor: string; // Color showing a message has been delivered to the recipient's device.
+  readReceiptReadColor: string; // Color signifying the recipient has read the message.
 }
 
 export const colorSchemes = {
@@ -33,6 +42,15 @@ export const colorSchemes = {
     navbarButtonColor: '#FFA500', // Orange for navbar buttons, indicating interactivity
     navbarButtonTextColor: '#FFFFFF', // White text on navbar buttons for visibility
     isImage: true,
+    secondaryButtonColor: '#78909C', // Example: a different shade for secondary actions
+    errorColor: '#D32F2F', // Example: red for errors
+    successColor: '#388E3C', // Example: green for success messages or indicators
+    linkColor: '#1976D2', // Example: blue for links
+    disabledButtonBgColor: '#C0C0C0', // Example: light grey for disabled buttons
+    disabledButtonTextColor: '#9E9E9E', // Example: grey for text on disabled buttons
+    readReceiptSentColor: '#BDBDBD', // Example: grey indicating a message is sent
+    readReceiptDeliveredColor: '#64B5F6', // Example: light blue indicating a message is delivered
+    readReceiptReadColor: '#4CAF50', // Example: green indicating a message is read
   },
   blueGrey: {
     name: "BlueGrey",
@@ -50,6 +68,15 @@ export const colorSchemes = {
     navbarButtonColor: '#90A4AE', // Light blue-grey for navbar buttons
     navbarButtonTextColor: '#263238', // Dark text on navbar buttons for readability
     isImage: false,
+    secondaryButtonColor: '#78909C', // Additional color for secondary buttons, slightly lighter than the main button color
+    errorColor: '#D32F2F', // Red for errors, providing clear feedback
+    successColor: '#388E3C', // Green for success messages or indicators, signaling positive outcomes
+    linkColor: '#1976D2', // Distinct blue for links, making them stand out against the theme's color palette
+    disabledButtonBgColor: '#C0C0C0', // Light grey for disabled buttons, clearly indicating non-interactivity
+    disabledButtonTextColor: '#9E9E9E', // Grey for text on disabled buttons, ensuring readability
+    readReceiptSentColor: '#BDBDBD', // Grey indicating a message is sent, subtly blending with the theme's color scheme
+    readReceiptDeliveredColor: '#64B5F6', // Light blue indicating a message is delivered, offering a soft contrast
+    readReceiptReadColor: '#4CAF50', // Green indicating a message has been read, aligning with the success color for consistency
   },
   dark: {
     name: "Dark",
@@ -67,23 +94,41 @@ export const colorSchemes = {
     navbarButtonColor: '#455A64', // Dark blue-grey for navbar buttons, maintaining theme consistency
     navbarButtonTextColor: '#ECEFF1', // Light grey text on navbar buttons for clarity
     isImage: false,
-  },
+    secondaryButtonColor: '#78909C', // A cooler tone for secondary buttons, providing visual hierarchy
+    errorColor: '#FF5252', // Bright red for error messages, ensuring they catch the user's attention
+    successColor: '#4CAF50', // Vibrant green for success indicators, signalling positive feedback
+    linkColor: '#80DEEA', // Cyan for links, offering a pop of color that distinguishes them from other text
+    disabledButtonBgColor: '#2C3E50', // Dark slate for disabled buttons, subtly indicating they are inactive
+    disabledButtonTextColor: '#7F8C8D', // Ash grey for text on disabled buttons, complementing the background
+    readReceiptSentColor: '#7B8A8B', // Greyish tone indicating a message is sent but not yet delivered
+    readReceiptDeliveredColor: '#3498DB', // Medium blue indicating delivery, standing out against darker elements
+    readReceiptReadColor: '#2ECC71', // Soft green indicating the message has been read, consistent with success indicators
+  },  
   colorful: {
     name: "Colorful",
     backgroundColor: '#F44336', // Bright red for a bold, colorful background
     textColor: '#212121', // Almost black text for stark contrast on the colorful background
     buttonColor: '#FFEB3B', // Vibrant yellow for buttons, adding to the theme's vibrancy
     userMessageBubbleColor: '#4CAF50', // Bright green for the user's message bubbles
-    userMessageTextColor: '#FFFFFF', // White text within the user's message bubbles
-    saigeMessageBubbleColor: '#2196F3', // Bright blue for Saige's message bubbles, contrasting with the user's
-    saigeMessageTextColor: '#FFFFFF', // White text within Saige's message bubbles
-    chatInputBgColor: '#FFC107', // Amber for the chat input area, keeping the colorful theme
+    userMessageTextColor: '#FFFFFF', // White text within the user's message bubbles for readability
+    saigeMessageBubbleColor: '#2196F3', // Bright blue for Saige's message bubbles, offering a distinct contrast
+    saigeMessageTextColor: '#FFFFFF', // White text within Saige's message bubbles for clarity
+    chatInputBgColor: '#FFC107', // Amber for the chat input area, maintaining the colorful theme
     chatInputTextColor: '#212121', // Almost black for text within the chat input, ensuring readability
     navbarBgColor: '#673AB7', // Deep purple for the navbar, complementing the colorful theme
     navbarTextColor: '#EDE7F6', // Light purple text in the navbar for a harmonious contrast
     navbarButtonColor: '#3F51B5', // Indigo for navbar buttons, enriching the theme's color palette
     navbarButtonTextColor: '#EDE7F6', // Light purple text on navbar buttons, matching the navbar text color
     isImage: false,
+    secondaryButtonColor: '#FF9800', // Orange for secondary buttons, contrasting with the primary yellow
+    errorColor: '#D32F2F', // Red for errors, providing clear visual feedback
+    successColor: '#4CAF50', // Green for success messages or indicators, signaling positive actions
+    linkColor: '#1976D2', // Bright blue for links, standing out against the theme's colors
+    disabledButtonBgColor: '#E0E0E0', // Light grey for disabled buttons, indicating non-interactivity
+    disabledButtonTextColor: '#9E9E9E', // Grey for text on disabled buttons, complementing the background
+    readReceiptSentColor: '#FFC107', // Amber, matching the chat input background, for sent messages
+    readReceiptDeliveredColor: '#4CAF50', // Green, consistent with user message bubbles, for delivered messages
+    readReceiptReadColor: '#2196F3', // Blue, aligning with Saige's message bubbles, for read messages
   },
   lightBlue: {
     name: "LightBlue",
@@ -91,7 +136,7 @@ export const colorSchemes = {
     textColor: '#01579B', // Dark blue text for readable contrast against the light background
     buttonColor: '#03A9F4', // Brighter blue for buttons, standing out against the background
     userMessageBubbleColor: '#81D4FA', // Very light blue for the user's message bubbles, for a subtle differentiation
-    userMessageTextColor: '#FFFFFF', // White text within the user's message bubbles
+    userMessageTextColor: '#FFFFFF', // White text within the user's message bubbles for readability
     saigeMessageBubbleColor: '#4FC3F7', // Slightly darker light blue for Saige's message bubbles, for visibility
     saigeMessageTextColor: '#01579B', // Dark blue text within Saige's message bubbles, matching the general text color
     chatInputBgColor: '#E1F5FE', // Very light blue, almost white, for the chat input area, enhancing readability
@@ -101,7 +146,17 @@ export const colorSchemes = {
     navbarButtonColor: '#4DD0E1', // Cyan for navbar buttons, adding another color to the theme's palette
     navbarButtonTextColor: '#01579B', // Dark blue text on navbar buttons, ensuring readability
     isImage: false,
-  }
+    secondaryButtonColor: '#B2EBF2', // Lighter cyan for secondary buttons, providing a soft alternative
+    errorColor: '#FF5252', // Bright red for errors, standing out in the light blue theme
+    successColor: '#4CAF50', // Green for success messages or indicators, conveying positive feedback
+    linkColor: '#0288D1', // Deep blue for links, ensuring they are noticeable
+    disabledButtonBgColor: '#BDBDBD', // Grey for disabled buttons, clearly indicating they are not interactive
+    disabledButtonTextColor: '#757575', // Darker grey for text on disabled buttons, maintaining readability
+    readReceiptSentColor: '#90A4AE', // Greyish blue for sent messages, blending with the theme
+    readReceiptDeliveredColor: '#81D4FA', // Light blue, similar to user message bubbles, for delivered messages
+    readReceiptReadColor: '#4FC3F7', // Similar to Saige's message bubbles, indicating the message has been read
+  },
+  
 };
 
 export type ThemeName = keyof typeof colorSchemes;
