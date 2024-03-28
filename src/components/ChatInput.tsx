@@ -1,74 +1,117 @@
-// Import statements to include necessary libraries and components.
-import React, { useState, useRef } from 'react'; // React library hooks for managing state and references.
-import { TextField, Button, Grid, Tooltip, CircularProgress } from '@mui/material'; // UI components from Material UI.
-import SendIcon from '@mui/icons-material/Send'; // Icon for the send message button.
-import MicIcon from '@mui/icons-material/Mic'; // Icon for the start recording button.
-import StopIcon from '@mui/icons-material/Stop'; // Icon for the stop recording button.
-import EmailIcon from '@mui/icons-material/Email'; // Icon for the email button.
-import { Theme } from '../components/colorScheme'; // Theme interface for applying custom styles.
+import React, { useState, useRef, useEffect } from 'react';
+import { TextField, Button, Grid, Tooltip, CircularProgress } from '@mui/material';
+import SendIcon from '@mui/icons-material/Send';
+import MicIcon from '@mui/icons-material/Mic';
+import StopIcon from '@mui/icons-material/Stop';
+import EmailIcon from '@mui/icons-material/Email';
+import { Theme } from '../components/colorScheme';
 
-// Defining the props that the ChatInput component will accept.
+const silenceThreshold = 0.02; // Threshold for considering silence, adjust as needed
+const silenceTime = 3000; // 3 seconds of silence before stopping
+
 interface ChatInputProps {
-  onSendMessage: (message: string, audioBlob?: Blob) => void; // Function to handle text message sending.
-  onSendAudioChunk: (audioChunk: Blob) => void; // Function to handle sending audio chunks as they are recorded.
-  isWaiting: boolean; // Indicates whether the app is currently processing a request.
-  onSendEmail: () => void; // Function to handle sending the conversation via email.
-  theme: Theme; // Theme object for styling components according to a selected theme.
+  onSendMessage: (message: string, audioBlob?: Blob) => void;
+  onSendAudioChunk: (audioChunk: Blob) => void;
+  isWaiting: boolean;
+  onSendEmail: () => void;
+  theme: Theme;
 }
 
-// The ChatInput functional component definition.
 const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, onSendAudioChunk, isWaiting, onSendEmail, theme }) => {
-  const [input, setInput] = useState(''); // State for storing the current value of the text input.
-  const [isRecording, setIsRecording] = useState(false); // State to track whether audio recording is in progress.
-  const mediaRecorderRef = useRef<MediaRecorder | null>(null); // Ref to hold the MediaRecorder instance for audio recording.
+  const [input, setInput] = useState('');
+  const [isRecording, setIsRecording] = useState(false);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const silenceDetectionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Function to handle sending a text message.
+  useEffect(() => {
+    // Clean up on component unmount
+    return () => {
+      if (silenceDetectionTimeoutRef.current) {
+        clearTimeout(silenceDetectionTimeoutRef.current);
+      }
+    };
+  }, []);
+
   const handleSendMessage = () => {
-    if (input.trim()) { // Checks if the input is not empty or whitespace.
-      onSendMessage(input); // Calls the onSendMessage function with the input text.
-      setInput(''); // Resets the text input to be empty after sending.
+    if (input.trim()) {
+      onSendMessage(input);
+      setInput('');
     }
   };
 
-  // Function to initiate audio recording.
   const handleStartRecording = async () => {
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) { // Checks if the browser supports audio recording.
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true }); // Requests access to the user's microphone.
-        mediaRecorderRef.current = new MediaRecorder(stream); // Creates a new MediaRecorder object with the obtained audio stream.
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorderRef.current = new MediaRecorder(stream);
+        audioContextRef.current = new AudioContext();
 
-        // Event handler for when audio data is available.
-        mediaRecorderRef.current.ondataavailable = event => {
-          if (event.data.size > 0) {
-            onSendAudioChunk(event.data); // Sends each audio chunk to the onSendAudioChunk function.
+        const source = audioContextRef.current.createMediaStreamSource(stream);
+        const processor = audioContextRef.current.createScriptProcessor(512, 1, 1);
+
+        source.connect(processor);
+        processor.connect(audioContextRef.current.destination);
+
+        processor.onaudioprocess = (event) => {
+          const input = event.inputBuffer.getChannelData(0);
+          let sum = 0.0;
+
+          for (let i = 0; i < input.length; ++i) {
+            sum += input[i] * input[i];
+          }
+          const volume = Math.sqrt(sum / input.length);
+
+          if (volume < silenceThreshold) {
+            if (!silenceDetectionTimeoutRef.current) {
+              silenceDetectionTimeoutRef.current = setTimeout(() => {
+                handleStopRecording();
+              }, silenceTime);
+            }
+          } else {
+            if (silenceDetectionTimeoutRef.current) {
+              clearTimeout(silenceDetectionTimeoutRef.current);
+              silenceDetectionTimeoutRef.current = null;
+            }
           }
         };
 
-        mediaRecorderRef.current.start(250); // Starts recording, with a timeslice of 250ms to ensure chunks are emitted regularly.
+        mediaRecorderRef.current.ondataavailable = (event) => {
+          if (event.data.size > 0) {
+            onSendAudioChunk(event.data);
+          }
+        };
 
-        setIsRecording(true); // Sets the recording state to true, indicating recording has started.
+        mediaRecorderRef.current.start(250);
+        setIsRecording(true);
       } catch (error) {
-        console.error('Audio recording error:', error); // Logs any errors that occur during recording setup.
+        console.error('Audio recording error:', error);
       }
     } else {
-      console.error('Audio recording not supported in this browser.'); // Logs if audio recording is not supported in the user's browser.
+      console.error('Audio recording not supported in this browser.');
     }
   };
 
-  // Function to stop audio recording.
   const handleStopRecording = () => {
-    if (mediaRecorderRef.current) { // Checks if there is an existing MediaRecorder instance.
-      mediaRecorderRef.current.stop(); // Stops the recording.
-      setIsRecording(false); // Sets the recording state to false, indicating recording has stopped.
+    if (mediaRecorderRef.current) {
+      mediaRecorderRef.current.stop();
+      setIsRecording(false);
+
+      if (silenceDetectionTimeoutRef.current) {
+        clearTimeout(silenceDetectionTimeoutRef.current);
+        silenceDetectionTimeoutRef.current = null;
+      }
+
+      if (audioContextRef.current) {
+        audioContextRef.current.close();
+        audioContextRef.current = null;
+      }
     }
   };
 
-  // JSX to render the chat input UI.
   return (
     <div className="chatInputContainer" style={{ backgroundColor: theme.chatInputBgColor, color: theme.textColor }}>
-      {/* Grid container for layout. */}
       <Grid container spacing={2} justifyContent="center" alignItems="center">
-        {/* Grid item for the text input field. */}
         <Grid item xs={12}>
           <TextField
             fullWidth
@@ -78,14 +121,14 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, onSendAudioChunk, 
             minRows={1}
             maxRows={5}
             value={input}
-            onChange={(e) => setInput(e.target.value)} // Updates the input state as the user types.
+            onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => {
-              if (e.key === 'Enter' && !e.shiftKey) { // Triggers send on Enter key (excluding when Shift is held for newlines).
+              if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
                 handleSendMessage();
               }
             }}
-            disabled={isWaiting || isRecording} // Disables the text field when waiting for a response or during recording.
+            disabled={isWaiting || isRecording}
             className="chat-text-input"
             InputProps={{
               style: {
@@ -95,18 +138,17 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, onSendAudioChunk, 
             }}
           />
         </Grid>
-        {/* Grid item for action buttons (send, record, email). */}
         <Grid item>
           <Button variant="contained" startIcon={<SendIcon />} onClick={handleSendMessage} disabled={isWaiting || isRecording || !input.trim()}>Send</Button>
           <Button variant="contained" startIcon={isRecording ? <StopIcon /> : <MicIcon />} onClick={isRecording ? handleStopRecording : handleStartRecording} disabled={isWaiting}> {isRecording ? 'Stop' : 'Start'} </Button>
           <Tooltip title="Email conversation">
             <Button variant="contained" startIcon={<EmailIcon />} onClick={onSendEmail} disabled={isWaiting}>Email</Button>
           </Tooltip>
-          {isWaiting && <CircularProgress />} {/* Shows a loading spinner if waiting for a process to complete. */}
+          {isWaiting && <CircularProgress />}
         </Grid>
       </Grid>
     </div>
   );
 };
 
-export default ChatInput; // Exports the ChatInput component for use in other parts of the app.
+export default ChatInput;
