@@ -108,7 +108,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, isWaiting, onSendE
             disabled={isWaiting} // Disables the button if the app is waiting for an operation to complete.
             sx={{ backgroundColor: theme.buttonColor, '&:hover': { backgroundColor: theme.buttonColor } }} // Applies the button color from the theme.
           >
-            {isRecording ? 'Stop Recording' : 'Start Recording'} // Changes the button text based on the isRecording state.
+            {isRecording ? 'Stop Recording' : 'Start Recording'} {/*} Changes the button text based on the isRecording state.*/}
           </Button>
           {/* Tooltip wrapping an Email button, providing additional information on hover. */}
           <Tooltip title="Email conversation">

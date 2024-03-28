@@ -28,11 +28,11 @@ const Message: React.FC<MessageProps> = ({ message, theme }) => {
 
   // Returns JSX for the message component, splitting the message content by newline characters and rendering each part with a <br /> for proper formatting.
   return (
-    <div style={messageStyles}> // Applies alignment styles to this wrapper div.
-      <div style={bubbleStyles}> // Applies bubble styling to this inner div.
-        {message.content.split("\n").map((text, index) => ( // Splits message content at newline characters and maps over each line.
-          <React.Fragment key={index}> // Uses React.Fragment to avoid adding unnecessary DOM elements, with a key for React's list rendering requirements.
-            {text}<br /> // Displays a line of text followed by a line break.
+    <div style={messageStyles}>{/* Applies alignment styles to this wrapper div. */}
+      <div style={bubbleStyles}>{/* Applies bubble styling to this inner div. */}
+        {message.content.split("\n").map((text, index) => (/* Splits message content at newline characters and maps over each line. */
+          <React.Fragment key={index}>{/* Uses React.Fragment to avoid adding unnecessary DOM elements, with a key for React's list rendering requirements. */}
+            {text}<br />{/* Displays a line of text followed by a line break. */}
           </React.Fragment>
         ))}
       </div>
@@ -41,3 +41,4 @@ const Message: React.FC<MessageProps> = ({ message, theme }) => {
 };
 
 export default Message; // Exports the Message component for use elsewhere in the application.
+
