@@ -88,6 +88,12 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, isWaiting, onSendE
             }}
             disabled={isWaiting || isRecording} // Disables the input field if the app is waiting or recording.
             className="chat-text-input" // Adding a className prop here
+            InputProps={{
+              style: {
+                height: '40px', // Directly sets the height of the input field
+                padding: '5px 10px', // Adjusts the padding inside the input field
+              },
+            }}
           />
         </Grid>
         <Grid item>

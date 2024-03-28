@@ -129,7 +129,7 @@ html, body {
 .chatInputContainer {
   width: 90%; /* Sets the width of the input container to 90% of its parent */
   min-height: 50px; /* Control the minimum height */
-  max-height: 100px; /* Control the maximum height */
+  max-height: 80px; /* Control the maximum height */
   max-width: 800px; /* Maximum width of the input container */
   margin: 0 auto; /* Centers the input container horizontally */
   padding: 10px 20px; /* Padding inside the input container */
@@ -150,7 +150,7 @@ html, body {
 /* Styling for the chat text input within the chat input container */
 .chatInputContainer .chat-text-input {
   padding: 5px 10px; /* Reduces spacing inside the input box */
-  height: 30px; /* Adjust as necessary to change the height of the input field */
+  height: 20px; /* Adjust as necessary to change the height of the input field */
   /* Add any other styling rules needed for the text input field here */
 }
 
