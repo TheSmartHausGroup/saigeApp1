@@ -129,7 +129,6 @@ html, body {
 .chatInputContainer {
   width: 90%; /* Sets the width of the input container to 90% of its parent */
   min-height: 50px; /* Control the minimum height */
-  max-height: 80px; /* Control the maximum height */
   max-width: 800px; /* Maximum width of the input container */
   margin: 0 auto; /* Centers the input container horizontally */
   padding: 10px 20px; /* Padding inside the input container */
@@ -144,6 +143,7 @@ html, body {
   align-items: center; /* Centers items vertically inside the container */
   z-index: 5; /* Sets the stack order of the input container */
   border-radius: 10px; /* Rounds the corners of the input container */
+  overflow: visible; /* Ensures that the container can grow with its content */
 }
 
 
