@@ -68,7 +68,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, isWaiting, onSendE
         <Grid item xs={12}>
           <TextField
             fullWidth
-            label="What do you want to do today..."
+            label="Type your message here..."
             variant="outlined"
             multiline
             minRows={1} // Ensures it starts with a single row
