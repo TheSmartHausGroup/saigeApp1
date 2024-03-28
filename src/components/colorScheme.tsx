@@ -26,8 +26,8 @@ export interface Theme {
 }
 
 export const colorSchemes = {
-  saige: {
-    name: "Saige",
+  sAIge: {
+    name: "sAIge",
     backgroundColor: 'url("https://app-pics103815-dev.s3.amazonaws.com/sAIgeImage")',
     textColor: '#4E4E4E', // White text for contrast on darker backgrounds or images
     buttonColor: '#4CAF50', // Vibrant green for buttons, providing a pop of color
@@ -52,7 +52,7 @@ export const colorSchemes = {
     readReceiptDeliveredColor: '#64B5F6', // Example: light blue indicating a message is delivered
     readReceiptReadColor: '#4CAF50', // Example: green indicating a message is read
   },
-  blueGrey: {
+  BlueGrey: {
     name: "BlueGrey",
     backgroundColor: '#607D8B', // A soothing blue-grey for the background
     textColor: '#FFFFFF', // White text for general readability
@@ -78,7 +78,7 @@ export const colorSchemes = {
     readReceiptDeliveredColor: '#64B5F6', // Light blue indicating a message is delivered, offering a soft contrast
     readReceiptReadColor: '#4CAF50', // Green indicating a message has been read, aligning with the success color for consistency
   },
-  dark: {
+  Dark: {
     name: "Dark",
     backgroundColor: '#263238', // Deep, dark grey for a dark theme background
     textColor: '#ECEFF1', // Light grey text for contrast against the dark background
@@ -104,7 +104,7 @@ export const colorSchemes = {
     readReceiptDeliveredColor: '#3498DB', // Medium blue indicating delivery, standing out against darker elements
     readReceiptReadColor: '#2ECC71', // Soft green indicating the message has been read, consistent with success indicators
   },  
-  colorful: {
+  Colorful: {
     name: "Colorful",
     backgroundColor: '#F44336', // Bright red for a bold, colorful background
     textColor: '#212121', // Almost black text for stark contrast on the colorful background
@@ -130,7 +130,7 @@ export const colorSchemes = {
     readReceiptDeliveredColor: '#4CAF50', // Green, consistent with user message bubbles, for delivered messages
     readReceiptReadColor: '#2196F3', // Blue, aligning with Saige's message bubbles, for read messages
   },
-  lightBlue: {
+  LightBlue: {
     name: "LightBlue",
     backgroundColor: '#B3E5FC', // Light blue for a soft, airy background
     textColor: '#01579B', // Dark blue text for readable contrast against the light background
@@ -161,4 +161,4 @@ export const colorSchemes = {
 
 export type ThemeName = keyof typeof colorSchemes;
 
-export const defaultTheme = colorSchemes.saige; // Sets Saige as the default theme
+export const defaultTheme = colorSchemes.sAIge; // Sets Saige as the default theme
