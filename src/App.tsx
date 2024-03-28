@@ -10,26 +10,14 @@ import './index.css';
 
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [user, setUser] = useState<{ username: string } | null>(null);
-  const [isWaiting, setIsWaiting] = useState<boolean>(false);
+  const [user,] = useState<{ username: string } | null>(null);
+  const [isWaiting,] = useState<boolean>(false);
   const [messages, setMessages] = useState<Array<MessageDto>>([
     new MessageDto('welcome-msg', false, 'What can we do together today?', 'text', new Date(), 'sent'),
   ]);
   const [activeTab, setActiveTab] = useState<'signIn' | 'signUp'>('signIn');
   const [theme, setTheme] = useState<Theme>(defaultTheme);
   const [ws, setWs] = useState<WebSocket | null>(null);
-
-  const onSignInSuccess = useCallback((username: string) => {
-    setIsAuthenticated(true);
-    setUser({ username });
-    setMessages([new MessageDto('welcome-msg', false, 'What can we do together today?', 'text', new Date())]);
-  }, []);
-  
-  const onSignUpSuccess = useCallback((username: string) => {
-    setIsAuthenticated(true);
-    setUser({ username });
-    setMessages([new MessageDto('welcome-msg', false, 'What can we do together today?', 'text', new Date())]);
-  }, []);
 
   const tabStyle = {
     cursor: 'pointer',
