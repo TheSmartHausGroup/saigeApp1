@@ -1,28 +1,29 @@
 export interface Theme {
   name: string;
-  backgroundColor: string; // Background color or image URL
-  textColor: string; // Default text color
-  buttonColor: string; // Default button background color
-  userMessageBubbleColor: string; // Background color for the user's message bubbles
-  userMessageTextColor: string; // Text color for the user's messages
-  saigeMessageBubbleColor: string; // Background color for Saige's (or AI's) message bubbles
-  saigeMessageTextColor: string; // Text color for Saige's (or AI's) messages
-  chatInputBgColor: string; // Background color for the chat input area
-  chatInputTextColor: string; // Text color for the chat input
-  navbarBgColor: string; // Background color for the navbar
-  navbarTextColor: string; // Text color for the navbar (including welcome message)
-  navbarButtonColor: string; // Background color for navbar buttons (e.g., sign out)
-  navbarButtonTextColor: string; // Text color for navbar buttons
-  isImage: boolean; // Indicates if the background is an image
-  secondaryButtonColor: string; // Color for secondary buttons, used for less prominent actions to distinguish them from primary actions.
-  errorColor: string; // Color used to indicate errors or negative outcomes, such as failed message delivery.
-  successColor: string; // Color indicating successful operations, like message sent or settings saved.
-  linkColor: string; // Color for hyperlinks within chat messages or interface elements, making them stand out.
-  disabledButtonBgColor: string; // Background color for disabled buttons, indicating that the button is not interactive.
-  disabledButtonTextColor: string; // Text color for disabled buttons, complementing the background to maintain readability.
-  readReceiptSentColor: string; // Color indicating a message has been sent but not yet delivered to the recipient.
-  readReceiptDeliveredColor: string; // Color showing a message has been delivered to the recipient's device.
-  readReceiptReadColor: string; // Color signifying the recipient has read the message.
+  backgroundColor: string; // Background color or default color if an image is used
+  textColor: string;
+  buttonColor: string;
+  userMessageBubbleColor: string;
+  userMessageTextColor: string;
+  saigeMessageBubbleColor: string;
+  saigeMessageTextColor: string;
+  chatInputBgColor: string;
+  chatInputTextColor: string;
+  navbarBgColor: string;
+  navbarTextColor: string;
+  navbarButtonColor: string;
+  navbarButtonTextColor: string;
+  isImage: boolean;
+  secondaryButtonColor: string;
+  errorColor: string;
+  successColor: string;
+  linkColor: string;
+  disabledButtonBgColor: string;
+  disabledButtonTextColor: string;
+  readReceiptSentColor: string;
+  readReceiptDeliveredColor: string;
+  readReceiptReadColor: string;
+  backgroundImage?: string; // Optional background image URL
 }
 
 export const colorSchemes = {

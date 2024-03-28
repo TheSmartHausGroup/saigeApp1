@@ -83,9 +83,9 @@ const App: React.FC = () => {
 
   // Render function for the App component.
   return (
-    <div className="chat-app-wrapper" style={{
-      backgroundColor: theme.isImage ? 'transparent' : theme.backgroundColor, // Dynamically setting the background color.
-      backgroundImage: theme.isImage ? `url(${theme.backgroundColor})` : 'none', // Dynamically setting the background image if theme specifies an image.
+      <div className="chat-app-wrapper" style={{
+        backgroundColor: theme.backgroundColor,
+        backgroundImage: theme.isImage ? `url(${theme.backgroundImage})` : 'none',
     }}> {/* Wrapper for the entire chat application. */}
       {isAuthenticated && <Navbar user={user} onSignOut={() => setIsAuthenticated(false)} isAuthenticated={isAuthenticated} currentThemeName={theme.name as ThemeName} switchTheme={switchTheme} />} {/* Navbar, shown if authenticated. */}
       {isAuthenticated ? (
