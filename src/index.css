@@ -71,7 +71,7 @@ html, body {
 
 /* Welcome message styling */
 .welcome-message {
-  font-size: 14px; /* Font size for the welcome message */
+  font-size: 28px; /* Font size for the welcome message */
   color: rgb(255, 255, 255); /* Text color for the welcome message */
 }
 
