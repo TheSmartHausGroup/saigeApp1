@@ -1,119 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import { Container } from '@mui/material';
-import { v4 as uuidv4 } from 'uuid';
+import React, { useEffect, useRef } from 'react';
+import MessageList from './MessageList'; // Ensure this import is correct
 import { MessageDto } from '../models/MessageDto';
-import ChatInput from './ChatInput';
-import MessageList from './MessageList';
+import { Theme } from '../components/colorScheme'; // Adjust the import path as necessary
 
-const Chat = () => {
-  const [ws, setWs] = useState<WebSocket | null>(null);
-  const [messages, setMessages] = useState<Array<MessageDto>>([]);
-  const [input, setInput] = useState<string>("");
+// Adjusting the interface to include a theme prop
+interface ChatProps {
+  messages: MessageDto[];
+  theme: Theme; // Adding theme to the props
+}
 
-  // Ensure wsEndpoint and apiEndpoint are defined, providing fallback values as needed.
-  // It's crucial that these fallback values are valid URLs to avoid runtime errors.
-  const wsEndpoint = process.env.REACT_APP_WS_ENDPOINT || 'wss://fallback.example.com';
-  const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'https://fallback.example.com/api';
+const Chat: React.FC<ChatProps> = ({ messages, theme }) => {
+  const endOfMessagesRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    // Check if wsEndpoint is a valid URL before attempting to create a WebSocket connection
-    if (!wsEndpoint) {
-      console.error('WebSocket endpoint URL is not defined.');
-      return;
+    if (endOfMessagesRef.current) {
+      endOfMessagesRef.current.scrollIntoView({ behavior: "smooth" });
     }
-
-    const websocket = new WebSocket(wsEndpoint);
-    setWs(websocket);
-
-    websocket.onopen = () => {
-      console.log('WebSocket connection established');
-    };
-
-    websocket.onmessage = (event) => {
-      const incomingMessage = JSON.parse(event.data);
-      setMessages(prevMessages => [...prevMessages, new MessageDto(incomingMessage.id, incomingMessage.isUser, incomingMessage.content, incomingMessage.type)]);
-    };
-
-    websocket.onerror = (error) => {
-      console.error('WebSocket error:', error);
-    };
-
-    websocket.onclose = () => {
-      console.log('WebSocket connection closed');
-      setWs(null);
-    };
-
-    return () => {
-      websocket.close();
-    };
-  }, [wsEndpoint]); // Reacting to changes in wsEndpoint
-
-  const handleSendMessage = () => {
-    if (input.trim() !== "" && ws) {
-      const newMessage = new MessageDto(uuidv4(), true, input, 'text');
-      setMessages(prevMessages => [...prevMessages, newMessage]);
-      ws.send(JSON.stringify({ message: input }));
-      setInput("");
-    }
-  };
-
-  const sendAudioChunk = async (audioBlob: Blob) => {
-    if (ws) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.result) {
-          ws.send(reader.result);
-        } else {
-          console.error('Failed to read audio chunk');
-        }
-      };
-      reader.onerror = (error) => {
-        console.error('Error reading audio chunk:', error);
-      };
-      reader.readAsArrayBuffer(audioBlob);
-    }
-  };
-
-  const onSendEmail = async () => {
-    const emailContent = messages.map(msg => `${msg.isUser ? 'User' : 'sAIge'}: ${msg.content}`).join("\n");
-  
-    try {
-      // Use apiEndpoint for making the fetch call
-      if (!apiEndpoint) {
-        console.error('API endpoint for sending email is not defined.');
-        return;
-      }
-
-      const response = await fetch(`${apiEndpoint}/sendEmail`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ content: emailContent }),
-      });
-  
-      if (!response.ok) {
-        throw new Error('Failed to send email');
-      }
-      
-      console.log("Email sent successfully.");
-    } catch (error) {
-      console.error("Failed to send email:", error);
-    }
-  };
+  }, [messages]);
 
   return (
-    <Container>
-      <MessageList messages={messages} />
-      <ChatInput
-        input={input}
-        isWaiting={!ws}
-        onInputChange={(e) => setInput(e.target.value)}
-        onSendMessage={handleSendMessage}
-        sendAudioChunk={sendAudioChunk}
-        onSendEmail={onSendEmail}
-      />
-    </Container>
+    <div className="chat-container" style={{
+      color: theme.textColor, // Using theme's text color
+      backgroundColor: theme.isImage ? `url(${theme.backgroundColor})` : theme.backgroundColor, // Applying background color or image
+      // Apply other theme styles as needed
+    }}> 
+      <div className="chat-messages">
+        <MessageList messages={messages} theme={theme} /> {/* Pass theme to MessageList if it needs theme */}
+        <div ref={endOfMessagesRef} />
+      </div>
+    </div>
   );
 };
 
